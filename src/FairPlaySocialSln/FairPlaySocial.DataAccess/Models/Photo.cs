@@ -6,30 +6,36 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace FairPlaySocial.DataAccess.Models
+namespace FairPlaySocial.DataAccess.Models;
+
+public partial class Photo
 {
-    public partial class Photo
-    {
-        [Key]
-        public long PhotoId { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Filename { get; set; }
-        [Required]
-        [StringLength(10)]
-        public string ImageType { get; set; }
-        [Required]
-        public byte[] ImageBytes { get; set; }
-        public DateTimeOffset RowCreationDateTime { get; set; }
-        [Required]
-        [StringLength(256)]
-        public string RowCreationUser { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string SourceApplication { get; set; }
-        [Required]
-        [Column("OriginatorIPAddress")]
-        [StringLength(100)]
-        public string OriginatorIpaddress { get; set; }
-    }
+    [Key]
+    public long PhotoId { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Filename { get; set; }
+
+    [Required]
+    [StringLength(10)]
+    public string ImageType { get; set; }
+
+    [Required]
+    public byte[] ImageBytes { get; set; }
+
+    public DateTimeOffset RowCreationDateTime { get; set; }
+
+    [Required]
+    [StringLength(256)]
+    public string RowCreationUser { get; set; }
+
+    [Required]
+    [StringLength(250)]
+    public string SourceApplication { get; set; }
+
+    [Required]
+    [Column("OriginatorIPAddress")]
+    [StringLength(100)]
+    public string OriginatorIpaddress { get; set; }
 }

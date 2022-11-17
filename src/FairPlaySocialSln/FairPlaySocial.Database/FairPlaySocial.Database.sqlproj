@@ -70,8 +70,12 @@
     <Build Include="dbo\Tables\ErrorLog.sql" />
     <Build Include="dbo\Tables\Photo.sql" />
     <Build Include="dbo\Tables\UserPreference.sql" />
+    <Build Include="dbo\Tables\Post.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="FairPlaySocial.Database.refactorlog" />
   </ItemGroup>
 </Project>

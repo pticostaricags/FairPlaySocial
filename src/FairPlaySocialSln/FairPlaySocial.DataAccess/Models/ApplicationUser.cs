@@ -6,43 +6,49 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace FairPlaySocial.DataAccess.Models
+namespace FairPlaySocial.DataAccess.Models;
+
+[Index("AzureAdB2cobjectId", Name = "UI_ApplicationUser_AzureAdB2CObjectId", IsUnique = true)]
+[Index("EmailAddress", Name = "UI_ApplicationUser_EmailAddress", IsUnique = true)]
+public partial class ApplicationUser
 {
-    [Index("AzureAdB2cobjectId", Name = "UI_ApplicationUser_AzureAdB2CObjectId", IsUnique = true)]
-    [Index("EmailAddress", Name = "UI_ApplicationUser_EmailAddress", IsUnique = true)]
-    public partial class ApplicationUser
-    {
-        public ApplicationUser()
-        {
-            ApplicationUserRole = new HashSet<ApplicationUserRole>();
-        }
+    [Key]
+    public long ApplicationUserId { get; set; }
 
-        [Key]
-        public long ApplicationUserId { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string FullName { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string EmailAddress { get; set; }
-        public DateTimeOffset LastLogIn { get; set; }
-        [Column("AzureAdB2CObjectId")]
-        public Guid AzureAdB2cobjectId { get; set; }
-        public DateTimeOffset RowCreationDateTime { get; set; }
-        [Required]
-        [StringLength(256)]
-        public string RowCreationUser { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string SourceApplication { get; set; }
-        [Required]
-        [Column("OriginatorIPAddress")]
-        [StringLength(100)]
-        public string OriginatorIpaddress { get; set; }
+    [Required]
+    [StringLength(150)]
+    public string FullName { get; set; }
 
-        [InverseProperty("ApplicationUser")]
-        public virtual UserPreference UserPreference { get; set; }
-        [InverseProperty("ApplicationUser")]
-        public virtual ICollection<ApplicationUserRole> ApplicationUserRole { get; set; }
-    }
+    [Required]
+    [StringLength(150)]
+    public string EmailAddress { get; set; }
+
+    public DateTimeOffset LastLogIn { get; set; }
+
+    [Column("AzureAdB2CObjectId")]
+    public Guid AzureAdB2cobjectId { get; set; }
+
+    public DateTimeOffset RowCreationDateTime { get; set; }
+
+    [Required]
+    [StringLength(256)]
+    public string RowCreationUser { get; set; }
+
+    [Required]
+    [StringLength(250)]
+    public string SourceApplication { get; set; }
+
+    [Required]
+    [Column("OriginatorIPAddress")]
+    [StringLength(100)]
+    public string OriginatorIpaddress { get; set; }
+
+    [InverseProperty("ApplicationUser")]
+    public virtual ICollection<ApplicationUserRole> ApplicationUserRole { get; } = new List<ApplicationUserRole>();
+
+    [InverseProperty("OwnerApplicationUser")]
+    public virtual ICollection<Post> Post { get; } = new List<Post>();
+
+    [InverseProperty("ApplicationUser")]
+    public virtual UserPreference UserPreference { get; set; }
 }

@@ -8,15 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.DataAccess.Models;
 
-[Index("ApplicationUserId", "ApplicationRoleId", Name = "UI_ApplicationUserRole", IsUnique = true)]
-public partial class ApplicationUserRole
+public partial class Post
 {
     [Key]
-    public long ApplicationUserRoleId { get; set; }
+    public long PostId { get; set; }
 
-    public long ApplicationUserId { get; set; }
+    [Required]
+    [StringLength(500)]
+    public string Text { get; set; }
 
-    public short ApplicationRoleId { get; set; }
+    public long OwnerApplicationUserId { get; set; }
 
     public DateTimeOffset RowCreationDateTime { get; set; }
 
@@ -33,11 +34,7 @@ public partial class ApplicationUserRole
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
 
-    [ForeignKey("ApplicationRoleId")]
-    [InverseProperty("ApplicationUserRole")]
-    public virtual ApplicationRole ApplicationRole { get; set; }
-
-    [ForeignKey("ApplicationUserId")]
-    [InverseProperty("ApplicationUserRole")]
-    public virtual ApplicationUser ApplicationUser { get; set; }
+    [ForeignKey("OwnerApplicationUserId")]
+    [InverseProperty("Post")]
+    public virtual ApplicationUser OwnerApplicationUser { get; set; }
 }

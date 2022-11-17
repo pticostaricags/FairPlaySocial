@@ -6,28 +6,34 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace FairPlaySocial.DataAccess.Models
+namespace FairPlaySocial.DataAccess.Models;
+
+public partial class ErrorLog
 {
-    public partial class ErrorLog
-    {
-        [Key]
-        public long ErrorLogId { get; set; }
-        [Required]
-        public string Message { get; set; }
-        [Required]
-        public string StackTrace { get; set; }
-        [Required]
-        public string FullException { get; set; }
-        public DateTimeOffset RowCreationDateTime { get; set; }
-        [Required]
-        [StringLength(256)]
-        public string RowCreationUser { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string SourceApplication { get; set; }
-        [Required]
-        [Column("OriginatorIPAddress")]
-        [StringLength(100)]
-        public string OriginatorIpaddress { get; set; }
-    }
+    [Key]
+    public long ErrorLogId { get; set; }
+
+    [Required]
+    public string Message { get; set; }
+
+    [Required]
+    public string StackTrace { get; set; }
+
+    [Required]
+    public string FullException { get; set; }
+
+    public DateTimeOffset RowCreationDateTime { get; set; }
+
+    [Required]
+    [StringLength(256)]
+    public string RowCreationUser { get; set; }
+
+    [Required]
+    [StringLength(250)]
+    public string SourceApplication { get; set; }
+
+    [Required]
+    [Column("OriginatorIPAddress")]
+    [StringLength(100)]
+    public string OriginatorIpaddress { get; set; }
 }

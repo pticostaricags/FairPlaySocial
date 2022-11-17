@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 2,
+   "CodeGenerationMode": 3,
    "ContextClassName": "FairPlaySocial.DatabaseContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
@@ -32,6 +32,10 @@
       },
       {
          "Name": "[dbo].[Photo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Post]",
          "ObjectType": 0
       },
       {

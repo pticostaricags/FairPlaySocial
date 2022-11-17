@@ -6,19 +6,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace FairPlaySocial.DataAccess.Models
-{
-    [Index("ApplicationUserId", Name = "UI_UserPreference_ApplicationUserId", IsUnique = true)]
-    public partial class UserPreference
-    {
-        [Key]
-        public long UserPreferenceId { get; set; }
-        public long ApplicationUserId { get; set; }
-        public bool EnableAudibleCuesInMobile { get; set; }
-        public bool EnableAudibleCuesInWeb { get; set; }
+namespace FairPlaySocial.DataAccess.Models;
 
-        [ForeignKey("ApplicationUserId")]
-        [InverseProperty("UserPreference")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
-    }
+[Index("ApplicationUserId", Name = "UI_UserPreference_ApplicationUserId", IsUnique = true)]
+public partial class UserPreference
+{
+    [Key]
+    public long UserPreferenceId { get; set; }
+
+    public long ApplicationUserId { get; set; }
+
+    public bool EnableAudibleCuesInMobile { get; set; }
+
+    public bool EnableAudibleCuesInWeb { get; set; }
+
+    [ForeignKey("ApplicationUserId")]
+    [InverseProperty("UserPreference")]
+    public virtual ApplicationUser ApplicationUser { get; set; }
 }

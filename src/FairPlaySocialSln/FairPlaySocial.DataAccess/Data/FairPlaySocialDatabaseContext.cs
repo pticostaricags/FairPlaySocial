@@ -2,61 +2,68 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using FairPlaySocial.DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace FairPlaySocial.DataAccess.Data
+namespace FairPlaySocial.DataAccess.Data;
+
+public partial class FairPlaySocialDatabaseContext : DbContext
 {
-    public partial class FairPlaySocialDatabaseContext : DbContext
+    public FairPlaySocialDatabaseContext(DbContextOptions<FairPlaySocialDatabaseContext> options)
+        : base(options)
     {
-        public FairPlaySocialDatabaseContext()
-        {
-        }
-
-        public FairPlaySocialDatabaseContext(DbContextOptions<FairPlaySocialDatabaseContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
-        public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
-        public virtual DbSet<ErrorLog> ErrorLog { get; set; }
-        public virtual DbSet<Photo> Photo { get; set; }
-        public virtual DbSet<UserPreference> UserPreference { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlaySocial.Database;Integrated Security=true");
-
-            modelBuilder.Entity<ApplicationUserRole>(entity =>
-            {
-                entity.HasOne(d => d.ApplicationRole)
-                    .WithMany(p => p.ApplicationUserRole)
-                    .HasForeignKey(d => d.ApplicationRoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ApplicationUserRole_ApplicationRole");
-
-                entity.HasOne(d => d.ApplicationUser)
-                    .WithMany(p => p.ApplicationUserRole)
-                    .HasForeignKey(d => d.ApplicationUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
-            });
-
-            modelBuilder.Entity<UserPreference>(entity =>
-            {
-                entity.HasOne(d => d.ApplicationUser)
-                    .WithOne(p => p.UserPreference)
-                    .HasForeignKey<UserPreference>(d => d.ApplicationUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserPreference_ApplicationUser");
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+    public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
+
+    public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
+
+    public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
+
+    public virtual DbSet<ErrorLog> ErrorLog { get; set; }
+
+    public virtual DbSet<Photo> Photo { get; set; }
+
+    public virtual DbSet<Post> Post { get; set; }
+
+    public virtual DbSet<UserPreference> UserPreference { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlaySocial.Database;Integrated Security=true");
+
+        modelBuilder.Entity<ApplicationRole>(entity =>
+        {
+            entity.HasKey(e => e.ApplicationRoleId).HasName("PK_Application");
+        });
+
+        modelBuilder.Entity<ApplicationUserRole>(entity =>
+        {
+            entity.HasOne(d => d.ApplicationRole).WithMany(p => p.ApplicationUserRole)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplicationUserRole_ApplicationRole");
+
+            entity.HasOne(d => d.ApplicationUser).WithMany(p => p.ApplicationUserRole)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
+        });
+
+        modelBuilder.Entity<Post>(entity =>
+        {
+            entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Post)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post_ApplicationUser");
+        });
+
+        modelBuilder.Entity<UserPreference>(entity =>
+        {
+            entity.HasOne(d => d.ApplicationUser).WithOne(p => p.UserPreference)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserPreference_ApplicationUser");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
