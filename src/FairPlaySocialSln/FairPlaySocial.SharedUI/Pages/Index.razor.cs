@@ -59,6 +59,15 @@ namespace FairPlaySocial.SharedUI.Pages
                                     .NavigateToUpdateMyUserPreferences()),
                                     ShowTitleBelowIcon=true,
                                     Title="User Preferences"
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-building",
+                                    OnClick= new EventCallback(this, ()=>
+                                    this.NavigationService!
+                                    .NavigateToCreateMyPost()),
+                                    ShowTitleBelowIcon=true,
+                                    Title="Create Post"
                                 }
                             };
                         }

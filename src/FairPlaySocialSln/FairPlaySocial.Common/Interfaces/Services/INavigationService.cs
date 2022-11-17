@@ -7,5 +7,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateBack();
         void NavigateToUserListForAdmin();
         void NavigateToUpdateMyUserPreferences();
+        void NavigateToCreateMyPost();
     }
 }
