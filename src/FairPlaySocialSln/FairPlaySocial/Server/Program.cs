@@ -184,6 +184,9 @@ builder.Services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSch
                 }
             }
         }
+        claimsIdentity?.AddClaim(new Claim(
+                FairPlaySocial.Common.Global.Constants.Claims.ApplicationUserId,
+                user.ApplicationUserId.ToString()));
     };
 });
 builder.Services.AddResponseCompression(opts =>
@@ -232,4 +235,5 @@ static void AddPlatformServices(WebApplicationBuilder builder)
     builder.Services.AddTransient<ApplicationUserService>();
     builder.Services.AddTransient<PhotoService>();
     builder.Services.AddTransient<UserPreferenceService>();
+    builder.Services.AddTransient<PostService>();
 }

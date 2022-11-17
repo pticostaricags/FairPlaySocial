@@ -23,5 +23,9 @@ namespace FairPlaySocial.AutomatedTests.Services.Providers
         {
             return true;
         }
+        public long GetApplicationUserId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

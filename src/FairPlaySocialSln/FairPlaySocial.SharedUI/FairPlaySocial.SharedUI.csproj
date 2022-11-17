@@ -37,8 +37,4 @@
     <ProjectReference Include="..\FairPlaySocial.MultiplatformComponents\FairPlaySocial.MultiplatformComponents.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\User\" />
-  </ItemGroup>
-
 </Project>

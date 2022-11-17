@@ -20,4 +20,8 @@
     <None Remove="Global\Enums\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FairPlaySocial.Models\FairPlaySocial.Models.csproj" />
+  </ItemGroup>
+
 </Project>

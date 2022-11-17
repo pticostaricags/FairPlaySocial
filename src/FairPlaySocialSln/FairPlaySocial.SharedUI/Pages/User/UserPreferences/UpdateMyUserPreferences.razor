@@ -1,0 +1,24 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="IsLoading"></LoadingIndicator>
+
+@if (this.MyUserPreferences != null)
+{
+    <EditForm Model="@this.MyUserPreferences" OnValidSubmit="OnValidSubmitAsync">
+        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <ValidationSummary></ValidationSummary>
+        </div>
+        <div class="form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="@this.MyUserPreferences!.EnableAudibleCuesInMobile"></InputCheckbox>
+            <label class="form-check-label">Enable Audible Cues In Mobile</label>
+        </div>
+        <div class="form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="@this.MyUserPreferences!.EnableAudibleCuesInWeb"></InputCheckbox>
+            <label class="form-check-label">Enable Audible Cues In Web</label>
+        </div>
+        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+            <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss">Update My Preferences</button>
+        </div>
+    </EditForm>
+}

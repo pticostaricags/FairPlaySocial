@@ -28,19 +28,7 @@ namespace FairPlaySocial.Models.CustomHttpResponse
         /// <summary>
         /// Errors
         /// </summary>
-        public Errors? Errors { get; set; }
-
-    }
-
-    /// <summary>
-    /// Errors
-    /// </summary>
-    public class Errors
-    {
-        /// <summary>
-        /// Error messages
-        /// </summary>
-        public string[]? _ { get; set; }
+        public Dictionary<string, string[]>? Errors { get; set; }
     }
 
 }

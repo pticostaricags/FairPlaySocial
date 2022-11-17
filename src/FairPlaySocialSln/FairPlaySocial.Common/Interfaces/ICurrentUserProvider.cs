@@ -5,5 +5,6 @@ namespace FairPlaySocial.Common.Interfaces
         string GetUsername();
         string GetObjectId();
         bool IsLoggedIn();
+        long GetApplicationUserId();
     }
 }

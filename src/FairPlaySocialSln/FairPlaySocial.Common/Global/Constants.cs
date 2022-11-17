@@ -8,6 +8,7 @@ namespace FairPlaySocial.Common.Global
         }
         public static class Claims
         {
+            public const string ApplicationUserId = nameof(ApplicationUserId);
             public const string ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
             public const string Name = "name";
             public const string GivenName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname";

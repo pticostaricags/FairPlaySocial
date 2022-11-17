@@ -55,5 +55,15 @@ namespace FairPlaySocial.Server.CustomUserProvider
             return (this.HttpContextAccessor.HttpContext!.User != null &&
                 this.HttpContextAccessor.HttpContext!.User.Identity!.IsAuthenticated);
         }
+
+        /// <summary>
+        /// Returns logged in user ApplicationUserId
+        /// </summary>
+        /// <returns></returns>
+        public long GetApplicationUserId()
+        {
+            var user = this.HttpContextAccessor.HttpContext!.User;
+            return Convert.ToInt64(user.Claims.Single(p => p.Type == Common.Global.Constants.Claims.ApplicationUserId).Value);
+        }
     }
 }
