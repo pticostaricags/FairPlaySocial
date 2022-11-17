@@ -1,0 +1,74 @@
+﻿.main-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 1fr;
+    height: 100vh;
+}
+
+.main-page-header {
+    display: grid;
+    grid-row: 1/2;
+    grid-column: 1/4;
+    background-color: lightblue;
+}
+
+.main-page-content {
+    grid-column: 1/4;
+    grid-row: 2/3;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.nav-bar-section {
+    align-self: center;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    height: 100%;
+}
+
+.nav-bar-icon {
+    position: relative;
+    top: 25%;
+    text-align: left;
+    padding-left: 5%;
+}
+
+.logo-section {
+    align-self: center;
+    grid-row: 1/2;
+    grid-column: 2/3;
+    height: 100%;
+}
+
+.logo-image {
+    text-align: center;
+}
+
+.footer-section {
+    grid-row: 3/4;
+    grid-column: 1/4;
+    height: 100%;
+    background-color: lightblue;
+}
+
+.footer-icons-section {
+    text-align: center;
+    top: 25%;
+}
+
+.chat-item-section {
+    border: dotted;
+}
+
+    .chat-item-section .sender {
+        font-weight:bold;
+    }
+
+    .chat-item-section .time {
+        font: italic;
+        background-color: gold;
+    }
+
+    .chat-item-section .content {
+        background-color:chocolate;
+    }

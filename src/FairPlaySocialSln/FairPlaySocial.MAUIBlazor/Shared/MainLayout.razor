@@ -1,0 +1,55 @@
+@using FairPlaySocial.Common
+@using FairPlaySocial.MAUIBlazor.Features.LogOn
+@inherits LayoutComponentBase
+
+<div class="main-page-grid">
+    <div class="main-page-header">
+        <div class="nav-bar-section">
+            <div class="nav-bar-icon">
+                @if (!UserState.UserContext.IsLoggedOn)
+                {
+                    <AudibleButton CssClass="@ThemeConfiguration.Buttons.PrimaryButtonCss"
+                               ItemText="Log In" DisplayText="true"
+                               OnClick="@( async () => await OnLoginClickedAsync())"></AudibleButton>
+                }
+                else
+                {
+                    <AudibleButton CssClass="@ThemeConfiguration.Buttons.PrimaryButtonCss"
+                               ItemText="Log Out" DisplayText="true"
+                               OnClick="@( async () => await OnLogoutClickedAsync())"></AudibleButton>
+                }
+            </div>
+        </div>
+        <div class="logo-section">
+            <div class="logo-image">
+                <a href="/">
+                    <i class="bi bi-house-door-fill"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main-page-content">
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                <AudibleLabel ItemText="@($"There is an error: {context.ToString()}")"></AudibleLabel>
+            </ErrorContent>
+        </ErrorBoundary>
+    </div>
+    <div class="footer-section">
+        <div class="footer-icons-section">
+            <AudibleLabel ItemText="@($"Current Url: {this.NavigationService!.CurrentUrl}")"></AudibleLabel><br />
+            @if (this.NavigationService!.CurrentUrl != "")
+            {
+                <AudibleButton ItemText="Navigate Back"
+                           DisplayText="false"
+                           CssClass="@ThemeConfiguration.Icons.NavigateBack"
+                           OnClick="this.NavigationService!.NavigateBack"></AudibleButton>
+                <br />
+            }
+            <FairPlaySocial.SharedUI.Components.ThemeSelector></FairPlaySocial.SharedUI.Components.ThemeSelector>
+        </div>
+    </div>
+</div>

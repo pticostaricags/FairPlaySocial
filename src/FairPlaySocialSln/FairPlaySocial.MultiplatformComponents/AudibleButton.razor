@@ -1,0 +1,9 @@
+<button class="@this.CssClass"
+        @onmouseover="@( async () => await OnMouseOverAsync())"
+        @onmouseout="@( () => OnMouseOut())"
+        @onclick="@this.OnClick">
+    @if (DisplayText)
+    {
+        @ItemText
+    }
+</button>

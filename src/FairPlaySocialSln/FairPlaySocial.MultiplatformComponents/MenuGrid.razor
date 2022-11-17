@@ -1,0 +1,39 @@
+<h3>MenuGrid</h3>
+
+<div class="grid-container">
+    @if (this.MenuItems?.Length > 0)
+    {
+        @foreach (var singleMenuItem in this.MenuItems)
+        {
+            <div class="grid-item">
+                <div>
+                    <button type="button" class="btn"
+                    @onmouseover="@( async ()=> await this.OnMouseOverAsync(singleMenuItem))"
+                    @onmouseout=@( async () => OnMouseOut(singleMenuItem))
+                    @onclick="singleMenuItem.OnClick"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="@singleMenuItem.Title">
+                    @if (singleMenuItem.ShowImage)
+                    {
+                        <img class="@singleMenuItem.ImageCss" src="@singleMenuItem.ImageSrc" />
+                    }
+                    else
+                    {
+                            <i class="@singleMenuItem.CssClass"></i>
+                    }
+                    </button>
+                </div>
+                <div>
+                    @if (singleMenuItem.ShowTitleBelowIcon)
+                    {
+                        <span>@singleMenuItem.Title</span>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <span>No Menu Items Available</span>
+    }
+</div>

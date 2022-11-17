@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.0" />
+	<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.0" />
+	<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FairPlaySocial.ClientServices\FairPlaySocial.ClientServices.csproj" />
+    <ProjectReference Include="..\FairPlaySocial.Common\FairPlaySocial.Common.csproj" />
+    <ProjectReference Include="..\FairPlaySocial.Models\FairPlaySocial.Models.csproj" />
+    <ProjectReference Include="..\FairPlaySocial.MultiplatformComponents\FairPlaySocial.MultiplatformComponents.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\User\" />
+  </ItemGroup>
+
+</Project>

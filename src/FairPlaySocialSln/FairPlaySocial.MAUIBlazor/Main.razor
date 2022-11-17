@@ -1,0 +1,22 @@
+@using System.Reflection
+@using FairPlaySocial.SharedUI.Pages
+<CascadingAuthenticationState>
+    <Router AppAssembly="@GetType().Assembly" AdditionalAssemblies="AdditionalAssemblies">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData"
+                                DefaultLayout="@typeof(MainLayout)" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+
+@code{
+    private Assembly[] AdditionalAssemblies = new Assembly[] 
+    {
+        typeof(CustomBaseComponent).Assembly
+    };
+}

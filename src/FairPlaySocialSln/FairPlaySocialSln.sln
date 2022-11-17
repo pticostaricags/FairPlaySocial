@@ -1,0 +1,141 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.MAUIBlazor", "FairPlaySocial.MAUIBlazor\FairPlaySocial.MAUIBlazor.csproj", "{4F62D8B1-1A42-45B1-BBA6-AB189F806810}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Server", "FairPlaySocial\Server\FairPlaySocial.Server.csproj", "{3D6EEDBF-22C4-4270-97D2-2579E6632096}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Client", "FairPlaySocial\Client\FairPlaySocial.Client.csproj", "{52878E63-39E1-4B22-8890-A384496F08C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Shared", "FairPlaySocial\Shared\FairPlaySocial.Shared.csproj", "{572BCC67-34F8-4F52-A199-3625AB6E7FDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.ClientServices", "FairPlaySocial.ClientServices\FairPlaySocial.ClientServices.csproj", "{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.ClientsConfiguration", "FairPlaySocial.ClientsConfiguration\FairPlaySocial.ClientsConfiguration.csproj", "{F3CC6C48-190D-473F-9D87-990A85210A4B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FairPlaySocial.Database", "FairPlaySocial.Database\FairPlaySocial.Database.sqlproj", "{BFE47888-CAE8-4BFD-964A-09ACF003D427}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.DataAccess", "FairPlaySocial.DataAccess\FairPlaySocial.DataAccess.csproj", "{D7A5BB1C-8C8D-4F28-82AC-04A57FDA9200}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Services", "FairPlaySocial.Services\FairPlaySocial.Services.csproj", "{CA0DC68C-CB79-40A9-ACC2-EB39EEE64DD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Models", "FairPlaySocial.Models\FairPlaySocial.Models.csproj", "{59159A8D-ED17-4745-B9B5-A645DC2DC8CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.AutomatedTests", "FairPlaySocial.AutomatedTests\FairPlaySocial.AutomatedTests.csproj", "{D23C31E0-289D-4E15-A4CA-C7629F67BB6B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Services.Generators", "FairPlaySocial.Services.Generators\FairPlaySocial.Services.Generators.csproj", "{6FDADF10-09DE-4309-8DEA-3D4C509BF502}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Common", "FairPlaySocial.Common\FairPlaySocial.Common.csproj", "{A86D37BF-0316-48F7-B8F4-5E1435FD1D8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Server.Generators", "FairPlaySocial.Server.Generators\FairPlaySocial.Server.Generators.csproj", "{184FC12F-3050-4820-B621-77A0CEF104A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.MultiplatformComponents", "FairPlaySocial.MultiplatformComponents\FairPlaySocial.MultiplatformComponents.csproj", "{A9E0F1DF-6EA9-40BA-8601-ABA6BBBFCFFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.ClientServices.Generators", "FairPlaySocial.ClientServices.Generators\FairPlaySocial.ClientServices.Generators.csproj", "{FC866A05-3DFA-447E-8B39-031792D15F68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.SharedUI", "FairPlaySocial.SharedUI\FairPlaySocial.SharedUI.csproj", "{B095DF48-9F6B-48ED-B0A6-E86273128321}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1591A730-1691-49ED-AF80-8CFD8033A95B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Notifications", "FairPlaySocial.Notifications\FairPlaySocial.Notifications.csproj", "{39DEB5DA-9F3D-4DE8-86C9-1BD91155B5EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.MultiplatformServices", "FairPlaySocial.MultiplatformServices\FairPlaySocial.MultiplatformServices.csproj", "{849DCC6B-86FA-466B-80D7-0692123DDB6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F62D8B1-1A42-45B1-BBA6-AB189F806810}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3D6EEDBF-22C4-4270-97D2-2579E6632096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6EEDBF-22C4-4270-97D2-2579E6632096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6EEDBF-22C4-4270-97D2-2579E6632096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6EEDBF-22C4-4270-97D2-2579E6632096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52878E63-39E1-4B22-8890-A384496F08C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52878E63-39E1-4B22-8890-A384496F08C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52878E63-39E1-4B22-8890-A384496F08C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52878E63-39E1-4B22-8890-A384496F08C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CC6C48-190D-473F-9D87-990A85210A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CC6C48-190D-473F-9D87-990A85210A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CC6C48-190D-473F-9D87-990A85210A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CC6C48-190D-473F-9D87-990A85210A4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE47888-CAE8-4BFD-964A-09ACF003D427}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D7A5BB1C-8C8D-4F28-82AC-04A57FDA9200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A5BB1C-8C8D-4F28-82AC-04A57FDA9200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A5BB1C-8C8D-4F28-82AC-04A57FDA9200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A5BB1C-8C8D-4F28-82AC-04A57FDA9200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0DC68C-CB79-40A9-ACC2-EB39EEE64DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0DC68C-CB79-40A9-ACC2-EB39EEE64DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0DC68C-CB79-40A9-ACC2-EB39EEE64DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0DC68C-CB79-40A9-ACC2-EB39EEE64DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59159A8D-ED17-4745-B9B5-A645DC2DC8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59159A8D-ED17-4745-B9B5-A645DC2DC8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59159A8D-ED17-4745-B9B5-A645DC2DC8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59159A8D-ED17-4745-B9B5-A645DC2DC8CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23C31E0-289D-4E15-A4CA-C7629F67BB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23C31E0-289D-4E15-A4CA-C7629F67BB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23C31E0-289D-4E15-A4CA-C7629F67BB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23C31E0-289D-4E15-A4CA-C7629F67BB6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDADF10-09DE-4309-8DEA-3D4C509BF502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDADF10-09DE-4309-8DEA-3D4C509BF502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDADF10-09DE-4309-8DEA-3D4C509BF502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDADF10-09DE-4309-8DEA-3D4C509BF502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86D37BF-0316-48F7-B8F4-5E1435FD1D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86D37BF-0316-48F7-B8F4-5E1435FD1D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86D37BF-0316-48F7-B8F4-5E1435FD1D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86D37BF-0316-48F7-B8F4-5E1435FD1D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184FC12F-3050-4820-B621-77A0CEF104A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184FC12F-3050-4820-B621-77A0CEF104A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184FC12F-3050-4820-B621-77A0CEF104A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184FC12F-3050-4820-B621-77A0CEF104A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E0F1DF-6EA9-40BA-8601-ABA6BBBFCFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E0F1DF-6EA9-40BA-8601-ABA6BBBFCFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E0F1DF-6EA9-40BA-8601-ABA6BBBFCFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E0F1DF-6EA9-40BA-8601-ABA6BBBFCFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC866A05-3DFA-447E-8B39-031792D15F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC866A05-3DFA-447E-8B39-031792D15F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC866A05-3DFA-447E-8B39-031792D15F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC866A05-3DFA-447E-8B39-031792D15F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B095DF48-9F6B-48ED-B0A6-E86273128321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B095DF48-9F6B-48ED-B0A6-E86273128321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B095DF48-9F6B-48ED-B0A6-E86273128321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B095DF48-9F6B-48ED-B0A6-E86273128321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39DEB5DA-9F3D-4DE8-86C9-1BD91155B5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39DEB5DA-9F3D-4DE8-86C9-1BD91155B5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39DEB5DA-9F3D-4DE8-86C9-1BD91155B5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39DEB5DA-9F3D-4DE8-86C9-1BD91155B5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849DCC6B-86FA-466B-80D7-0692123DDB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849DCC6B-86FA-466B-80D7-0692123DDB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849DCC6B-86FA-466B-80D7-0692123DDB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849DCC6B-86FA-466B-80D7-0692123DDB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,51 @@
+@inherits CustomBaseComponent
+
+<h3>UserList</h3>
+
+<EditForm Model="this.filteringSortingModel" OnValidSubmit="OnValidSubmitAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">Select a field:</label>
+        @if (PropertyNames?.Count() > 0)
+        {
+            <InputSelect class="@ThemeConfiguration.Selects.DefaultCss"
+                     @bind-Value="@this.filteringSortingModel!.Filtering!.PropertyName">
+                     <option value=""></option>
+                @foreach (var singlePropertyName in this.PropertyNames)
+                {
+                    <option value="@singlePropertyName">@singlePropertyName</option>
+                }
+            </InputSelect>
+        }
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        @if (this.filteringSortingModel.Filtering != null)
+        {
+            <label class="@ThemeConfiguration.Labels.DefaultCss">Input a Value:</label>
+            <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.filteringSortingModel!.Filtering!.PropertyComparisonValue"></InputText>
+        }
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <button 
+            class="@ThemeConfiguration.Buttons.PrimaryButtonCss"
+            type="submit">Filter</button>
+    </div>
+</EditForm>
+@if (this.FilteredApplicationUsers?.Length > 0)
+{
+    foreach (var singleApplicationUser in this.FilteredApplicationUsers)
+    {
+        <div class="row">
+            <div class="col">
+                FullName: @singleApplicationUser.FullName
+            </div>
+            <div class="col">
+                Id: @singleApplicationUser.ApplicationUserId
+            </div>
+        </div>
+    }
+}

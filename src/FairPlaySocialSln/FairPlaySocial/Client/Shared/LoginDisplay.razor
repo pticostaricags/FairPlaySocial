@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+<AuthorizeView>
+    <Authorized>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <label class="form-label">
+                        <strong>
+                            @context?.User?.Identity?.Name
+                        </strong>
+                    </label>
+                </li>
+                <li>
+                    <button class="btn btn-info form-control" @onclick="BeginLogout">
+                        <i class="bi bi-person-circle"></i>
+                        Log Out
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <button class="btn btn-info form-control" @onclick="Login">
+                        <i class="bi bi-person-circle"></i>
+                        Log In
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+    private void BeginLogout(MouseEventArgs args)
+    {
+        NavigationManager!.NavigateToLogout("authentication/logout");
+    }
+
+    private void Login()
+    {
+        this.NavigationManager!.NavigateTo("authentication/login");
+    }
+}

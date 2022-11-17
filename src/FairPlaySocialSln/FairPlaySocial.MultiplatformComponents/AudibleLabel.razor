@@ -1,0 +1,5 @@
+@using FairPlaySocial.Common.Global
+<label class="@ThemeConfiguration.Labels.DefaultCss"
+@onmouseover="@( async () => await OnMouseOverAsync())"
+@onmouseout="@( () => OnMouseOut())"
+>@ItemText</label>

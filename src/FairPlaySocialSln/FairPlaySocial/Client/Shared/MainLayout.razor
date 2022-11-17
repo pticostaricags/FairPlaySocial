@@ -1,0 +1,50 @@
+@using FairPlaySocial.Common
+@inherits LayoutComponentBase
+
+<div class="main-page-grid">
+    <div class="main-page-header">
+        <div class="nav-bar-section">
+            <div class="nav-bar-icon">
+                <AuthorizeView>
+                    <Authorized>
+                        <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>
+                    </Authorized>
+                    <NotAuthorized>
+                        <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLoginClicked())">Log In</button>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+        <div class="logo-section">
+            <div class="logo-image">
+                <a href="/">
+                    <i class="bi bi-house-door-fill"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main-page-content">
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                There is an error: @context.ToString()
+            </ErrorContent>
+        </ErrorBoundary>
+    </div>
+    <div class="footer-section">
+        <div class="footer-icons-section">
+            Current Url: @this.NavigationService!.CurrentUrl<br />
+            @if (this.NavigationService.CurrentUrl != "")
+            {
+                <button @onclick="this.NavigationService.NavigateBack">
+                    <i class="bi bi-arrow-left-circle-fill"></i>
+                </button>
+                <br />
+            }
+            <FairPlaySocial.SharedUI.Components.ThemeSelector></FairPlaySocial.SharedUI.Components.ThemeSelector>
+        </div>
+    </div>
+</div>
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight" Timeout="10"></BlazoredToasts>

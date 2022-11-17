@@ -1,0 +1,10 @@
+@using FairPlaySocial.Models.Photo
+@using FairPlaySocial.SharedUI.Pages
+
+@inherits CustomBaseComponent
+
+<EditForm Model="@this.Model">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <InputFile accept="image/*" OnChange="OnFileSelectionChangedAsync"></InputFile>
+</EditForm>

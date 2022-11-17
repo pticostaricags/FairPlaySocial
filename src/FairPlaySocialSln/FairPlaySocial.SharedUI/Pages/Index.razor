@@ -1,0 +1,19 @@
+@inherits CustomBaseComponent
+@page "/"
+@using FairPlaySocial.Common
+
+<LoadingIndicator IsLoading="@this.IsLoading"></LoadingIndicator>
+
+<h1>
+    <AudibleLabel 
+        ItemText="@base.WhiteLabelingService!.WhiteLabelingData?.ApplicationName">
+    </AudibleLabel>
+</h1>
+<p>
+    <AudibleLabel ItemText="@WelcomeMessage"></AudibleLabel>
+</p>
+
+@if (UserState.UserContext?.IsLoggedOn == true && this.MainMenuItems != null)
+{
+    <MenuGrid MenuItems="MainMenuItems"></MenuGrid>
+}
