@@ -33,16 +33,19 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateMyPostAsync(CreatePostModel createPostModel,
+        public async Task<IActionResult> CreateMyPostAsync(
+            [FromServices] ApplicationUserService applicationUserService,
+            CreatePostModel createPostModel,
             CancellationToken cancellationToken)
         {
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
             entity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             await this.postService.CreatePostAsync(entity, cancellationToken);
             //TODO: Consider using groups to send only to users in the "Home Feed" page
+            var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
             await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
             {
-                From = entity.OwnerApplicationUserId.ToString(),
+                From = userEntity.FullName,
                 GroupName = null,
                 Message = entity.Text
             });

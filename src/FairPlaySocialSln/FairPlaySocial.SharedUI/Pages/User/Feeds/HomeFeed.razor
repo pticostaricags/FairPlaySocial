@@ -1,0 +1,19 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>HomeFeed</h3>
+
+@if (this.ReceivedNotifications?.Count > 0)
+{
+    foreach (var singleNotification in this.ReceivedNotifications)
+    {
+        <div class="@ThemeConfiguration.Chats.ChatItemSection">
+            <label class="@ThemeConfiguration.Chats.ChatSender">
+                @singleNotification.From
+            </label>
+            <p class="@ThemeConfiguration.Chats.ChatContent">@singleNotification.Message</p>
+            <p class="@ThemeConfiguration.Chats.ChatTime"></p>
+        </div>
+    }
+}

@@ -68,6 +68,15 @@ namespace FairPlaySocial.SharedUI.Pages
                                     .NavigateToCreateMyPost()),
                                     ShowTitleBelowIcon=true,
                                     Title="Create Post"
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-building",
+                                    OnClick= new EventCallback(this, ()=>
+                                    this.NavigationService!
+                                    .NavigateToHomeFeed()),
+                                    ShowTitleBelowIcon=true,
+                                    Title="Home Feed"
                                 }
                             };
                         }

@@ -9,7 +9,14 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
     {
         public PostProfile() 
         {
-            CreateMap<Post, PostModel>();
+            CreateMap<Post, PostModel>()
+                .AfterMap((source, dest) => 
+                {
+                    if (source.OwnerApplicationUser != null)
+                    {
+                        dest.OwnerApplicationUserFullName = source.OwnerApplicationUser.FullName;
+                    }
+                });
             CreateMap<PostModel, Post>();
             CreateMap<CreatePostModel, Post>();
         }

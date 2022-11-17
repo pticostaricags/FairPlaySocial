@@ -15,7 +15,7 @@ namespace FairPlaySocial.SharedUI.Pages
             await this.WhiteLabelingService!.LoadWhiteLabelingDataAsync();
         }
 
-        public ValueTask DisposeAsync()
+        public virtual ValueTask DisposeAsync()
         {
             this._cancellationTokenSource.Cancel();
             this._cancellationTokenSource.Dispose();
