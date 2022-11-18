@@ -6,14 +6,11 @@ We encourage community contribution so that all can create a great system togeth
 How To Contribute
 ------------
 
-* Use the Discussions section to inform us you'd like to contribute.
 * Check the Issues section and decide in which issues you'd like to contribute
   * Find the ones labeled with "Good first issue" assigned which are not assigned to anyone.
-* Let us know in the Issue that you are working on it, so we assign it to you.
-* Use the Discussions section to post your ideas
+* Let us know in the Issue that you want to work on it, so we assign it to you.
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
-
-**Note: Please let us know what made you want to contribute: https://github.com/efonsecab/FairPlayTube/discussions/205**
+* Actively invite other to contribute in the project and becoming sponsors.
 
 Coding Standards
 ------------
