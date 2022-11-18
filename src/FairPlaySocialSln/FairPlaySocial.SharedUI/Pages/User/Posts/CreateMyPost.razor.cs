@@ -35,7 +35,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
                     .CreateMyPostAsync(this.createPostModel, base.CancellationToken);
                 await this.ToastService!.ShowSuccessMessageAsync(
                     "Post has been created", base.CancellationToken);
-                this.NavigationService!.NavigateHome(forceReload: false);
+                this.NavigationService!.NavigateToHomeFeed();
             }
             catch (Exception ex)
             {

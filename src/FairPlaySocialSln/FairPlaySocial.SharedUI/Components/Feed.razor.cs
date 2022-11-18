@@ -3,6 +3,7 @@ using FairPlaySocial.Common;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.Notifications;
+using FairPlaySocial.Models.Post;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
@@ -17,7 +18,7 @@ namespace FairPlaySocial.SharedUI.Components
     {
         [Parameter]
         [EditorRequired]
-        public List<NotificationModel>? InitialNotifications { get; set; }
+        public List<PostModel> PostModels { get; set; } = new List<PostModel>();
         [Parameter]
         [EditorRequired]
         public string? HubUrl { get; set; }
@@ -26,13 +27,11 @@ namespace FairPlaySocial.SharedUI.Components
         [Inject]
         private IToastService? ToastService { get; set; }
         private HubConnection? HubConnection { get; set; }
-        private List<NotificationModel> ReceivedNotifications { get; set; } = new List<NotificationModel>();
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                this.ReceivedNotifications.AddRange(InitialNotifications!);
                 var authorizedHttpClient = this.HttpClientService!.CreateAuthorizedClient();
                 var hubUrl = $"{authorizedHttpClient.BaseAddress!.ToString()
                     .TrimEnd('/')}{this.HubUrl}";
@@ -46,7 +45,11 @@ namespace FairPlaySocial.SharedUI.Components
 
                 this.HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, (model) =>
                 {
-                    ReceivedNotifications.Add(model);
+                    this.PostModels.Insert(0, new PostModel()
+                    {
+                        OwnerApplicationUserFullName = model.From,
+                        Text = model.Message
+                    });
                     StateHasChanged();
                 });
                 await this.HubConnection.StartAsync();
@@ -65,6 +68,11 @@ namespace FairPlaySocial.SharedUI.Components
         {
             await this.HubConnection!.DisposeAsync();
             await base.DisposeAsync();
+        }
+
+        internal void Refresh()
+        {
+            StateHasChanged();
         }
     }
 }

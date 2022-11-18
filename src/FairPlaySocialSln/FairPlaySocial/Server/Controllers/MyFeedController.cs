@@ -2,6 +2,7 @@
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,7 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
 
-        public MyFeedController(IMapper mapper, ICurrentUserProvider currentUserProvider, 
+        public MyFeedController(IMapper mapper, ICurrentUserProvider currentUserProvider,
             PostService postService)
         {
             this.mapper = mapper;
@@ -29,14 +30,21 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<PostModel[]?> GetMyHomeFeedAsync(
+        public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
+            [FromQuery] PageRequestModel pageRequestModel,
             CancellationToken cancellationToken)
         {
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
-                .Include(p=>p.OwnerApplicationUser)
-                .OrderByDescending(p => p.PostId);
-            var result = 
-                await query.Select(p => this.mapper.Map<Post, PostModel>(p))
+                .Include(p => p.OwnerApplicationUser);
+            PagedItems<PostModel> result = new PagedItems<PostModel>();
+            result.PageSize = Constants.Pagination.DefaultPageSize;
+            result.PageNumber = pageRequestModel.PageNumber;
+            result.TotalItems = await query.CountAsync(cancellationToken);
+            result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
+            result.Items = await query.OrderByDescending(p => p.PostId)
+                .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
+                .Take(Constants.Pagination.DefaultPageSize)
+                .Select(p => this.mapper.Map<Post, PostModel>(p))
                 .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }

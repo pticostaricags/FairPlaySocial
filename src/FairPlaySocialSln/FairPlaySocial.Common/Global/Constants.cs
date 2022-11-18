@@ -2,6 +2,10 @@ namespace FairPlaySocial.Common.Global
 {
     public static class Constants
     {
+        public static class Pagination
+        {
+            public const int DefaultPageSize = 5;
+        }
         public static class Locales
         {
             public const string DefaultLocale = "en-US";

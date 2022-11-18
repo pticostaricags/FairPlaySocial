@@ -4,9 +4,28 @@
 
 <h3>HomeFeed</h3>
 
-@if (this.ReceivedNotifications.Count > 0)
+@if (this.MyHomeFeed != null && this.PostModels != null)
 {
-    <Feed HubUrl="@Constants.Hubs.HomeFeedHub"
-      InitialNotifications="@this.ReceivedNotifications">
+    <Feed
+      HubUrl="@Constants.Hubs.HomeFeedHub"
+      PostModels="PostModels">
     </Feed>
+
+    @if (this.MyHomeFeed?.PageNumber > 1)
+    {
+        <button @onclick="OnPreviousPageButtonCllickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+            Previous Page
+        </button>
+    }
+    <label class="@ThemeConfiguration.Labels.DefaultCss">Page @this.MyHomeFeed?.PageNumber of @this.MyHomeFeed?.TotalPages</label>
+    @if (this.MyHomeFeed?.PageNumber < this.MyHomeFeed?.TotalPages)
+    {
+        <button @onclick="OnNextPageButtonClickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+            Next Page
+        </button>
+    }
 }

@@ -3,6 +3,9 @@ using FairPlaySocial.Common;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.Notifications;
+using FairPlaySocial.Models.Pagination;
+using FairPlaySocial.Models.Post;
+using FairPlaySocial.SharedUI.Components;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -19,24 +22,30 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
-        private List<NotificationModel> ReceivedNotifications { get; set; } = new List<NotificationModel>();
+        private PageRequestModel PageRequestModel { get; set; } = new PageRequestModel()
+        {
+            PageNumber = 1
+        };
+        private List<PostModel>? PostModels { get; set; }
         private bool IsBusy { get; set; }
+
+        private PagedItems<PostModel>? MyHomeFeed;
+
         protected override async Task OnInitializedAsync()
+        {
+            await LoadDataAsync();
+        }
+
+        private async Task LoadDataAsync()
         {
             try
             {
                 IsBusy = true;
-                var myHomeFeed = await this.MyFeedClientService!
-                    .GetMyHomeFeedAsync(base.CancellationToken);
-                if (myHomeFeed != null)
-                {
-                    this.ReceivedNotifications.AddRange(myHomeFeed
-                        .Select(p => new NotificationModel()
-                        {
-                            From = p.OwnerApplicationUserFullName,
-                            Message = p.Text
-                        }));
-                }
+                this.MyHomeFeed = null;
+                StateHasChanged();
+                this.MyHomeFeed = await this.MyFeedClientService!
+                    .GetMyHomeFeedAsync(this.PageRequestModel, base.CancellationToken);
+                this.PostModels = MyHomeFeed!.Items!.ToList();
             }
             catch (Exception ex)
             {
@@ -47,6 +56,17 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task OnPreviousPageButtonCllickedAsync()
+        {
+            this.PageRequestModel.PageNumber--;
+            await LoadDataAsync();
+        }
+        private async Task OnNextPageButtonClickedAsync()
+        {
+            this.PageRequestModel.PageNumber++;
+            await LoadDataAsync();
         }
     }
 }
