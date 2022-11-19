@@ -23,7 +23,10 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
-        private CreatePostModel createPostModel = new CreatePostModel();
+        private CreatePostModel createPostModel = new CreatePostModel()
+        {
+            Photo = new()
+        };
         private bool IsBusy { get; set; }
 
         private async Task OnValidSubmitAsync()
@@ -46,6 +49,12 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
             {
                 IsBusy = false;
             }
+        }
+
+        private Task OnPostPhotoSelectedAsync()
+        {
+            //This should invoke a Content Moderation Service, similar to what FairPlayDating is doing
+            return Task.CompletedTask;
         }
     }
 }

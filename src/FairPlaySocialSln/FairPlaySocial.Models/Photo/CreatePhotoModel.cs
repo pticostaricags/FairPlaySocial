@@ -4,7 +4,7 @@ namespace FairPlaySocial.Models.Photo
 {
     public class CreatePhotoModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please select and image")]
         [StringLength(50)]
         public string? Filename { get; set; }
         [Required]

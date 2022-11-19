@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairPlaySocial.Models.Photo;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [StringLength(500)]
         public string? Text { get; set; }
+        [Required]
+        [ValidateComplexType]
+        public CreatePhotoModel? Photo { get; set; }
     }
 }

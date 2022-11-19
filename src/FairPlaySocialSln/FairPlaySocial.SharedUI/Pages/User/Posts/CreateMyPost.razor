@@ -6,13 +6,21 @@
 
 <EditForm Model="@this.createPostModel" OnValidSubmit="OnValidSubmitAsync">
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
-        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
         <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
-            @bind-Value="@this.createPostModel.Text"></InputTextArea>
-            <ValidationMessage For="@( () => this.createPostModel.Text)"></ValidationMessage>
+                       @bind-Value="@this.createPostModel.Text"></InputTextArea>
+        <ValidationMessage For="@( () => this.createPostModel.Text)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Post Photo:"></AudibleLabel>
+        <ImagePicker Model="@this.createPostModel!.Photo"
+                     OnFileSelected="OnPostPhotoSelectedAsync"
+                     MaxHeightForPreview="300"></ImagePicker>
+        <ValidationMessage For="@( () => this.createPostModel.Photo)"></ValidationMessage>
+        <ValidationMessage For="@( () => this.createPostModel.Photo!.Filename)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <button type="submit"

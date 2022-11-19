@@ -53,6 +53,10 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_ApplicationUser");
+
+            entity.HasOne(d => d.Photo).WithMany(p => p.Post)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post_Photo");
         });
 
         modelBuilder.Entity<UserPreference>(entity =>

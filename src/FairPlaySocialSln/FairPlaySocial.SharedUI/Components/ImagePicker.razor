@@ -8,3 +8,10 @@
     <ValidationSummary></ValidationSummary>
     <InputFile accept="image/*" OnChange="OnFileSelectionChangedAsync"></InputFile>
 </EditForm>
+
+@if (this.Model!.ImageBytes != null)
+{
+    <img class="@ThemeConfiguration.Images.ThumbnailDefaultCss"
+     style="max-height:@( $"{this.MaxHeightForPreview}px;" )"
+     src="data:@this.Model.ImageType;base64, @Convert.ToBase64String(this.Model.ImageBytes)" />
+}

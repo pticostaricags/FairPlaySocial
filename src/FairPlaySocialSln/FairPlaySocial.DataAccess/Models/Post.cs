@@ -17,6 +17,8 @@ public partial class Post
     [StringLength(500)]
     public string Text { get; set; }
 
+    public long PhotoId { get; set; }
+
     public long OwnerApplicationUserId { get; set; }
 
     public DateTimeOffset RowCreationDateTime { get; set; }
@@ -37,4 +39,8 @@ public partial class Post
     [ForeignKey("OwnerApplicationUserId")]
     [InverseProperty("Post")]
     public virtual ApplicationUser OwnerApplicationUser { get; set; }
+
+    [ForeignKey("PhotoId")]
+    [InverseProperty("Post")]
+    public virtual Photo Photo { get; set; }
 }

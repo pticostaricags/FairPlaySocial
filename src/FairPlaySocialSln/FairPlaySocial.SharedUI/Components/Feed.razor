@@ -10,6 +10,11 @@
             </label>
             <p class="@ThemeConfiguration.Chats.ChatContent">@singlePostModel.Text</p>
             <p class="@ThemeConfiguration.Chats.ChatTime"></p>
+            @if (singlePostModel.Photo != null)
+            {
+                <img class="@ThemeConfiguration.Images.ThumbnailDefaultCss"
+         src="data:@singlePostModel.Photo!.ImageType;base64, @Convert.ToBase64String(singlePostModel.Photo.ImageBytes!)" />
+            }
         </div>
     }
 }

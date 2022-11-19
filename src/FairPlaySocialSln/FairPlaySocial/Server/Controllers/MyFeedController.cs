@@ -35,7 +35,8 @@ namespace FairPlaySocial.Server.Controllers
             CancellationToken cancellationToken)
         {
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
-                .Include(p => p.OwnerApplicationUser);
+                .Include(p => p.OwnerApplicationUser)
+                .Include(P=>P.Photo);
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;

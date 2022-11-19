@@ -38,4 +38,7 @@ public partial class Photo
     [Column("OriginatorIPAddress")]
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
+
+    [InverseProperty("Photo")]
+    public virtual ICollection<Post> Post { get; } = new List<Post>();
 }
