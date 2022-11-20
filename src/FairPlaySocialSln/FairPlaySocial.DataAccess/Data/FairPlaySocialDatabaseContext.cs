@@ -18,6 +18,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
 
+    public virtual DbSet<ApplicationUserFollow> ApplicationUserFollow { get; set; }
+
     public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
 
     public virtual DbSet<ErrorLog> ErrorLog { get; set; }
@@ -35,6 +37,17 @@ public partial class FairPlaySocialDatabaseContext : DbContext
         modelBuilder.Entity<ApplicationRole>(entity =>
         {
             entity.HasKey(e => e.ApplicationRoleId).HasName("PK_Application");
+        });
+
+        modelBuilder.Entity<ApplicationUserFollow>(entity =>
+        {
+            entity.HasOne(d => d.FollowedApplicationUser).WithMany(p => p.ApplicationUserFollowFollowedApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplicationUserFollow_FollowedApplicationUser");
+
+            entity.HasOne(d => d.FollowerApplicationUser).WithMany(p => p.ApplicationUserFollowFollowerApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplicationUserFollow_FollowerApplicationUser");
         });
 
         modelBuilder.Entity<ApplicationUserRole>(entity =>

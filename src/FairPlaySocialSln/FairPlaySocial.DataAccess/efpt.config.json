@@ -23,6 +23,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserFollow]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ApplicationUserRole]",
          "ObjectType": 0
       },

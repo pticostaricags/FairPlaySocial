@@ -43,6 +43,12 @@ public partial class ApplicationUser
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
 
+    [InverseProperty("FollowedApplicationUser")]
+    public virtual ICollection<ApplicationUserFollow> ApplicationUserFollowFollowedApplicationUser { get; } = new List<ApplicationUserFollow>();
+
+    [InverseProperty("FollowerApplicationUser")]
+    public virtual ICollection<ApplicationUserFollow> ApplicationUserFollowFollowerApplicationUser { get; } = new List<ApplicationUserFollow>();
+
     [InverseProperty("ApplicationUser")]
     public virtual ICollection<ApplicationUserRole> ApplicationUserRole { get; } = new List<ApplicationUserRole>();
 
