@@ -1,3 +1,5 @@
+using FairPlaySocial.Models.Post;
+
 namespace FairPlaySocial.Models.Notifications
 {
     /// <summary>
@@ -11,5 +13,6 @@ namespace FairPlaySocial.Models.Notifications
         /// </summary>
         public string? Message { get; set; }
         public string? GroupName { get; set; }
+        public PostModel? Post { get; set; }
     }
 }

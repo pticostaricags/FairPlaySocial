@@ -45,11 +45,7 @@ namespace FairPlaySocial.SharedUI.Components
 
                 this.HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, (model) =>
                 {
-                    this.PostModels.Insert(0, new PostModel()
-                    {
-                        OwnerApplicationUserFullName = model.From,
-                        Text = model.Message
-                    });
+                    this.PostModels.Insert(0, model.Post!);
                     StateHasChanged();
                 });
                 await this.HubConnection.StartAsync();

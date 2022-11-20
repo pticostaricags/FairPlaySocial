@@ -56,7 +56,10 @@ namespace FairPlaySocial.Server
             services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddTransient<IEmailService, EmailService>();
-            services.AddSignalR();
+            services.AddSignalR(hubOptions => 
+            {
+                hubOptions.MaximumReceiveMessageSize= 20 * 1024 * 1024;
+            });
             AddPlatformServices(services);
 
             services.AddTransient(serviceProvider =>
