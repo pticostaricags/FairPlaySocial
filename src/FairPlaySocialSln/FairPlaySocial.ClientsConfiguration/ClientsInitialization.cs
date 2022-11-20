@@ -17,6 +17,7 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<MyUserPreferenceClientService>();
             services.AddTransient<MyPostClientService>();
             services.AddTransient<MyFeedClientService>();
+            services.AddTransient<MyFollowClientService>();
             services.AddSingleton(new UserPreferenceModel());
             services.AddSingleton<IWhiteLabelingService, WhiteLabelingService>();
         }
