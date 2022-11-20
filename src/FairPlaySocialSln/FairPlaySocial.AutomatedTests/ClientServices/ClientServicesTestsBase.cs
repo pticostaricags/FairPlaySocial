@@ -10,9 +10,9 @@ using System.Net.Http.Json;
 using System.Text;
 using static FairPlaySocial.Common.Global.Constants;
 
-namespace FairPlaySocial.AutomatedTests.Website
+namespace FairPlaySocial.AutomatedTests.ClientServices
 {
-    public abstract class WebServerTestsBase
+    public abstract class ClientServicesTestsBase
     {
         internal static TestServer? Server { get; private set; }
         private HttpClient? UserRoleAuthorizedHttpClient { get; set; }
@@ -20,11 +20,11 @@ namespace FairPlaySocial.AutomatedTests.Website
         internal static string? UserBearerToken { get; set; }
         internal static TestAzureAdB2CAuthConfiguration? TestAzureAdB2CAuthConfiguration { get; set; }
         public TestsHttpClientFactory TestsHttpClientFactory { get; }
-        public WebServerTestsBase()
+        public ClientServicesTestsBase()
         {
             ConfigurationBuilder configurationBuilder = new();
 #if DEBUG
-            configurationBuilder.AddUserSecrets<WebServerTestsBase>();
+            configurationBuilder.AddUserSecrets<ClientServicesTestsBase>();
 #else
             var appSettingsBase64Content = Environment.GetEnvironmentVariable("AppSettingsContent")!;
             var appSettingsBytes = Convert.FromBase64String(appSettingsBase64Content);
@@ -36,7 +36,7 @@ namespace FairPlaySocial.AutomatedTests.Website
             var builder = new WebHostBuilder()
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
-            WebServerTestsBase.Server = new TestServer(builder);
+            ClientServicesTestsBase.Server = new TestServer(builder);
             this.TestsHttpClientFactory = new TestsHttpClientFactory();
         }
 
@@ -129,12 +129,12 @@ namespace FairPlaySocial.AutomatedTests.Website
         {
             string assemblyName = Common.Global.Constants.Assemblies.MainAppAssemblyName;
             var serverApiClientName = $"{assemblyName}.ServerAPI";
-            var client = WebServerTestsBase.Server!.CreateClient();
+            var client = ClientServicesTestsBase.Server!.CreateClient();
             if (name == serverApiClientName)
             {
                 client.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",
-                    WebServerTestsBase.UserBearerToken);
+                    ClientServicesTestsBase.UserBearerToken);
                 return client;
             }
             else
