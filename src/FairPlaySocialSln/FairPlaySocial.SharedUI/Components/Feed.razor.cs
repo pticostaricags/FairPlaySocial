@@ -31,7 +31,7 @@ namespace FairPlaySocial.SharedUI.Components
         private MyFollowClientService? MyFollowClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
-        public long? SelectedPostAuthorApplicationUserId { get; private set; }
+        private PostModel? SelectedPostModel { get; set; }
         public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
         private bool IsBusy { get; set; }
         protected override async Task OnInitializedAsync()
@@ -77,15 +77,16 @@ namespace FairPlaySocial.SharedUI.Components
             await base.DisposeAsync();
         }
 
-        private async Task OnPostAuthorSelectedAsync(long applicationUserId)
+        private async Task OnPostAuthorSelectedAsync(PostModel selectedPostModel)
         {
             try
             {
                 this.IsBusy = true;
                 this.ShowPostAuthorModal = true;
-                this.SelectedPostAuthorApplicationUserId = applicationUserId;
+                this.SelectedPostModel = selectedPostModel;
                 this.MySelectedAuthorFollowStatus = await this.MyFollowClientService!
-                    .GetMyFollowedStatusAsync(SelectedPostAuthorApplicationUserId!.Value,
+                    .GetMyFollowedStatusAsync(
+                    this.SelectedPostModel.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
             }
             catch (Exception ex)
@@ -100,7 +101,7 @@ namespace FairPlaySocial.SharedUI.Components
         {
             this.ShowPostAuthorModal = false;
             this.MySelectedAuthorFollowStatus = null;
-            this.SelectedPostAuthorApplicationUserId = null;
+            this.SelectedPostModel= null;
         }
 
         private async Task OnFollowSelectedAuthorAsync()
@@ -109,9 +110,9 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.MyFollowClientService!
-                    .FollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
+                    .FollowUserAsync(this.SelectedPostModel!.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
-                await OnPostAuthorSelectedAsync(this.SelectedPostAuthorApplicationUserId.Value);
+                await OnPostAuthorSelectedAsync(this.SelectedPostModel);
             }
             catch (Exception ex)
             {
@@ -127,9 +128,9 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.MyFollowClientService!
-                    .UnFollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
+                    .UnFollowUserAsync(this.SelectedPostModel!.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
-                await OnPostAuthorSelectedAsync(this.SelectedPostAuthorApplicationUserId.Value);
+                await OnPostAuthorSelectedAsync(this.SelectedPostModel);
             }
             catch (Exception ex)
             {
