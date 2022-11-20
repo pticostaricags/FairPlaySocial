@@ -1,5 +1,12 @@
 # FairPlaySocial
 
+## Build Status
+[![Build Web App](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildWebApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildWebApp.yml)
+
+[![Build .NET MAUI Android](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiAndroidApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiAndroidApp.yml)
+
+[![Build .NET MAUI Windows](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiWindowsApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiWindowsApp.yml)
+
 ## What is FairPlaySocial
 A multi-platform social system, part of the FairPlay initiative:
 https://www.linkedin.com/pulse/fairplay-software-what-eduardo-fonseca/?trackingId=sW%2Fm6EzmRxajgWvLZMdc6A%3D%3D
