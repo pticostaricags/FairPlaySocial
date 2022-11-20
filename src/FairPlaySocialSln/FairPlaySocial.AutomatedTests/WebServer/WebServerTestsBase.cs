@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Net.Http.Json;
+using System.Text;
 using static FairPlaySocial.Common.Global.Constants;
 
 namespace FairPlaySocial.AutomatedTests.Website
@@ -22,7 +23,14 @@ namespace FairPlaySocial.AutomatedTests.Website
         public WebServerTestsBase()
         {
             ConfigurationBuilder configurationBuilder = new();
+#if DEBUG
             configurationBuilder.AddUserSecrets<WebServerTestsBase>();
+#else
+var appSettingsContent = Environment.GetEnvironmentVariable("AppSettingsContent");
+            var appSettingsBytes = Encoding.UTF8.GetBytes(appSettingsContent);
+            MemoryStream memoryStream= new MemoryStream(appSettingsBytes);
+            configurationBuilder.AddJsonStream(memoryStream);
+#endif
             IConfiguration configuration = configurationBuilder.Build();
             TestAzureAdB2CAuthConfiguration = configuration.GetSection("TestAzureAdB2CAuthConfiguration").Get<TestAzureAdB2CAuthConfiguration>();
             var builder = new WebHostBuilder()
@@ -125,7 +133,7 @@ namespace FairPlaySocial.AutomatedTests.Website
             if (name == serverApiClientName)
             {
                 client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",
                     WebServerTestsBase.UserBearerToken);
                 return client;
             }

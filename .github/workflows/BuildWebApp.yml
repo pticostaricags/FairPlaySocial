@@ -26,4 +26,4 @@ jobs:
     - name: Lists Tests
       run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Tests
-      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -e AppSettingsContent=${{ secrets.APPSETTINGSCONTENT }}
