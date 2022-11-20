@@ -2,6 +2,7 @@
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.ApplicationUserFollow;
 using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -49,12 +50,31 @@ namespace FairPlaySocial.Server.Controllers
                 .GetAllApplicationUserFollow(trackEntities: false, cancellationToken: cancellationToken)
                 .Where(p => p.FollowerApplicationUserId == myApplicationUserId &&
                 p.FollowedApplicationUserId == userToUnFollowApplicationUserId)
-                .SingleOrDefaultAsync(cancellationToken:cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (entity is null)
             {
                 throw new CustomValidationException($"Your are not followin user: {userToUnFollowApplicationUserId}");
             }
             return Ok();
+        }
+
+        [HttpGet("[action]")]
+        public async Task<ApplicationUserFollowStatusModel> GetMyFollowedStatusAsync(
+            long userToCheckApplicationUserId, CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var entity = await this.applicationUserFollowService
+                .GetAllApplicationUserFollow(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.FollowerApplicationUserId == myApplicationUserId &&
+                p.FollowedApplicationUserId == userToCheckApplicationUserId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            var result = new ApplicationUserFollowStatusModel()
+            {
+                FollowerApplicationUserId = myApplicationUserId,
+                FollowedApplicationUserId = userToCheckApplicationUserId,
+                IsFollowed = entity is not null
+            };
+            return result;
         }
     }
 }

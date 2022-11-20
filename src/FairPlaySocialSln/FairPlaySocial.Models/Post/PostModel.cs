@@ -17,6 +17,7 @@ namespace FairPlaySocial.Models.Post
         [StringLength(500)]
         public string? Text { get; set; }
         public string? OwnerApplicationUserFullName { get; set; }
+        public long? OwnerApplicationUserId { get; set; }
         public PhotoModel? Photo { get; set; }
     }
 }

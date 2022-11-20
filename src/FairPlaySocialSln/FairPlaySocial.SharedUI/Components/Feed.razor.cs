@@ -2,6 +2,7 @@
 using FairPlaySocial.Common;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
+using FairPlaySocial.Models.ApplicationUserFollow;
 using FairPlaySocial.Models.Notifications;
 using FairPlaySocial.Models.Post;
 using Microsoft.AspNetCore.Components;
@@ -26,7 +27,12 @@ namespace FairPlaySocial.SharedUI.Components
         private HttpClientService? HttpClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private MyFollowClientService? MyFollowClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
+        private bool ShowPostAuthorModal { get; set; }
+        public long? SelectedPostAuthorApplicationUserId { get; private set; }
+        public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -66,9 +72,60 @@ namespace FairPlaySocial.SharedUI.Components
             await base.DisposeAsync();
         }
 
-        internal void Refresh()
+        private async Task OnPostAuthorSelectedAsync(long applicationUserId)
         {
-            StateHasChanged();
+            try
+            {
+                this.ShowPostAuthorModal = true;
+                this.SelectedPostAuthorApplicationUserId = applicationUserId;
+                this.MySelectedAuthorFollowStatus = await this.MyFollowClientService!
+                    .GetMyFollowedStatusAsync(SelectedPostAuthorApplicationUserId!.Value, 
+                    CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+        }
+
+        private void HidePostAuthorModal()
+        {
+            this.ShowPostAuthorModal = false;
+            this.MySelectedAuthorFollowStatus = null;
+            this.SelectedPostAuthorApplicationUserId = null;
+        }
+
+        private async Task OnFollowSelectedAuthorAsync()
+        {
+            try
+            {
+                await this.MyFollowClientService!
+                    .FollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
+                    CancellationToken.None);
+                await OnPostAuthorSelectedAsync(this.SelectedPostAuthorApplicationUserId.Value);
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+        }
+
+        private async Task OnUnFollowSelectedAuthorAsync()
+        {
+            try
+            {
+                await this.MyFollowClientService!
+                    .UnFollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
+                    base.CancellationToken);
+                await OnPostAuthorSelectedAsync(this.SelectedPostAuthorApplicationUserId.Value);
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
         }
     }
 }

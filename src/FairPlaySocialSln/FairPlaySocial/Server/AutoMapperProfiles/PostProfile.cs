@@ -15,6 +15,7 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     if (source.OwnerApplicationUser != null)
                     {
                         dest.OwnerApplicationUserFullName = source.OwnerApplicationUser.FullName;
+                        dest.OwnerApplicationUserId = source.OwnerApplicationUser.ApplicationUserId;
                     }
                     if (source.Photo != null)
                     {

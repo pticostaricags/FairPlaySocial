@@ -5,7 +5,9 @@
     foreach (var singlePostModel in this.PostModels)
     {
         <div class="@ThemeConfiguration.Chats.ChatItemSection">
-            <label class="@ThemeConfiguration.Chats.ChatSender">
+            <label @onclick="@( async () => await OnPostAuthorSelectedAsync(singlePostModel.OwnerApplicationUserId!.Value))"
+           class="@ThemeConfiguration.Chats.ChatSender"
+           style="cursor:pointer;">
                 @singlePostModel.OwnerApplicationUserFullName
             </label>
             <p class="@ThemeConfiguration.Chats.ChatContent">@singlePostModel.Text</p>
@@ -17,4 +19,29 @@
             }
         </div>
     }
+}
+
+@if (this.ShowPostAuthorModal && this.MySelectedAuthorFollowStatus != null)
+{
+    <CustomModal OkButtonText="OK" OnCloseButtonClicked="HidePostAuthorModal"
+             ShowFooter="false">
+        <Title>Author:????</Title>
+        <Content>
+            @if (!this.MySelectedAuthorFollowStatus!.IsFollowed)
+            {
+                <button type="button"
+                @onclick="OnFollowSelectedAuthorAsync">
+                    <i class="bi bi-star"></i>
+                </button>
+            }
+            else
+            {
+                <button type="button"
+                @onclick="OnUnFollowSelectedAuthorAsync">
+                    <i class="bi bi-star-fill"></i>
+                </button>
+            }
+
+        </Content>
+    </CustomModal>
 }
