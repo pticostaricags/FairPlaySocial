@@ -27,10 +27,10 @@ namespace FairPlaySocial.ClientServices
             await response.CustomEnsureSuccessStatusCodeAsync();
         }
 
-        public async Task UnFollowUserAsync(long userToFollowApplicationUserId, CancellationToken cancellationToken)
+        public async Task UnFollowUserAsync(long userToUnFollowApplicationUserId, CancellationToken cancellationToken)
         {
             var requestUrl = $"api/MyFollow/UnFollowUser" +
-                $"?{nameof(userToFollowApplicationUserId)}={userToFollowApplicationUserId}";
+                $"?{nameof(userToUnFollowApplicationUserId)}={userToUnFollowApplicationUserId}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsync(requestUrl, null, cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();

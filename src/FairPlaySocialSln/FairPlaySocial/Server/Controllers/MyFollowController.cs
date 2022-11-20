@@ -55,6 +55,12 @@ namespace FairPlaySocial.Server.Controllers
             {
                 throw new CustomValidationException($"Your are not followin user: {userToUnFollowApplicationUserId}");
             }
+            else
+            {
+                await this.applicationUserFollowService
+                    .DeleteApplicationUserFollowAsync(entity.ApplicationUserFollowId,
+                    cancellationToken:cancellationToken);
+            }
             return Ok();
         }
 

@@ -1,5 +1,7 @@
 ﻿@inherits FairPlaySocial.SharedUI.Pages.CustomBaseComponent
 
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
 @if (this.PostModels?.Count > 0)
 {
     foreach (var singlePostModel in this.PostModels)

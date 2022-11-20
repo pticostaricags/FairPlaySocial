@@ -33,11 +33,12 @@ namespace FairPlaySocial.SharedUI.Components
         private bool ShowPostAuthorModal { get; set; }
         public long? SelectedPostAuthorApplicationUserId { get; private set; }
         public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
-
+        private bool IsBusy { get; set; }
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                this.IsBusy = true;
                 var authorizedHttpClient = this.HttpClientService!.CreateAuthorizedClient();
                 var hubUrl = $"{authorizedHttpClient.BaseAddress!.ToString()
                     .TrimEnd('/')}{this.HubUrl}";
@@ -61,6 +62,10 @@ namespace FairPlaySocial.SharedUI.Components
                 await this.ToastService!
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
             }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         public bool IsConnected =>
@@ -76,10 +81,11 @@ namespace FairPlaySocial.SharedUI.Components
         {
             try
             {
+                this.IsBusy = true;
                 this.ShowPostAuthorModal = true;
                 this.SelectedPostAuthorApplicationUserId = applicationUserId;
                 this.MySelectedAuthorFollowStatus = await this.MyFollowClientService!
-                    .GetMyFollowedStatusAsync(SelectedPostAuthorApplicationUserId!.Value, 
+                    .GetMyFollowedStatusAsync(SelectedPostAuthorApplicationUserId!.Value,
                     CancellationToken.None);
             }
             catch (Exception ex)
@@ -87,6 +93,7 @@ namespace FairPlaySocial.SharedUI.Components
                 await this.ToastService!
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
             }
+            finally { this.IsBusy = false; }
         }
 
         private void HidePostAuthorModal()
@@ -100,6 +107,7 @@ namespace FairPlaySocial.SharedUI.Components
         {
             try
             {
+                this.IsBusy = true;
                 await this.MyFollowClientService!
                     .FollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
                     CancellationToken.None);
@@ -110,15 +118,17 @@ namespace FairPlaySocial.SharedUI.Components
                 await this.ToastService!
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
             }
+            finally { this.IsBusy = false; }
         }
 
         private async Task OnUnFollowSelectedAuthorAsync()
         {
             try
             {
+                this.IsBusy = true;
                 await this.MyFollowClientService!
                     .UnFollowUserAsync(this.SelectedPostAuthorApplicationUserId!.Value,
-                    base.CancellationToken);
+                    CancellationToken.None);
                 await OnPostAuthorSelectedAsync(this.SelectedPostAuthorApplicationUserId.Value);
             }
             catch (Exception ex)
@@ -126,6 +136,7 @@ namespace FairPlaySocial.SharedUI.Components
                 await this.ToastService!
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
             }
+            finally { this.IsBusy = false; }
         }
     }
 }
