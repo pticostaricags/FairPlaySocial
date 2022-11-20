@@ -26,8 +26,8 @@ namespace FairPlaySocial.AutomatedTests.Website
 #if DEBUG
             configurationBuilder.AddUserSecrets<WebServerTestsBase>();
 #else
-            var appSettingsContent = Environment.GetEnvironmentVariable("AppSettingsContent")!;
-            var appSettingsBytes = Encoding.UTF8.GetBytes(appSettingsContent);
+            var appSettingsBase64Content = Environment.GetEnvironmentVariable("AppSettingsContent")!;
+            var appSettingsBytes = Convert.FromBase64String(appSettingsBase64Content);
             MemoryStream memoryStream = new MemoryStream(appSettingsBytes);
             configurationBuilder.AddJsonStream(memoryStream);
 #endif
