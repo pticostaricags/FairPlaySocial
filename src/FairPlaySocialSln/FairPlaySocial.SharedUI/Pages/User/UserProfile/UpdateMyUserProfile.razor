@@ -1,5 +1,53 @@
-﻿<h3>UpdateMyUserProfile</h3>
+﻿@inherits CustomBaseComponent
 
-@code {
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
 
-}
+<h3>UpdateMyUserProfile</h3>
+
+<EditForm Model="@this.createUserProfileModel" OnValidSubmit="OnValidSubmitAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">
+            Bio:
+        </label>
+        <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
+                       @bind-Value="@this.createUserProfileModel.Bio">
+        </InputTextArea>
+        <ValidationMessage For="@( () => this.createUserProfileModel.Bio)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">YouTube Nickname:</label>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createUserProfileModel.YouTubeNickname"></InputText>
+        <ValidationMessage For="@( () => this.createUserProfileModel.YouTubeNickname)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">LinkedIn Nickname:</label>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createUserProfileModel.LinkedInNickname"></InputText>
+        <ValidationMessage For="@( () => this.createUserProfileModel.LinkedInNickname)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">Facebook Nickname:</label>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createUserProfileModel.FacebookNickname"></InputText>
+        <ValidationMessage For="@( () => this.createUserProfileModel.FacebookNickname)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">Instagram Nickname:</label>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createUserProfileModel.InstagramNickname"></InputText>
+        <ValidationMessage For="@( () => this.createUserProfileModel.InstagramNickname)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">Twitter Nickname:</label>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createUserProfileModel.TwitterNickname"></InputText>
+        <ValidationMessage For="@( () => this.createUserProfileModel.TwitterNickname)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss">Update Profile</button>
+    </div>
+</EditForm>
