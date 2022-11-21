@@ -67,5 +67,11 @@ namespace FairPlaySocial.MultiplatformServices
             this.NavigateTo(
                 $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.HomeFeed}", false);
         }
+
+        public void NavigateToUpdateMyUserProfile()
+        {
+            this.NavigateTo(
+                $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.UpdateMyUserProfile}", false);
+        }
     }
 }

@@ -65,6 +65,15 @@ namespace FairPlaySocial.SharedUI.Pages
                                     CssClass="bi bi-building",
                                     OnClick= new EventCallback(this, ()=>
                                     this.NavigationService!
+                                    .NavigateToUpdateMyUserProfile()),
+                                    ShowTitleBelowIcon=true,
+                                    Title="User Profile"
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-building",
+                                    OnClick= new EventCallback(this, ()=>
+                                    this.NavigationService!
                                     .NavigateToCreateMyPost()),
                                     ShowTitleBelowIcon=true,
                                     Title="Create Post"

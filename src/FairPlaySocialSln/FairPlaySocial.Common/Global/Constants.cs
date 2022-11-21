@@ -57,6 +57,7 @@ namespace FairPlaySocial.Common.Global
                 public const string HomeFeed = $"/User/Feeds/{nameof(HomeFeed)}";
                 public const string UpdateMyUserPreferences = $"/User/{nameof(UpdateMyUserPreferences)}";
                 public const string CreateMyPost = $"/User/Posts/{nameof(CreateMyPost)}";
+                public const string UpdateMyUserProfile = $"/User/UserProfile/{nameof(UpdateMyUserProfile)}";
             }
         }
 

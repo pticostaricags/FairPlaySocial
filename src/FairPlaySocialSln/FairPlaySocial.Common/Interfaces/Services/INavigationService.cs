@@ -9,5 +9,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToUpdateMyUserPreferences();
         void NavigateToCreateMyPost();
         void NavigateToHomeFeed();
+        void NavigateToUpdateMyUserProfile();
     }
 }
