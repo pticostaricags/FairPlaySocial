@@ -57,4 +57,7 @@ public partial class ApplicationUser
 
     [InverseProperty("ApplicationUser")]
     public virtual UserPreference UserPreference { get; set; }
+
+    [InverseProperty("ApplicationUser")]
+    public virtual UserProfile UserProfile { get; set; }
 }

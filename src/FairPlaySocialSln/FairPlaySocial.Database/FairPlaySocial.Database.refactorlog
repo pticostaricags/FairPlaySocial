@@ -7,4 +7,53 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PostId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="952c5b0b-cc9a-458c-8068-dde466902a96" ChangeDateTime="11/21/2022 11:30:12">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserProfileId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="48bfdf26-cfcc-4e79-982d-7c5c62aa672d" ChangeDateTime="11/21/2022 11:33:09">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[LinkedInUrl]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LinkedInName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="67dc79eb-d614-463d-bed0-b962b42efd8f" ChangeDateTime="11/21/2022 11:33:32">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[TwitterU]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TwitterHandle" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="06c2b371-d61f-4f19-acf5-0cee4b0c6583" ChangeDateTime="11/21/2022 11:34:27">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[FacebookName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FacebookNickname" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0682288c-4959-44b9-ac22-55d7fc6b8852" ChangeDateTime="11/21/2022 11:34:30">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[TwitterHandle]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TwitterNickname" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="15e434ea-1ee1-4aa1-91e8-0da2681459bd" ChangeDateTime="11/21/2022 11:34:38">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[LinkedInName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LinkedInNickname" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6fad20e7-f347-47f6-8495-eec83999b96f" ChangeDateTime="11/21/2022 11:35:28">
+    <Property Name="ElementName" Value="[dbo].[UserProfile].[YoutubeNickname]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserProfile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="YouTubeNickname" />
+  </Operation>
 </Operations>

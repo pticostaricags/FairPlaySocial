@@ -45,6 +45,10 @@
       {
          "Name": "[dbo].[UserPreference]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserProfile]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "FairPlaySocial.Database\\FairPlaySocial.Database.sqlproj",

@@ -30,6 +30,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<UserPreference> UserPreference { get; set; }
 
+    public virtual DbSet<UserProfile> UserProfile { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlaySocial.Database;Integrated Security=true");
@@ -77,6 +79,15 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.UserPreference)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserPreference_ApplicationUser");
+        });
+
+        modelBuilder.Entity<UserProfile>(entity =>
+        {
+            entity.Property(e => e.UserProfileId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.ApplicationUser).WithOne(p => p.UserProfile)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserProfile_ApplicationUser");
         });
 
         OnModelCreatingPartial(modelBuilder);
