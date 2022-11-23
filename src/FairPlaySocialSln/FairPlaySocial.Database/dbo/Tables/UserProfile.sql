@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserProfile]
 (
-	[UserProfileId] BIGINT NOT NULL PRIMARY KEY, 
+	[UserProfileId] BIGINT NOT NULL CONSTRAINT PK_UserProfile PRIMARY KEY IDENTITY, 
     [ApplicationUserId] BIGINT NOT NULL, 
     [Bio] NVARCHAR(500) NOT NULL, 
     [LinkedInNickname] NVARCHAR(50) NULL, 

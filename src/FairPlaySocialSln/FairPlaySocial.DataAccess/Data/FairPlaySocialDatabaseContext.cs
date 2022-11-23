@@ -83,8 +83,6 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
         modelBuilder.Entity<UserProfile>(entity =>
         {
-            entity.Property(e => e.UserProfileId).ValueGeneratedNever();
-
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.UserProfile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserProfile_ApplicationUser");
