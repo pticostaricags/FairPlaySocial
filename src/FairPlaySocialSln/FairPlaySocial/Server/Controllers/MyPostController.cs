@@ -45,6 +45,7 @@ namespace FairPlaySocial.Server.Controllers
             var post = this.mapper.Map<Post, PostModel>(entity);
             //TODO: Consider using groups to send only to users in the "Home Feed" page
             var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
+            post.OwnerApplicationUserFullName = userEntity.FullName;
             await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
             {
                 From = userEntity.FullName,
