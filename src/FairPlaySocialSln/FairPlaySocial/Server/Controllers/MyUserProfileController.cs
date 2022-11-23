@@ -27,6 +27,26 @@ namespace FairPlaySocial.Server.Controllers
             this.userProfileService = userProfileService;
         }
 
+        [HttpGet("[action]")]
+        public async Task<UserProfileModel> GetMyUserProfileAsync(CancellationToken cancellationToken)
+        {
+            var entity = await this.userProfileService
+                .GetAllUserProfile(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p=>p.ApplicationUserId == this.currentUserProvider.GetApplicationUserId())
+                .SingleOrDefaultAsync(cancellationToken:cancellationToken);
+            if (entity is null)
+            {
+                return new UserProfileModel()
+                {
+                };
+            }
+            else
+            {
+                var result = this.mapper.Map<UserProfile, UserProfileModel>(entity);
+                return result;
+            }
+        }
+
         [HttpPost("[action]")]
         public async Task<UserProfileModel?> UpdateMyUserProfileAsync(
             CreateUserProfileModel createUserProfileModel, CancellationToken cancellationToken)

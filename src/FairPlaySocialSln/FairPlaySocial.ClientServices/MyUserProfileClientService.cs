@@ -28,5 +28,15 @@ namespace FairPlaySocial.ClientServices
             var result = await response.Content.ReadFromJsonAsync<UserProfileModel>();
             return result;
         }
+
+        public async Task<UserProfileModel> GetMyUserProfileAsync(CancellationToken cancellationToken)
+        {
+            var requestUrl = "api/MyUserProfile/GetMyUserProfile";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.GetAsync(requestUrl, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<UserProfileModel>(cancellationToken: cancellationToken);
+            return result!;
+        }
     }
 }
