@@ -6,7 +6,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: FairPlaySocialDev
   AZURE_WEBAPP_PACKAGE_PATH: FairPlaySocial\Server\publish
-  CONFIGURATION: Debug
+  CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
 jobs:
