@@ -65,6 +65,7 @@ namespace FairPlaySocial.Common.Global
         {
             public const string ApplicationUser = nameof(ApplicationUser);
             public const string Photo = nameof(Photo);
+            public const string UserProfile = nameof(UserProfile);
         }
     }
 }

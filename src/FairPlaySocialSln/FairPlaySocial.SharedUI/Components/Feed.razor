@@ -24,12 +24,30 @@
 }
 
 @if (this.ShowPostAuthorModal && this.MySelectedAuthorFollowStatus != null &&
-this.SelectedPostModel != null)
+this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
 {
     <CustomModal OkButtonText="OK" OnCloseButtonClicked="HidePostAuthorModal"
              ShowFooter="false">
         <Title>@this.SelectedPostModel!.OwnerApplicationUserFullName</Title>
         <Content>
+            <p>
+                Bio: @this.MySelectedAuthorUserProfile.Bio
+            </p>
+            <p>
+                YouTubeNickname: @this.MySelectedAuthorUserProfile.YouTubeNickname
+            </p>
+            <p>
+                FacebookNickname: @this.MySelectedAuthorUserProfile.FacebookNickname
+            </p>
+            <p>
+                InstagramNickname: @this.MySelectedAuthorUserProfile.InstagramNickname
+            </p>
+            <p>
+                TwitterNickname: @this.MySelectedAuthorUserProfile.TwitterNickname
+            </p>
+            <p>
+                LinkedInNickname: @this.MySelectedAuthorUserProfile.LinkedInNickname
+            </p>
             @if (!this.MySelectedAuthorFollowStatus!.IsFollowed)
             {
                 <button type="button"

@@ -5,6 +5,7 @@ using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.ApplicationUserFollow;
 using FairPlaySocial.Models.Notifications;
 using FairPlaySocial.Models.Post;
+using FairPlaySocial.Models.UserProfile;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
@@ -29,10 +30,13 @@ namespace FairPlaySocial.SharedUI.Components
         private IToastService? ToastService { get; set; }
         [Inject]
         private MyFollowClientService? MyFollowClientService { get; set; }
+        [Inject]
+        private PublicUserProfileClientService? PublicUserProfileClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
         public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
+        private UserProfileModel? MySelectedAuthorUserProfile { get; set; }
         private bool IsBusy { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -88,6 +92,11 @@ namespace FairPlaySocial.SharedUI.Components
                     .GetMyFollowedStatusAsync(
                     this.SelectedPostModel.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
+                this.MySelectedAuthorUserProfile = 
+                    await this.PublicUserProfileClientService!
+                    .GetPublicUserProfileByApplicationUserIdAsync(
+                        this.SelectedPostModel.OwnerApplicationUserId!.Value,
+                        CancellationToken.None);
             }
             catch (Exception ex)
             {
