@@ -1,4 +1,5 @@
-﻿using FairPlaySocial.Models.Photo;
+﻿using FairPlaySocial.CustomValidation.CustomValidationAttributes;
+using FairPlaySocial.Models.Photo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,7 @@ namespace FairPlaySocial.Models.Post
     {
         [Required]
         [StringLength(500)]
+        [ProhibitHasTags(ErrorMessage = "Text cannot contain HashTags")]
         public string? Text { get; set; }
         [Required]
         [ValidateComplexType]
