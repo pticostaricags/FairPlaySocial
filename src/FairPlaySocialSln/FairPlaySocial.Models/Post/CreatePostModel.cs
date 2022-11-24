@@ -14,6 +14,7 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [StringLength(500)]
         [ProhibitHasTags(ErrorMessage = "Text cannot contain HashTags")]
+        [ProhibitUrls(ErrorMessage = "Text cannot contain Urls")]
         public string? Text { get; set; }
         [Required]
         [ValidateComplexType]
