@@ -12,6 +12,12 @@
            style="cursor:pointer;">
                 @singlePostModel.OwnerApplicationUserFullName
             </label>
+            <label class="@ThemeConfiguration.Labels.DefaultCss"
+           style="display:inline; float:right;">
+                <strong>
+                    @(singlePostModel.PostedTime.Hours > 0 ? $"{(int)singlePostModel.PostedTime.Hours}h" : $"{singlePostModel.PostedTime.Minutes}m")
+                </strong>
+            </label>
             <p class="@ThemeConfiguration.Chats.ChatContent">@singlePostModel.Text</p>
             <p class="@ThemeConfiguration.Chats.ChatTime"></p>
             @if (singlePostModel.Photo != null)

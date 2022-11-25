@@ -16,8 +16,11 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [StringLength(500)]
         public string? Text { get; set; }
+        public DateTimeOffset? RowCreationDateTime { get; set; }
         public string? OwnerApplicationUserFullName { get; set; }
         public long? OwnerApplicationUserId { get; set; }
         public PhotoModel? Photo { get; set; }
+        public TimeSpan PostedTime =>
+            DateTimeOffset.UtcNow.Subtract(RowCreationDateTime!.Value);
     }
 }
