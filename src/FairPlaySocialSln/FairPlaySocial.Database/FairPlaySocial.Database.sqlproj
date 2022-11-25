@@ -73,6 +73,7 @@
     <Build Include="dbo\Tables\Post.sql" />
     <Build Include="dbo\Tables\ApplicationUserFollow.sql" />
     <Build Include="dbo\Tables\UserProfile.sql" />
+    <Build Include="dbo\Tables\LikedPost.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

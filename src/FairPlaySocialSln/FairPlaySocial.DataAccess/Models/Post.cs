@@ -36,6 +36,9 @@ public partial class Post
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
 
+    [InverseProperty("Post")]
+    public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
+
     [ForeignKey("OwnerApplicationUserId")]
     [InverseProperty("Post")]
     public virtual ApplicationUser OwnerApplicationUser { get; set; }

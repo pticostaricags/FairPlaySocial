@@ -32,11 +32,13 @@ namespace FairPlaySocial.Server.Controllers
         [HttpGet("[action]")]
         public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
             [FromQuery] PageRequestModel pageRequestModel,
+            [FromServices] LikedPostService likedPostService,
             CancellationToken cancellationToken)
         {
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
                 .Include(p => p.OwnerApplicationUser)
-                .Include(P=>P.Photo);
+                .Include(P => P.Photo)
+                .Include(p => p.LikedPost);
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;
@@ -47,6 +49,19 @@ namespace FairPlaySocial.Server.Controllers
                 .Take(Constants.Pagination.DefaultPageSize)
                 .Select(p => this.mapper.Map<Post, PostModel>(p))
                 .ToArrayAsync(cancellationToken: cancellationToken);
+            var resultingPostsIds = result.Items.Select(p => p.PostId).ToArray();
+            var myLikedPosts = await likedPostService.GetAllLikedPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.LikingApplicationUserId == this.currentUserProvider.GetApplicationUserId() &&
+                resultingPostsIds.Contains(p.PostId))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            if (myLikedPosts.Any())
+            {
+                foreach (var singleLikedPost in myLikedPosts) 
+                {
+                    var matchingItem = result.Items.Single(p=>p.PostId== singleLikedPost.PostId);
+                    matchingItem.IsLiked = true;
+                }
+            }
             return result;
         }
     }

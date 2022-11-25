@@ -56,4 +56,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="YouTubeNickname" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f602e494-3cd7-49a7-ab5b-b262f810af16" ChangeDateTime="11/25/2022 11:52:17">
+    <Property Name="ElementName" Value="[dbo].[LikedPost].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LikedPost]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LikedPostApplicationUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0d3a8fe7-3db9-41e8-87ea-4fbd5f626ac2" ChangeDateTime="11/25/2022 11:55:28">
+    <Property Name="ElementName" Value="[dbo].[LikedPost].[LikedPostApplicationUserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LikedPost]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LikedPostId" />
+  </Operation>
 </Operations>

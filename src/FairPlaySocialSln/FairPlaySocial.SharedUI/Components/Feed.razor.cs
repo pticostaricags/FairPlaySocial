@@ -32,6 +32,8 @@ namespace FairPlaySocial.SharedUI.Components
         private MyFollowClientService? MyFollowClientService { get; set; }
         [Inject]
         private PublicUserProfileClientService? PublicUserProfileClientService { get; set; }
+        [Inject]
+        private MyLikedPostsClientService? MyLikedPostsClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
@@ -147,6 +149,29 @@ namespace FairPlaySocial.SharedUI.Components
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
             }
             finally { this.IsBusy = false; }
+        }
+
+        private async Task LikePostAsync(PostModel postModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyLikedPostsClientService!
+                    .LikePostAsync(new Models.LikedPost.CreateLikedPostModel()
+                    {
+                        PostId = postModel.PostId
+                    }, base.CancellationToken);
+                postModel.IsLiked = true;
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy&= false;
+            }
         }
     }
 }

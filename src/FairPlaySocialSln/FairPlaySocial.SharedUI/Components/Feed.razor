@@ -25,6 +25,15 @@
                 <img class="@ThemeConfiguration.Images.ThumbnailDefaultCss"
          src="data:@singlePostModel.Photo!.ImageType;base64, @Convert.ToBase64String(singlePostModel.Photo.ImageBytes!)" />
             }
+            <div class="@ThemeConfiguration.Chats.ChatActionsBar">
+                @if (singlePostModel.IsLiked == false)
+                {
+                    <button @onclick="@( async () => await LikePostAsync(singlePostModel))">
+                        <i class="bi bi-star"></i>
+                    </button>
+                }
+                <p>@singlePostModel.LikesCount like(s)</p>
+            </div>
         </div>
     }
 }

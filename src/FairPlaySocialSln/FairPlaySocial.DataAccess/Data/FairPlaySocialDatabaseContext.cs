@@ -24,6 +24,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ErrorLog> ErrorLog { get; set; }
 
+    public virtual DbSet<LikedPost> LikedPost { get; set; }
+
     public virtual DbSet<Photo> Photo { get; set; }
 
     public virtual DbSet<Post> Post { get; set; }
@@ -61,6 +63,17 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.ApplicationUser).WithMany(p => p.ApplicationUserRole)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
+        });
+
+        modelBuilder.Entity<LikedPost>(entity =>
+        {
+            entity.HasOne(d => d.LikingApplicationUser).WithMany(p => p.LikedPost)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LikedPost_ApplicationUser");
+
+            entity.HasOne(d => d.Post).WithMany(p => p.LikedPost)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LikedPost_Post");
         });
 
         modelBuilder.Entity<Post>(entity =>

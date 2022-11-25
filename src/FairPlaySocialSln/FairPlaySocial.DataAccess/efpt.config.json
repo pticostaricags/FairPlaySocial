@@ -35,6 +35,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[LikedPost]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Photo]",
          "ObjectType": 0
       },

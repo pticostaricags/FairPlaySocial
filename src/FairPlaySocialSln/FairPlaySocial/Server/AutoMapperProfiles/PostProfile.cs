@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Models.ApplicationUser;
 using FairPlaySocial.Models.Post;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FairPlaySocial.Server.AutoMapperProfiles
 {
@@ -21,11 +23,16 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     {
                         dest.Photo = new Models.Photo.PhotoModel()
                         {
-                            Filename=source.Photo.Filename,
-                            ImageBytes= source.Photo.ImageBytes,
-                            ImageType=source.Photo.ImageType,
-                            PhotoId= source.Photo.PhotoId
+                            Filename = source.Photo.Filename,
+                            ImageBytes = source.Photo.ImageBytes,
+                            ImageType = source.Photo.ImageType,
+                            PhotoId = source.Photo.PhotoId
                         };
+                    }
+                    if (source.LikedPost != null &&
+                    source.LikedPost.Any())
+                    {
+                        dest.LikesCount = source.LikedPost.Count();
                     }
                 });
             CreateMap<PostModel, Post>();
@@ -36,9 +43,9 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     {
                         dest.Photo = new Photo()
                         {
-                            Filename= source.Photo.Filename,
-                            ImageBytes= source.Photo.ImageBytes,
-                            ImageType= source.Photo.ImageType
+                            Filename = source.Photo.Filename,
+                            ImageBytes = source.Photo.ImageBytes,
+                            ImageType = source.Photo.ImageType
                         };
                     }
                 });
