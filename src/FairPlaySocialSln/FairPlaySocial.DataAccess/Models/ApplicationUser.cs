@@ -52,6 +52,9 @@ public partial class ApplicationUser
     [InverseProperty("ApplicationUser")]
     public virtual ICollection<ApplicationUserRole> ApplicationUserRole { get; } = new List<ApplicationUserRole>();
 
+    [InverseProperty("DislikingApplicationUser")]
+    public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
+
     [InverseProperty("LikingApplicationUser")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
 

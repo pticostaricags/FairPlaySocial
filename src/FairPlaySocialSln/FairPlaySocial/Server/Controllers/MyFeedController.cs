@@ -33,6 +33,7 @@ namespace FairPlaySocial.Server.Controllers
         public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
             [FromQuery] PageRequestModel pageRequestModel,
             [FromServices] LikedPostService likedPostService,
+            [FromServices] DislikedPostService dislikedPostService,
             CancellationToken cancellationToken)
         {
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
@@ -60,6 +61,19 @@ namespace FairPlaySocial.Server.Controllers
                 {
                     var matchingItem = result.Items.Single(p=>p.PostId== singleLikedPost.PostId);
                     matchingItem.IsLiked = true;
+                }
+            }
+
+            var myDislikedPosts = await dislikedPostService.GetAllDislikedPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.DislikingApplicationUserId == this.currentUserProvider.GetApplicationUserId() &&
+                resultingPostsIds.Contains(p.PostId))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            if (myDislikedPosts.Any())
+            {
+                foreach (var singleDislikedPost in myDislikedPosts)
+                {
+                    var matchingItem = result.Items.Single(p => p.PostId == singleDislikedPost.PostId);
+                    matchingItem.IsDisliked = true;
                 }
             }
             return result;

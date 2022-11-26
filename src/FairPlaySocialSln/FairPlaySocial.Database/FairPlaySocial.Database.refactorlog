@@ -70,4 +70,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="LikedPostId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="461297f5-3511-45ed-b1e5-d086ae7118fd" ChangeDateTime="11/26/2022 10:16:07">
+    <Property Name="ElementName" Value="[dbo].[DislikedPost].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DislikedPost]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DislikedPostId" />
+  </Operation>
 </Operations>

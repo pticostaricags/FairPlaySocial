@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.Common.Extensions;
+using FairPlaySocial.Models.DislikedPost;
 using FairPlaySocial.Models.LikedPost;
 using System;
 using System.Collections.Generic;
@@ -28,5 +29,18 @@ namespace FairPlaySocial.ClientServices
             var result = await response.Content.ReadFromJsonAsync<LikedPostModel>();
             return result;
         }
+
+        public async Task<DislikedPostModel?> DislikePostAsync(
+            CreateDislikedPostModel createDislikedPostModel,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = "api/MyLikedPosts/DislikePost";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync(requestUrl, createDislikedPostModel, cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<DislikedPostModel>();
+            return result;
+        }
+
     }
 }

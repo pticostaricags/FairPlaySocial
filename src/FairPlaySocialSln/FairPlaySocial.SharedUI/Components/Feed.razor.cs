@@ -94,7 +94,7 @@ namespace FairPlaySocial.SharedUI.Components
                     .GetMyFollowedStatusAsync(
                     this.SelectedPostModel.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
-                this.MySelectedAuthorUserProfile = 
+                this.MySelectedAuthorUserProfile =
                     await this.PublicUserProfileClientService!
                     .GetPublicUserProfileByApplicationUserIdAsync(
                         this.SelectedPostModel.OwnerApplicationUserId!.Value,
@@ -112,7 +112,7 @@ namespace FairPlaySocial.SharedUI.Components
         {
             this.ShowPostAuthorModal = false;
             this.MySelectedAuthorFollowStatus = null;
-            this.SelectedPostModel= null;
+            this.SelectedPostModel = null;
         }
 
         private async Task OnFollowSelectedAuthorAsync()
@@ -170,7 +170,30 @@ namespace FairPlaySocial.SharedUI.Components
             }
             finally
             {
-                this.IsBusy&= false;
+                this.IsBusy = false;
+            }
+        }
+
+        private async Task DislikePostAsync(PostModel postModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyLikedPostsClientService!
+                    .DislikePostAsync(new Models.DislikedPost.CreateDislikedPostModel()
+                    {
+                        PostId = postModel.PostId
+                    }, base.CancellationToken);
+                postModel.IsDisliked = true;
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
         }
     }

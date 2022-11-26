@@ -37,6 +37,9 @@ public partial class Post
     public string OriginatorIpaddress { get; set; }
 
     [InverseProperty("Post")]
+    public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
+
+    [InverseProperty("Post")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
 
     [ForeignKey("OwnerApplicationUserId")]

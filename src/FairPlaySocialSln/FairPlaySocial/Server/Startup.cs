@@ -277,6 +277,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<ApplicationUserFollowService>();
             services.AddTransient<UserProfileService>();
             services.AddTransient<LikedPostService>();
+            services.AddTransient<DislikedPostService>();
         }
     }
 }

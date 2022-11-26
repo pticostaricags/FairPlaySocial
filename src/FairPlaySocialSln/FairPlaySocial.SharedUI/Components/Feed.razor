@@ -29,7 +29,7 @@
                 @if (singlePostModel.IsLiked == false)
                 {
                     <button class="btn"
-                        @onclick="@( async () => await LikePostAsync(singlePostModel))">
+                @onclick="@( async () => await LikePostAsync(singlePostModel))">
                         <i class="bi bi-hand-thumbs-up"></i>
                     </button>
                 }
@@ -41,7 +41,8 @@
                 }
                 @if (singlePostModel.IsDisliked == false)
                 {
-                    <button class="btn">
+                    <button class="btn"
+                @onclick="@( async () => await DislikePostAsync(singlePostModel))">
                         <i class="bi bi-hand-thumbs-down"></i>
                     </button>
                 }

@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[DislikedPost]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ErrorLog]",
          "ObjectType": 0
       },
