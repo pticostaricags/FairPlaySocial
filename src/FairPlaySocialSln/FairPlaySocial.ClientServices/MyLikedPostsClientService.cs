@@ -42,5 +42,27 @@ namespace FairPlaySocial.ClientServices
             return result;
         }
 
+        public async Task RemoveLikeFromPostAsync(long postId,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyLikedPosts/RemoveLikeFromPost" +
+                $"?{nameof(postId)}={postId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsync(requestUri: requestUrl,
+                content: null, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+        }
+
+        public async Task RemoveDislikeFromPostAsync(long postId,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyLikedPosts/RemoveDislikeFromPost" +
+                $"?{nameof(postId)}={postId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsync(requestUri: requestUrl, 
+                content: null, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+        }
+
     }
 }

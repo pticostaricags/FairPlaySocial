@@ -196,5 +196,45 @@ namespace FairPlaySocial.SharedUI.Components
                 this.IsBusy = false;
             }
         }
+
+        private async Task RemoveLikeFromPostAsync(PostModel? postModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyLikedPostsClientService!
+                    .RemoveLikeFromPostAsync(postModel!.PostId!.Value, base.CancellationToken);
+                postModel.IsLiked = false;
+            }
+            catch(Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private async Task RemoveDislikeFromPostAsync(PostModel? postModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyLikedPostsClientService!
+                    .RemoveDislikeFromPostAsync(postModel!.PostId!.Value, base.CancellationToken);
+                postModel.IsDisliked = false;
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
     }
 }

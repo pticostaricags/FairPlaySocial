@@ -8,6 +8,7 @@ using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -21,8 +22,8 @@ namespace FairPlaySocial.Server.Controllers
         private readonly LikedPostService likedPostService;
         private readonly DislikedPostService dislikedPostService;
 
-        public MyLikedPostsController(IMapper mapper, 
-            ICurrentUserProvider currentUserProvider, 
+        public MyLikedPostsController(IMapper mapper,
+            ICurrentUserProvider currentUserProvider,
             LikedPostService likedPostService,
             DislikedPostService dislikedPostService)
         {
@@ -42,6 +43,42 @@ namespace FairPlaySocial.Server.Controllers
             entity = await this.likedPostService.CreateLikedPostAsync(entity, cancellationToken);
             var result = this.mapper.Map<LikedPost, LikedPostModel>(entity);
             return result;
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> RemoveLikeFromPostAsync(
+            [FromQuery] long postId,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            //verify entity like is from logged in user executing the request
+            var entity = await this.likedPostService
+                .GetAllLikedPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.PostId == postId && p.LikingApplicationUserId == myApplicationUserId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (entity is not null)
+            {
+                await this.likedPostService.DeleteLikedPostAsync(entity.LikedPostId, cancellationToken);
+            }
+            return Ok(entity);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> RemoveDislikeFromPostAsync(
+            [FromQuery] long postId,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            //verify entity dislike is from logged in user executing the request
+            var entity = await this.dislikedPostService
+                .GetAllDislikedPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.PostId == postId && p.DislikingApplicationUserId == myApplicationUserId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (entity is not null)
+            {
+                await this.dislikedPostService.DeleteDislikedPostAsync(entity.DislikedPostId, cancellationToken);
+            }
+            return Ok(entity);
         }
 
         [HttpPost("[action]")]

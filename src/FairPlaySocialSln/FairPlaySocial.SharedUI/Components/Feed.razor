@@ -35,7 +35,8 @@
                 }
                 else
                 {
-                    <button class="btn">
+                    <button class="btn"
+                @onclick="@( async () => await RemoveLikeFromPostAsync(singlePostModel))">
                         <i class="bi bi-hand-thumbs-up-fill"></i>
                     </button>
                 }
@@ -48,7 +49,8 @@
                 }
                 else
                 {
-                    <button class="btn">
+                    <button class="btn"
+                @onclick="@( async () => await RemoveDislikeFromPostAsync(singlePostModel))">
                         <i class="bi bi-hand-thumbs-down-fill"></i>
                     </button>
                 }
