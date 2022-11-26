@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FairPlaySocial.CustomValidation.CustomValidationAttributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class ProhibitHasTagsAttribute : ValidationAttribute
+    public class ProhibitHashTagsAttribute : ValidationAttribute
     {
         private const string HashTagsPattern = @"\#\w+";
         public override bool IsValid(object? value)
