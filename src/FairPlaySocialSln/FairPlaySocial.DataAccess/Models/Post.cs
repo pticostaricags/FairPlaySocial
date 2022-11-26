@@ -49,4 +49,7 @@ public partial class Post
     [ForeignKey("PhotoId")]
     [InverseProperty("Post")]
     public virtual Photo Photo { get; set; }
+
+    [InverseProperty("Post")]
+    public virtual ICollection<PostTag> PostTag { get; } = new List<PostTag>();
 }

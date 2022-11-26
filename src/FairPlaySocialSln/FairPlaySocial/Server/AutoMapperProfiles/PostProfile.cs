@@ -14,6 +14,12 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
             CreateMap<Post, PostModel>()
                 .AfterMap((source, dest) =>
                 {
+                    if (source.PostTag!= null) 
+                    {
+                        dest.Tag1= source.PostTag.ElementAt(0).Tag;
+                        dest.Tag2 = source.PostTag.ElementAt(1).Tag;
+                        dest.Tag3 = source.PostTag.ElementAt(2).Tag;
+                    }
                     if (source.OwnerApplicationUser != null)
                     {
                         dest.OwnerApplicationUserFullName = source.OwnerApplicationUser.FullName;
@@ -48,6 +54,18 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                             ImageType = source.Photo.ImageType
                         };
                     }
+                    dest.PostTag.Add(new PostTag() 
+                    {
+                        Tag = source.Tag1
+                    });
+                    dest.PostTag.Add(new PostTag()
+                    {
+                        Tag = source.Tag2
+                    });
+                    dest.PostTag.Add(new PostTag()
+                    {
+                        Tag = source.Tag3
+                    });
                 });
         }
     }

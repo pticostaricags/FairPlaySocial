@@ -1,5 +1,6 @@
 ﻿using FairPlaySocial.CustomValidation.CustomValidationAttributes;
 using FairPlaySocial.Models.Photo;
+using FairPlaySocial.Models.PostTag;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,5 +20,11 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [ValidateComplexType]
         public CreatePhotoModel? Photo { get; set; }
+        [Required]
+        public string? Tag1 { get; set; }
+        [Required]
+        public string? Tag2 { get; set; }
+        [Required]
+        public string? Tag3 { get; set; }
     }
 }

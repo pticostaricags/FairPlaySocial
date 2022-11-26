@@ -75,6 +75,7 @@
     <Build Include="dbo\Tables\UserProfile.sql" />
     <Build Include="dbo\Tables\LikedPost.sql" />
     <Build Include="dbo\Tables\DislikedPost.sql" />
+    <Build Include="dbo\Tables\PostTag.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

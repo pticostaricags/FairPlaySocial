@@ -39,7 +39,8 @@ namespace FairPlaySocial.Server.Controllers
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
                 .Include(p => p.OwnerApplicationUser)
                 .Include(P => P.Photo)
-                .Include(p => p.LikedPost);
+                .Include(p => p.LikedPost)
+                .Include(p=>p.PostTag);
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;

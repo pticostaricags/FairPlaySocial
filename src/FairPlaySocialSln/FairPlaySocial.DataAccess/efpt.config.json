@@ -51,6 +51,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PostTag]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserPreference]",
          "ObjectType": 0
       },

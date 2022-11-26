@@ -32,6 +32,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<Post> Post { get; set; }
 
+    public virtual DbSet<PostTag> PostTag { get; set; }
+
     public virtual DbSet<UserPreference> UserPreference { get; set; }
 
     public virtual DbSet<UserProfile> UserProfile { get; set; }
@@ -98,6 +100,13 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.Photo).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_Photo");
+        });
+
+        modelBuilder.Entity<PostTag>(entity =>
+        {
+            entity.HasOne(d => d.Post).WithMany(p => p.PostTag)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PostTag_Post");
         });
 
         modelBuilder.Entity<UserPreference>(entity =>

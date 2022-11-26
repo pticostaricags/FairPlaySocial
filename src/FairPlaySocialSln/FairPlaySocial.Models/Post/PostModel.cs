@@ -25,5 +25,8 @@ namespace FairPlaySocial.Models.Post
         public bool IsLiked { get; set; }
         public bool IsDisliked { get; set; }
         public int LikesCount { get; set; }
+        public string? Tag1 { get; set; }
+        public string? Tag2 { get; set; }
+        public string? Tag3 { get; set; }
     }
 }
