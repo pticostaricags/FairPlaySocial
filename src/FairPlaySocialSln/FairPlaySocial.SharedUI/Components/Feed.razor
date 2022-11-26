@@ -55,6 +55,18 @@
                     </button>
                 }
                 <p>@singlePostModel.LikesCount like(s)</p>
+                @if (singlePostModel.Tag1 is not null)
+                {
+                    <p>Tag1: @singlePostModel.Tag1</p>
+                }
+                @if (singlePostModel.Tag2 is not null)
+                {
+                    <p>Tag2: @singlePostModel.Tag2</p>
+                }
+                @if (singlePostModel.Tag3 is not null)
+                {
+                    <p>Tag3: @singlePostModel.Tag3</p>
+                }
             </div>
         </div>
     }
