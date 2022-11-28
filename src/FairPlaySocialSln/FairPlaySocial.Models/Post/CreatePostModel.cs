@@ -32,5 +32,7 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [RegularExpression(PATTERN_JUST_ONE_WORD, ErrorMessage = INVALID_TAG_ERROR_MESSAGE)]
         public string? Tag3 { get; set; }
+        [Url]
+        public string? Url { get; set; }
     }
 }

@@ -23,6 +23,12 @@
         <ValidationMessage For="@( () => this.createPostModel.Photo!.Filename)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Url:"></AudibleLabel>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.createPostModel.Url"></InputText>
+        <ValidationMessage For="@( () => this.createPostModel.Url)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <AudibleLabel ItemText="Tag 1:"></AudibleLabel>
         <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
                    @bind-Value="@this.createPostModel.Tag1"></InputText>

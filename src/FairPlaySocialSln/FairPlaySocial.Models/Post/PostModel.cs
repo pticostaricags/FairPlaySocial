@@ -28,5 +28,7 @@ namespace FairPlaySocial.Models.Post
         public string? Tag1 { get; set; }
         public string? Tag2 { get; set; }
         public string? Tag3 { get; set; }
+        [Url]
+        public string? Url { get; set; }
     }
 }

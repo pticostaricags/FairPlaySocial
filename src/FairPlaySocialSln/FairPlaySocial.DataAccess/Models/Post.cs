@@ -52,4 +52,7 @@ public partial class Post
 
     [InverseProperty("Post")]
     public virtual ICollection<PostTag> PostTag { get; } = new List<PostTag>();
+
+    [InverseProperty("Post")]
+    public virtual ICollection<PostUrl> PostUrl { get; } = new List<PostUrl>();
 }

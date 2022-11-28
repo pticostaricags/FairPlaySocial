@@ -55,6 +55,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PostUrl]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserPreference]",
          "ObjectType": 0
       },

@@ -40,7 +40,8 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.OwnerApplicationUser)
                 .Include(P => P.Photo)
                 .Include(p => p.LikedPost)
-                .Include(p=>p.PostTag);
+                .Include(p=>p.PostTag)
+                .Include(p=>p.PostUrl);
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;

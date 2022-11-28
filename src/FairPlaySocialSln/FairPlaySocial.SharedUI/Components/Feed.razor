@@ -67,6 +67,10 @@
                 {
                     <p>Tag3: @singlePostModel.Tag3</p>
                 }
+                @if (!String.IsNullOrWhiteSpace(singlePostModel.Url))
+                {
+                    <p>Url: @singlePostModel.Url</p>
+                }
             </div>
         </div>
     }

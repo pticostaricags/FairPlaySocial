@@ -14,6 +14,10 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
             CreateMap<Post, PostModel>()
                 .AfterMap((source, dest) =>
                 {
+                    if (source.PostUrl is { Count: > 0 })
+                    {
+                        dest.Url = source.PostUrl.First().Url;
+                    }
                     if (source.PostTag is { Count: 3 })
                     {
                         dest.Tag1 = source.PostTag.ElementAt(0).Tag;
@@ -45,6 +49,13 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
             CreateMap<CreatePostModel, Post>()
                 .AfterMap((source, dest) =>
                 {
+                    if (!String.IsNullOrWhiteSpace(source.Url))
+                    {
+                        dest.PostUrl.Add(new PostUrl()
+                        {
+                            Url = source.Url
+                        });
+                    }
                     if (source.Photo != null)
                     {
                         dest.Photo = new Photo()
