@@ -26,6 +26,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ErrorLog> ErrorLog { get; set; }
 
+    public virtual DbSet<ForbiddenUrl> ForbiddenUrl { get; set; }
+
     public virtual DbSet<LikedPost> LikedPost { get; set; }
 
     public virtual DbSet<Photo> Photo { get; set; }

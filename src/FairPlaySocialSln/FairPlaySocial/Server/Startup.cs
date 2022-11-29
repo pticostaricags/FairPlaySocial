@@ -60,7 +60,7 @@ namespace FairPlaySocial.Server
             {
                 hubOptions.MaximumReceiveMessageSize= 20 * 1024 * 1024;
             });
-            AddPlatformServices(services);
+            services.AddPlatformServices();
 
             services.AddTransient(serviceProvider =>
             {
@@ -266,20 +266,6 @@ namespace FairPlaySocial.Server
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapFallbackToFile("index.html");
             });
-        }
-
-        static void AddPlatformServices(IServiceCollection services)
-        {
-            services.AddTransient<ApplicationUserService>();
-            services.AddTransient<PhotoService>();
-            services.AddTransient<UserPreferenceService>();
-            services.AddTransient<PostService>();
-            services.AddTransient<ApplicationUserFollowService>();
-            services.AddTransient<UserProfileService>();
-            services.AddTransient<LikedPostService>();
-            services.AddTransient<DislikedPostService>();
-            services.AddTransient<PostTagService>();
-            services.AddTransient<PostUrlService>();
         }
     }
 }

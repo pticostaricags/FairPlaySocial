@@ -39,6 +39,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ForbiddenUrl]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[LikedPost]",
          "ObjectType": 0
       },

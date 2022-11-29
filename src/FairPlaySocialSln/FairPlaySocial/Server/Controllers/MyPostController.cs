@@ -2,6 +2,7 @@
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Notifications.Hubs;
 using FairPlaySocial.Services;
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -35,9 +38,33 @@ namespace FairPlaySocial.Server.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateMyPostAsync(
             [FromServices] ApplicationUserService applicationUserService,
+            [FromServices] ForbiddenUrlService forbiddenUrlService,
+            [FromServices] HttpClient httpClient,
             CreatePostModel createPostModel,
             CancellationToken cancellationToken)
         {
+            if (!String.IsNullOrWhiteSpace(createPostModel.Url))
+            {
+                //Check https://stackoverflow.com/questions/2569851/how-to-expand-urls-in-c
+                var response = await httpClient.GetAsync(createPostModel.Url);
+                string redirectUrl = String.Empty;
+                if (
+                    (response.StatusCode == System.Net.HttpStatusCode.Redirect ||
+                    response.StatusCode == System.Net.HttpStatusCode.Moved) &&
+                    !String.IsNullOrWhiteSpace(response.Headers.Location?.AbsoluteUri))
+                {
+                    redirectUrl = response.Headers.Location!.AbsoluteUri;
+                }
+                var isForbiddeUrl = await forbiddenUrlService
+                    .GetAllForbiddenUrl(trackEntities: false, cancellationToken: cancellationToken)
+                    .Where(p => EF.Functions.Like(createPostModel.Url, "%" + p.Url + "%")
+                    || EF.Functions.Like(redirectUrl, "%" + p.Url + "%"))
+                    .AnyAsync(cancellationToken: cancellationToken);
+                if (isForbiddeUrl)
+                {
+                    throw new CustomValidationException($"Forbidden url: {createPostModel.Url}");
+                }
+            }
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
             entity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             entity =
