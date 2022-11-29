@@ -11,7 +11,7 @@ namespace FairPlaySocial.MAUIBlazor.Platforms.Android
         Categories = new[] { global::Android.Content.Intent.CategoryBrowsable,
             global::Android.Content.Intent.CategoryDefault },
         DataHost = "auth",
-        DataScheme = "msal74369fca-6e6f-4e55-9426-91fa6ded6f4a")]
+        DataScheme = "msal86fd3439-fca2-4b8f-89c0-bdb4b13c520e")]
 #else
     [IntentFilter(new[] { global::Android.Content.Intent.ActionView },
             Categories = new[] { global::Android.Content.Intent.CategoryBrowsable,
