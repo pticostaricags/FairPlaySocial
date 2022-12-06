@@ -22,7 +22,7 @@ on:
 env:
   CONFIGURATION: Debug
   DOTNET_CORE_VERSION: 7.0.x
-  WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial
+  WORKING_DIRECTORY: src/FairPlaySocialSln
   TESTS_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
 jobs:
   analyze:
