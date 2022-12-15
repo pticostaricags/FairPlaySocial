@@ -89,9 +89,17 @@ namespace FairPlaySocial.Server.Controllers
         {
             var result =
                 await this.postService!.GetPostHistoryByPostId(postId)!
-                .Where(p=>p.PostVisibilityId == 
+                .Where(p => p.PostVisibilityId ==
                 (short)Common.Enums.PostVisibility.Public)
-                .Select(p => this.mapper!.Map<Post, PostModel>(p))
+                .OrderBy(p=> EF.Property<DateTime>(p, nameof(PostModel.ValidFrom)))
+                .Select(p => new PostModel()
+                {
+                    PostId = p.PostId,
+                    Text = p.Text,
+                    ValidFrom = EF.Property<DateTime>(p, nameof(PostModel.ValidFrom)),
+                    ValidTo = EF.Property<DateTime>(p, nameof(PostModel.ValidTo)),
+                    RowCreationDateTime = p.RowCreationDateTime
+                })
                 .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }

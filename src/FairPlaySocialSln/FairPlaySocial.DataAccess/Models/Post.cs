@@ -38,10 +38,6 @@ public partial class Post
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
 
-    public DateTime ValidFrom { get; set; }
-
-    public DateTime ValidTo { get; set; }
-
     [InverseProperty("Post")]
     public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
 

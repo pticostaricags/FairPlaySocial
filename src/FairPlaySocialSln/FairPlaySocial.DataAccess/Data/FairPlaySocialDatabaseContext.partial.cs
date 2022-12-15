@@ -1,5 +1,6 @@
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.Common.Providers;
+using FairPlaySocial.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,6 +16,11 @@ namespace FairPlaySocial.DataAccess.Data
             this.CurrentUserProvider = currentUserProvider;
         }
 
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Post>().Property<DateTime>("ValidFrom");
+            modelBuilder.Entity<Post>().Property<DateTime>("ValidTo");
+        }
 
         public override int SaveChanges()
         {
