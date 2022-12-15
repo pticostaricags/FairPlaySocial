@@ -54,6 +54,10 @@
                         <i class="bi bi-hand-thumbs-down-fill"></i>
                     </button>
                 }
+                <button class="btn"
+                @onclick="@( async () => await GetPostHistoryAsync(singlePostModel))">
+                    <i class="bi bi-clock-history"></i>
+                </button>
                 <p>@singlePostModel.LikesCount like(s)</p>
                 @if (singlePostModel.Tag1 is not null)
                 {
@@ -116,6 +120,37 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
                 </button>
             }
 
+        </Content>
+    </CustomModal>
+}
+@if (this.ShowPostHistory == true)
+{
+    <CustomModal OkButtonText="OK" OnCloseButtonClicked="HidePostHistoryModal"
+             ShowFooter="false">
+        <Title>Post History</Title>
+        <Content>
+            @if (this.SelectedPostHistory?.Length > 0)
+            {
+                <ul>
+                    @foreach (var singlePostHistory in this.SelectedPostHistory)
+                    {
+                        <li>
+                            <div>
+                                <strong>Text: </strong>
+                                @singlePostHistory.Text
+                            </div>
+                            <div>
+                                <strong>From: </strong>
+                                @singlePostHistory.ValidFrom
+                            </div>
+                            <div>
+                                <strong>To: </strong>
+                                @singlePostHistory.ValidTo
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
         </Content>
     </CustomModal>
 }

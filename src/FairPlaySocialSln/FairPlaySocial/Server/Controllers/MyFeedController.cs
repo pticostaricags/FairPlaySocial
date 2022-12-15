@@ -83,5 +83,17 @@ namespace FairPlaySocial.Server.Controllers
             }
             return result;
         }
+
+        [HttpGet("[action]")]
+        public async Task<PostModel[]?> GetPostHistoryByPostIdAsync(long postId, CancellationToken cancellationToken)
+        {
+            var result =
+                await this.postService!.GetPostHistoryByPostId(postId)!
+                .Where(p=>p.PostVisibilityId == 
+                (short)Common.Enums.PostVisibility.Public)
+                .Select(p => this.mapper!.Map<Post, PostModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            return result;
+        }
     }
 }

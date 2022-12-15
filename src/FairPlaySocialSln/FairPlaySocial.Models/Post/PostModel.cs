@@ -30,5 +30,7 @@ namespace FairPlaySocial.Models.Post
         public string? Tag3 { get; set; }
         [Url]
         public string? Url { get; set; }
+        public DateTime ValidFrom { get; set; }
+        public DateTime ValidTo { get; set; }
     }
 }

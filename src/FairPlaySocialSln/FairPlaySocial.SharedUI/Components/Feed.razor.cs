@@ -34,12 +34,16 @@ namespace FairPlaySocial.SharedUI.Components
         private PublicUserProfileClientService? PublicUserProfileClientService { get; set; }
         [Inject]
         private MyLikedPostsClientService? MyLikedPostsClientService { get; set; }
+        [Inject]
+        private MyFeedClientService? MyFeedClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
         public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
         private UserProfileModel? MySelectedAuthorUserProfile { get; set; }
+        private PostModel[]? SelectedPostHistory { get; set; }
         private bool IsBusy { get; set; }
+        private bool ShowPostHistory { get; set; } = false;
         protected override async Task OnInitializedAsync()
         {
             try
@@ -235,6 +239,32 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = false;
             }
+        }
+
+        private async Task GetPostHistoryAsync(PostModel? postModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                this.SelectedPostHistory = await this.MyFeedClientService!
+                    .GetPostHistoryByPostIdAsync(postModel!.PostId!.Value, this.CancellationToken);
+                this.ShowPostHistory = true;
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, this.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private void HidePostHistoryModal()
+        {
+            this.ShowPostHistory = false;
+            this.SelectedPostHistory = null;
         }
     }
 }
