@@ -21,4 +21,7 @@ public partial class PostVisibility
     [Required]
     [StringLength(50)]
     public string Description { get; set; }
+
+    [InverseProperty("PostVisibility")]
+    public virtual ICollection<Post> Post { get; } = new List<Post>();
 }

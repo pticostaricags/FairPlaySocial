@@ -1,4 +1,5 @@
-﻿@inherits CustomBaseComponent
+﻿@using FairPlaySocial.Common.Enums;
+@inherits CustomBaseComponent
 
 <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
 
@@ -13,6 +14,18 @@
         <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
                        @bind-Value="@this.createPostModel.Text"></InputTextArea>
         <ValidationMessage For="@( () => this.createPostModel.Text)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Post Visibility"></AudibleLabel>
+        <InputSelect ValueChanged="@( (short? value) => this.createPostModel.PostVisibilityId = value )"
+                     ValueExpression="@( ()=> this.createPostModel.PostVisibilityId)"
+                     Value="@this.createPostModel.PostVisibilityId"
+                     class="@ThemeConfiguration.Selects.DefaultCss">
+            <option value=""></option>
+            <option value="@((short)PostVisibility.Public)">@PostVisibility.Public.ToString()</option>
+            <option value="@((short)PostVisibility.Subscribers)">@PostVisibility.Subscribers.ToString()</option>
+        </InputSelect>
+        <ValidationMessage For="@( () => this.createPostModel.PostVisibilityId)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <AudibleLabel ItemText="Post Photo:"></AudibleLabel>

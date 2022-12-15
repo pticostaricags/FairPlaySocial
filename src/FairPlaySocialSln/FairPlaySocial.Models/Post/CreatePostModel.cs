@@ -34,5 +34,8 @@ namespace FairPlaySocial.Models.Post
         public string? Tag3 { get; set; }
         [Url]
         public string? Url { get; set; }
+        [Required]
+        [Range(1, 2)]
+        public short? PostVisibilityId { get; set; }
     }
 }

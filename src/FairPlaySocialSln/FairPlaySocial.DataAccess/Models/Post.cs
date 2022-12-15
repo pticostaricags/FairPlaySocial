@@ -13,11 +13,13 @@ public partial class Post
     [Key]
     public long PostId { get; set; }
 
+    public short PostVisibilityId { get; set; }
+
+    public long PhotoId { get; set; }
+
     [Required]
     [StringLength(500)]
     public string Text { get; set; }
-
-    public long PhotoId { get; set; }
 
     public long OwnerApplicationUserId { get; set; }
 
@@ -55,4 +57,8 @@ public partial class Post
 
     [InverseProperty("Post")]
     public virtual ICollection<PostUrl> PostUrl { get; } = new List<PostUrl>();
+
+    [ForeignKey("PostVisibilityId")]
+    [InverseProperty("Post")]
+    public virtual PostVisibility PostVisibility { get; set; }
 }

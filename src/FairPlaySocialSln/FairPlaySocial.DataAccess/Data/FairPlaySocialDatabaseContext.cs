@@ -99,6 +99,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
+            entity.Property(e => e.PostVisibilityId).HasDefaultValueSql("1");
+
             entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_ApplicationUser");
@@ -106,6 +108,10 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.Photo).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_Photo");
+
+            entity.HasOne(d => d.PostVisibility).WithMany(p => p.Post)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post_PostVisibility");
         });
 
         modelBuilder.Entity<PostTag>(entity =>

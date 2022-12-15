@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
@@ -36,12 +37,14 @@ namespace FairPlaySocial.Server.Controllers
             [FromServices] DislikedPostService dislikedPostService,
             CancellationToken cancellationToken)
         {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
                 .Include(p => p.OwnerApplicationUser)
                 .Include(P => P.Photo)
                 .Include(p => p.LikedPost)
-                .Include(p=>p.PostTag)
-                .Include(p=>p.PostUrl);
+                .Include(p => p.PostTag)
+                .Include(p => p.PostUrl)
+                .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public);
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;
@@ -54,20 +57,20 @@ namespace FairPlaySocial.Server.Controllers
                 .ToArrayAsync(cancellationToken: cancellationToken);
             var resultingPostsIds = result.Items.Select(p => p.PostId).ToArray();
             var myLikedPosts = await likedPostService.GetAllLikedPost(trackEntities: false, cancellationToken: cancellationToken)
-                .Where(p => p.LikingApplicationUserId == this.currentUserProvider.GetApplicationUserId() &&
+                .Where(p => p.LikingApplicationUserId == myApplicationUserId &&
                 resultingPostsIds.Contains(p.PostId))
                 .ToArrayAsync(cancellationToken: cancellationToken);
             if (myLikedPosts.Any())
             {
-                foreach (var singleLikedPost in myLikedPosts) 
+                foreach (var singleLikedPost in myLikedPosts)
                 {
-                    var matchingItem = result.Items.Single(p=>p.PostId== singleLikedPost.PostId);
+                    var matchingItem = result.Items.Single(p => p.PostId == singleLikedPost.PostId);
                     matchingItem.IsLiked = true;
                 }
             }
 
             var myDislikedPosts = await dislikedPostService.GetAllDislikedPost(trackEntities: false, cancellationToken: cancellationToken)
-                .Where(p => p.DislikingApplicationUserId == this.currentUserProvider.GetApplicationUserId() &&
+                .Where(p => p.DislikingApplicationUserId == myApplicationUserId &&
                 resultingPostsIds.Contains(p.PostId))
                 .ToArrayAsync(cancellationToken: cancellationToken);
             if (myDislikedPosts.Any())
