@@ -98,4 +98,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ForbiddenUrlId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="cae84aa6-3798-4769-b811-ce28011e417a" ChangeDateTime="12/15/2022 12:45:40">
+    <Property Name="ElementName" Value="[dbo].[PostVisibility].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PostVisibility]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostVisibilityId" />
+  </Operation>
 </Operations>

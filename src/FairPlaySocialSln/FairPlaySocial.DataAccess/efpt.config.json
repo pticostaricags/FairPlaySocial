@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 3,
-   "ContextClassName": "FairPlaySocial.DatabaseContext",
+   "ContextClassName": "FairPlaySocialDatabaseContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
@@ -60,6 +60,10 @@
       },
       {
          "Name": "[dbo].[PostUrl]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PostVisibility]",
          "ObjectType": 0
       },
       {

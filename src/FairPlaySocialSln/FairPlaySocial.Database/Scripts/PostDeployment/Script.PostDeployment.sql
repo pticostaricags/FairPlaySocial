@@ -9,6 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+BEGIN TRANSACTION
 --START OF DEFAULT APPLICATION ROLES
 SET IDENTITY_INSERT [dbo].[ApplicationRole] ON
 DECLARE @ROLE_USER NVARCHAR(50)  = 'User'
@@ -22,4 +23,21 @@ BEGIN
     INSERT INTO [dbo].[ApplicationRole]([ApplicationRoleId],[Name],[Description]) VALUES(3, @ROLE_USER, 'Admin Users')
 END
 SET IDENTITY_INSERT [dbo].[ApplicationRole] OFF
---START OF DEFAULT APPLICATION ROLES
+--END OF DEFAULT APPLICATION ROLES
+--START OF DEFAULT POST VISIBILITY
+SET IDENTITY_INSERT [dbo].[PostVisibility] ON
+DECLARE @POST_VISIBILITY_ID SMALLINT = 1
+IF NOT EXISTS (SELECT * FROM [dbo].[PostVisibility] PV WHERE [PV].[Name] = 'Public')
+BEGIN
+    INSERT INTO [dbo].[PostVisibility]([PostVisibilityId],[Name],[Description])
+    VALUES (@POST_VISIBILITY_ID, 'Public', 'Visible to everyone')
+END
+SET @POST_VISIBILITY_ID = 2
+IF NOT EXISTS (SELECT * FROM [dbo].[PostVisibility] PV WHERE [PV].[Name] = 'Subscribers')
+BEGIN
+    INSERT INTO [dbo].[PostVisibility]([PostVisibilityId],[Name],[Description])
+    VALUES (@POST_VISIBILITY_ID, 'Subscribers', 'Visible to subscribers only')
+END
+SET IDENTITY_INSERT [dbo].[PostVisibility] OFF
+--END OF DEFAULT POST VISIBILITY
+COMMIT

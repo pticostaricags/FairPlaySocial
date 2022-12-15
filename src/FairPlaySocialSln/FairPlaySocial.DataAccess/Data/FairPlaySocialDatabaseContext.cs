@@ -38,6 +38,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<PostUrl> PostUrl { get; set; }
 
+    public virtual DbSet<PostVisibility> PostVisibility { get; set; }
+
     public virtual DbSet<UserPreference> UserPreference { get; set; }
 
     public virtual DbSet<UserProfile> UserProfile { get; set; }
