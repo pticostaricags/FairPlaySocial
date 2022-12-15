@@ -1,6 +1,7 @@
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.Common.Providers;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.Post;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,8 +19,12 @@ namespace FairPlaySocial.DataAccess.Data
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Post>().Property<DateTime>("ValidFrom");
-            modelBuilder.Entity<Post>().Property<DateTime>("ValidTo");
+            modelBuilder.Entity<Post>().ToTable(nameof(Post), p => p.IsTemporal(b =>
+            {
+                b.HasPeriodStart(nameof(PostModel.ValidFrom));
+                b.HasPeriodEnd(nameof(PostModel.ValidTo));
+                b.UseHistoryTable($"{nameof(Post)}Hitory");
+            }));
         }
 
         public override int SaveChanges()
