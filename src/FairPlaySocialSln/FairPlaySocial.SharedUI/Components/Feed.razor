@@ -65,6 +65,10 @@
                         <i class="bi bi-pencil-fill"></i>
                     </button>
                 }
+                <button class="btn"
+                @onclick="@( () => ReSharePost(singlePostModel))">
+                    <i class="bi bi-fast-forward-circle-fill"></i>
+                </button>
                 <p>@singlePostModel.LikesCount like(s)</p>
                 @if (singlePostModel.Tag1 is not null)
                 {
@@ -171,6 +175,35 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
             <EditPostModal OnPostUpdated="OnPostUpdated"
                        PostModel="@this.SelectedPostModel"
                        CancellationToken="@this.CancellationToken"></EditPostModal>
+        </Content>
+    </CustomModal>
+}
+@if (ShowReShareModal && this.SelectedPostModel != null)
+{
+    <CustomModal OkButtonText="OK"
+             OnCloseButtonClicked="HidePostReShareModal"
+             ShowFooter="false">
+        <Title>ReShare Post</Title>
+        <Content>
+            <EditForm Model="@this.createSharedPostModel" OnValidSubmit="OnValidSubmitForReSharePostAsync">
+                <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+                    <ValidationSummary></ValidationSummary>
+                </div>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
+                    <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
+                               @bind-Value="@this.createSharedPostModel!.Text"></InputTextArea>
+                    <ValidationMessage For="@( () => this.createSharedPostModel!.Text)"></ValidationMessage>
+                </div>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <button type="submit"
+                        class="@ThemeConfiguration.Buttons.PrimaryButtonCss">
+                        ReShare
+                    </button>
+                </div>
+            </EditForm>
         </Content>
     </CustomModal>
 }

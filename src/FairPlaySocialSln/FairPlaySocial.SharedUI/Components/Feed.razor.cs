@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,8 @@ namespace FairPlaySocial.SharedUI.Components
         private MyLikedPostsClientService? MyLikedPostsClientService { get; set; }
         [Inject]
         private MyFeedClientService? MyFeedClientService { get; set; }
+        [Inject]
+        private MyPostClientService? MyPostClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
@@ -45,6 +48,8 @@ namespace FairPlaySocial.SharedUI.Components
         private bool IsBusy { get; set; }
         private bool ShowPostHistory { get; set; } = false;
         private bool ShowPostEditModal { get; set; } = false;
+        private bool ShowReShareModal { get; set; } = false;
+        private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
         protected override async Task OnInitializedAsync()
         {
             try
@@ -274,6 +279,16 @@ namespace FairPlaySocial.SharedUI.Components
             this.ShowPostEditModal = true;
         }
 
+        private void ReSharePost(PostModel? postModel) 
+        {
+            this.createSharedPostModel = new CreateSharedPostModel()
+            {
+                CreatedFromPostId = postModel!.PostId
+            };
+            this.SelectedPostModel = postModel;
+            this.ShowReShareModal = true;
+        }
+
         private void HidePostEditModal()
         {
             this.ShowPostEditModal = false;
@@ -284,6 +299,35 @@ namespace FairPlaySocial.SharedUI.Components
         {
             StateHasChanged();
             HidePostEditModal();
+        }
+
+        private void HidePostReShareModal()
+        {
+            this.ShowReShareModal = false;
+            this.SelectedPostModel = null;
+            this.createSharedPostModel = null;
+        }
+
+        private async Task OnValidSubmitForReSharePostAsync()
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyPostClientService!
+                    .CreateSharedPostAsync(this.createSharedPostModel!, base.CancellationToken);
+                await ToastService!
+                    .ShowSuccessMessageAsync("Post has been Re-Shared", base.CancellationToken);
+                this.HidePostReShareModal();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
     }
 }

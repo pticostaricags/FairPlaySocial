@@ -101,13 +101,13 @@ public partial class FairPlaySocialDatabaseContext : DbContext
         {
             entity.Property(e => e.PostVisibilityId).HasDefaultValueSql("1");
 
+            entity.HasOne(d => d.CreatedFromPost).WithMany(p => p.InverseCreatedFromPost).HasConstraintName("FK_Post_Post");
+
             entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_ApplicationUser");
 
-            entity.HasOne(d => d.Photo).WithMany(p => p.Post)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Post_Photo");
+            entity.HasOne(d => d.Photo).WithMany(p => p.Post).HasConstraintName("FK_Post_Photo");
 
             entity.HasOne(d => d.PostVisibility).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)

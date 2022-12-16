@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Hosting;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -25,19 +26,61 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
         private readonly IHubContext<NotificationHub, INotificationHub> hubContext;
-        public MyPostController(IMapper mapper,
-            ICurrentUserProvider currentUserProvider, PostService postService,
+        private readonly ApplicationUserService applicationUserService;
+        public MyPostController(
+            IMapper mapper,
+            ICurrentUserProvider currentUserProvider,
+            ApplicationUserService applicationUserService,
+            PostService postService,
             IHubContext<NotificationHub, INotificationHub> hubContext)
         {
             this.mapper = mapper;
             this.currentUserProvider = currentUserProvider;
             this.postService = postService;
             this.hubContext = hubContext;
+            this.applicationUserService = applicationUserService;
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateSharedPostAsync(
+            CreateSharedPostModel createSharedPostModel,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var postEntity = await this.postService
+                .GetPostByIdAsync(createSharedPostModel.CreatedFromPostId!.Value,
+                trackEntities: false, cancellationToken: cancellationToken);
+            if (postEntity == null)
+            {
+                throw new CustomValidationException("Unable to find specified post");
+            }
+            if (postEntity.PostVisibilityId !=
+                (short)Common.Enums.PostVisibility.Public)
+            {
+                throw new CustomValidationException("Only public posts can be shared");
+            }
+            postEntity.PostId = 0;
+            postEntity.CreatedFromPostId = createSharedPostModel.CreatedFromPostId;
+            postEntity.Text = createSharedPostModel.Text;
+            postEntity.OwnerApplicationUserId = myApplicationUserId;
+            postEntity =await this.postService.CreatePostAsync(postEntity, cancellationToken: cancellationToken);
+            var post = this.mapper.Map<Post, PostModel>(postEntity);
+            //TODO: Consider using groups to send only to users in the "Home Feed" page
+            var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
+            post.OwnerApplicationUserFullName = userEntity.FullName;
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            {
+                From = userEntity.FullName,
+                GroupName = null,
+                Message = postEntity.Text,
+                Post = post
+            });
+            return Ok();
+
         }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateMyPostAsync(
-            [FromServices] ApplicationUserService applicationUserService,
             [FromServices] ForbiddenUrlService forbiddenUrlService,
             [FromServices] HttpClient httpClient,
             CreatePostModel createPostModel,

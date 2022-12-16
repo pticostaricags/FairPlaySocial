@@ -18,6 +18,15 @@ namespace FairPlaySocial.ClientServices
             this.httpClientService = httpClientService;
         }
 
+        public async Task CreateSharedPostAsync(
+            CreateSharedPostModel createSharedPostModel,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = "api/MyPost/CreateSharedPost";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync(requestUrl, createSharedPostModel, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+        }
         public async Task CreateMyPostAsync(CreatePostModel createPostModel,
             CancellationToken cancellationToken)
         {

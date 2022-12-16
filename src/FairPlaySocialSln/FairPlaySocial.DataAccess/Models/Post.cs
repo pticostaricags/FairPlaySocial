@@ -15,7 +15,7 @@ public partial class Post
 
     public short PostVisibilityId { get; set; }
 
-    public long PhotoId { get; set; }
+    public long? PhotoId { get; set; }
 
     [Required]
     [StringLength(500)]
@@ -38,8 +38,17 @@ public partial class Post
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
 
+    public long? CreatedFromPostId { get; set; }
+
+    [ForeignKey("CreatedFromPostId")]
+    [InverseProperty("InverseCreatedFromPost")]
+    public virtual Post CreatedFromPost { get; set; }
+
     [InverseProperty("Post")]
     public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
+
+    [InverseProperty("CreatedFromPost")]
+    public virtual ICollection<Post> InverseCreatedFromPost { get; } = new List<Post>();
 
     [InverseProperty("Post")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
