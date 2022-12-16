@@ -26,5 +26,16 @@ namespace FairPlaySocial.ClientServices
             var response = await authorizedHttpClient.PostAsJsonAsync(requestUrl, createPostModel, cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
         }
+
+        public async Task<PostModel?> UpdateMyPostTextAsync(PostModel postModel,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyPost/UpdateMyPostText";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PutAsJsonAsync(requestUrl, postModel, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<PostModel>();
+            return result;
+        }
     }
 }

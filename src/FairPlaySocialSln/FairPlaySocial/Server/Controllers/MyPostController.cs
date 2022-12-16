@@ -82,5 +82,26 @@ namespace FairPlaySocial.Server.Controllers
             });
             return Ok();
         }
+
+        [HttpPut("[action]")]
+        public async Task<PostModel> UpdateMyPostTextAsync(PostModel postModel,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var postEntity = await this.postService
+                .GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Where(p => p.PostId == postModel.PostId &&
+                p.OwnerApplicationUserId == myApplicationUserId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (postEntity == null)
+            {
+                throw new CustomValidationException($"Unable to find an owned post " +
+                    $"with {nameof(postModel.PostId)}: {postModel.PostId}");
+            }
+            postEntity.Text = postModel.Text;
+            await this.postService.UpdatePostAsync(postEntity, cancellationToken: cancellationToken);
+            var result = this.mapper.Map<Post, PostModel>(postEntity);
+            return result;
+        }
     }
 }

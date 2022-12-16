@@ -44,6 +44,7 @@ namespace FairPlaySocial.SharedUI.Components
         private PostModel[]? SelectedPostHistory { get; set; }
         private bool IsBusy { get; set; }
         private bool ShowPostHistory { get; set; } = false;
+        private bool ShowPostEditModal { get; set; } = false;
         protected override async Task OnInitializedAsync()
         {
             try
@@ -210,7 +211,7 @@ namespace FairPlaySocial.SharedUI.Components
                     .RemoveLikeFromPostAsync(postModel!.PostId!.Value, base.CancellationToken);
                 postModel.IsLiked = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await this.ToastService!
                     .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
@@ -265,6 +266,24 @@ namespace FairPlaySocial.SharedUI.Components
         {
             this.ShowPostHistory = false;
             this.SelectedPostHistory = null;
+        }
+
+        private void EditPost(PostModel? postModel)
+        {
+            this.SelectedPostModel = postModel;
+            this.ShowPostEditModal = true;
+        }
+
+        private void HidePostEditModal()
+        {
+            this.ShowPostEditModal = false;
+            this.SelectedPostModel = null;
+        }
+
+        private void OnPostUpdated(PostModel postModel)
+        {
+            StateHasChanged();
+            HidePostEditModal();
         }
     }
 }

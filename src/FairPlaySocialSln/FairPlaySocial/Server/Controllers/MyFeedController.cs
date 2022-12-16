@@ -81,6 +81,10 @@ namespace FairPlaySocial.Server.Controllers
                     matchingItem.IsDisliked = true;
                 }
             }
+            foreach (var singlePost in result.Items)
+            {
+                singlePost.IsOwned = (singlePost.OwnerApplicationUserId == myApplicationUserId);
+            }
             return result;
         }
 

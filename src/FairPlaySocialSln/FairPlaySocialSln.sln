@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Notification
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.MultiplatformServices", "FairPlaySocial.MultiplatformServices\FairPlaySocial.MultiplatformServices.csproj", "{849DCC6B-86FA-466B-80D7-0692123DDB6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlaySocial.CustomValidation", "FairPlaySocial.CustomValidation\FairPlaySocial.CustomValidation.csproj", "{DA551784-8EBE-440B-8FB6-CE3139F174C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.CustomValidation", "FairPlaySocial.CustomValidation\FairPlaySocial.CustomValidation.csproj", "{DA551784-8EBE-440B-8FB6-CE3139F174C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

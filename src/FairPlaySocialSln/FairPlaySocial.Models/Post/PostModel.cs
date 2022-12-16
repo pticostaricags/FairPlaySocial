@@ -32,5 +32,6 @@ namespace FairPlaySocial.Models.Post
         public string? Url { get; set; }
         public DateTime ValidFrom { get; set; }
         public DateTime ValidTo { get; set; }
+        public bool IsOwned { get; set; }
     }
 }

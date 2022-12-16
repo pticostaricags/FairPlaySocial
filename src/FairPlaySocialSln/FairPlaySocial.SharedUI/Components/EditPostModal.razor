@@ -1,0 +1,21 @@
+﻿<h3>EditPostModal</h3>
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<EditForm Model="@this.PostModel" OnValidSubmit="OnValidSubmitAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
+        <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
+                       @bind-Value="@this.PostModel!.Text"></InputTextArea>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <button type="submit"
+                class="@ThemeConfiguration.Buttons.PrimaryButtonCss">
+            Edit Post
+        </button>
+    </div>
+</EditForm>

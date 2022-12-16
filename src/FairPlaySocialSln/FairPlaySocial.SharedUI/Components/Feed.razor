@@ -58,6 +58,13 @@
                 @onclick="@( async () => await GetPostHistoryAsync(singlePostModel))">
                     <i class="bi bi-clock-history"></i>
                 </button>
+                @if (singlePostModel.IsOwned)
+                {
+                    <button class="btn"
+                @onclick="@( () => EditPost(singlePostModel))">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                }
                 <p>@singlePostModel.LikesCount like(s)</p>
                 @if (singlePostModel.Tag1 is not null)
                 {
@@ -151,6 +158,19 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
                     }
                 </ul>
             }
+        </Content>
+    </CustomModal>
+}
+@if (this.ShowPostEditModal && this.SelectedPostModel != null)
+{
+    <CustomModal OkButtonText="OK"
+             OnCloseButtonClicked="HidePostEditModal"
+             ShowFooter="false">
+        <Title>Edit Post</Title>
+        <Content>
+            <EditPostModal OnPostUpdated="OnPostUpdated"
+                       PostModel="@this.SelectedPostModel"
+                       CancellationToken="@this.CancellationToken"></EditPostModal>
         </Content>
     </CustomModal>
 }
