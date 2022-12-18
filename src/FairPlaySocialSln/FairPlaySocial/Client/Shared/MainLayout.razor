@@ -8,6 +8,7 @@
                 <AuthorizeView>
                     <Authorized>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>
+                        <p>@UserState.UserContext.FullName</p>
                     </Authorized>
                     <NotAuthorized>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLoginClicked())">Log In</button>

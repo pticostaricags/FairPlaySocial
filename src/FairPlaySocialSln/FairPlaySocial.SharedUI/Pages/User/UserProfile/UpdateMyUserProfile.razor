@@ -21,12 +21,20 @@
         <label class="@ThemeConfiguration.Labels.DefaultCss">YouTube Nickname:</label>
         <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
                    @bind-Value="@this.createUserProfileModel.YouTubeNickname"></InputText>
+        @if (!String.IsNullOrWhiteSpace(this.createUserProfileModel.YouTubeNickname))
+        {
+            <a href="@this.createUserProfileModel.YouTubeLink" target="_blank">@this.createUserProfileModel.YouTubeLink</a>
+        }
         <ValidationMessage For="@( () => this.createUserProfileModel.YouTubeNickname)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <label class="@ThemeConfiguration.Labels.DefaultCss">LinkedIn Nickname:</label>
         <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
                    @bind-Value="@this.createUserProfileModel.LinkedInNickname"></InputText>
+        @if (!String.IsNullOrWhiteSpace(this.createUserProfileModel.LinkedInNickname))
+        {
+            <a href="@this.createUserProfileModel.LinkedInLink" target="_blank">@this.createUserProfileModel.LinkedInLink</a>
+        }
         <ValidationMessage For="@( () => this.createUserProfileModel.LinkedInNickname)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">

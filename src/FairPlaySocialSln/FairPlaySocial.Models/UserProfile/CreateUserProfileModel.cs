@@ -15,6 +15,10 @@ namespace FairPlaySocial.Models.UserProfile
 
         [StringLength(50)]
         public string? LinkedInNickname { get; set; }
+        public string? LinkedInLink =>
+            String.IsNullOrWhiteSpace(LinkedInNickname) ?
+            String.Empty :
+            $"https://www.linkedin.com/in/{LinkedInNickname}";
 
         [StringLength(50)]
         public string? TwitterNickname { get; set; }
@@ -27,5 +31,9 @@ namespace FairPlaySocial.Models.UserProfile
 
         [StringLength(50)]
         public string? YouTubeNickname { get; set; }
+        public string? YouTubeLink =>
+            String.IsNullOrWhiteSpace(YouTubeNickname) ?
+            String.Empty :
+            $"https://youtube.com/c/{YouTubeNickname}";
     }
 }
