@@ -5,8 +5,7 @@
 <LoadingIndicator IsLoading="@this.IsLoading"></LoadingIndicator>
 
 <h1>
-    <AudibleLabel 
-        ItemText="@base.WhiteLabelingService!.WhiteLabelingData?.ApplicationName">
+    <AudibleLabel ItemText="@($"{base.WhiteLabelingService!.WhiteLabelingData?.ApplicationName} (Beta)")">
     </AudibleLabel>
 </h1>
 <p>
