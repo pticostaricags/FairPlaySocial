@@ -50,6 +50,7 @@
                         <i class="bi bi-hand-thumbs-up-fill"></i>
                     </button>
                 }
+                (@singlePostModel.LikesCount)
                 @if (singlePostModel.IsDisliked == false)
                 {
                     <button class="btn"
@@ -64,6 +65,7 @@
                         <i class="bi bi-hand-thumbs-down-fill"></i>
                     </button>
                 }
+                (@singlePostModel.DisLikesCount)
                 <button class="btn"
                 @onclick="@( async () => await GetPostHistoryAsync(singlePostModel))">
                     <i class="bi bi-clock-history"></i>
@@ -79,20 +81,32 @@
                 @onclick="@( () => ReSharePost(singlePostModel))">
                     <i class="bi bi-fast-forward-circle-fill"></i>
                 </button>
-                <p>@singlePostModel.LikesCount like(s)</p>
-                <p>@singlePostModel.DisLikesCount dislike(s)</p>
-                @if (singlePostModel.Tag1 is not null)
+                @if (singlePostModel.Tag1 is not null || singlePostModel.Tag2 is not null || singlePostModel.Tag3 is not null)
                 {
-                    <p>Tag1: @singlePostModel.Tag1</p>
+                    <p>
+                        Tag(s):
+                    </p>
                 }
-                @if (singlePostModel.Tag2 is not null)
-                {
-                    <p>Tag2: @singlePostModel.Tag2</p>
-                }
-                @if (singlePostModel.Tag3 is not null)
-                {
-                    <p>Tag3: @singlePostModel.Tag3</p>
-                }
+                <ul class="nav nav-pills">
+                    @if (singlePostModel.Tag1 is not null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page">@singlePostModel.Tag1</a>
+                        </li>
+                    }
+                    @if (singlePostModel.Tag2 is not null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page">@singlePostModel.Tag2</a>
+                        </li>
+                    }
+                    @if (singlePostModel.Tag3 is not null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page">@singlePostModel.Tag3</a>
+                        </li>
+                    }
+                </ul>
                 @if (!String.IsNullOrWhiteSpace(singlePostModel.Url))
                 {
                     <p>Url: @singlePostModel.Url</p>
