@@ -4,6 +4,16 @@
 
 @if (this.PostModels?.Count > 0)
 {
+    @if (this.NotificationsQueue.Count > 0)
+    {
+        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+            <AudibleLabel ItemText="@PendingNotificationsMessage"></AudibleLabel>
+            <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss"
+            type="button" @onclick="ProcessEnqueuedNotifications">
+                Refresh
+            </button>
+        </div>
+    }
     foreach (var singlePostModel in this.PostModels)
     {
         <div class="@ThemeConfiguration.Chats.ChatItemSection">
@@ -70,6 +80,7 @@
                     <i class="bi bi-fast-forward-circle-fill"></i>
                 </button>
                 <p>@singlePostModel.LikesCount like(s)</p>
+                <p>@singlePostModel.DisLikesCount dislike(s)</p>
                 @if (singlePostModel.Tag1 is not null)
                 {
                     <p>Tag1: @singlePostModel.Tag1</p>

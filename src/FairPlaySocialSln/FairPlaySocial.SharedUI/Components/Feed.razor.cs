@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace FairPlaySocial.SharedUI.Components
 {
     public partial class Feed : IAsyncDisposable
     {
+        private const string PendingNotificationsMessage = """You have pending notifications. Use the "Refresh" button to reflect latest changes""";
         [Parameter]
         [EditorRequired]
         public List<PostModel> PostModels { get; set; } = new List<PostModel>();
@@ -50,6 +52,7 @@ namespace FairPlaySocial.SharedUI.Components
         private bool ShowPostEditModal { get; set; } = false;
         private bool ShowReShareModal { get; set; } = false;
         private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
+        private Queue<NotificationModel> NotificationsQueue { get; set; } = new();
         protected override async Task OnInitializedAsync()
         {
             try
@@ -66,11 +69,15 @@ namespace FairPlaySocial.SharedUI.Components
                     })
                     .Build();
 
-                this.HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, (model) =>
+                this.HubConnection.On(Constants.Hubs.ReceiveMessage, (Action<NotificationModel>)((model) =>
                 {
-                    this.PostModels.Insert(0, model.Post!);
+                    this.NotificationsQueue.Enqueue(model);
+                    if (this.NotificationsQueue.Count == 1)
+                        this.ToastService!
+                        .ShowSuccessMessageAsync(PendingNotificationsMessage, base.CancellationToken)
+                        .Wait();
                     StateHasChanged();
-                });
+                }));
                 await this.HubConnection.StartAsync();
             }
             catch (Exception ex)
@@ -82,6 +89,49 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = false;
             }
+        }
+
+        private void ProcessEnqueuedNotifications()
+        {
+            while (this.NotificationsQueue.Count > 0)
+            {
+                var model = this.NotificationsQueue.Dequeue();
+                ProcessNotification(model);
+            }
+        }
+
+        private void ProcessNotification(NotificationModel model)
+        {
+            switch (model.PostAction)
+            {
+                case PostAction.PostCreated:
+                    this.PostModels.Insert(0, model.Post!);
+                    break;
+                case PostAction.PostTextUpdate:
+                    var matchingPost = this.PostModels.SingleOrDefault(p => p.PostId == model.Post!.PostId);
+                    if (matchingPost != null)
+                        matchingPost.Text = model.Post!.Text;
+                    break;
+                case PostAction.LikeAdded:
+                case PostAction.LikeRemoved:
+                    var likeChangedPost = this.PostModels.SingleOrDefault(p => p.PostId == model.Post!.PostId);
+                    if (likeChangedPost != null)
+                    {
+                        likeChangedPost.LikesCount = model.Post!.LikesCount;
+                        likeChangedPost.IsLiked = model.Post!.IsLiked;
+                    }
+                    break;
+                case PostAction.DislikeAdded:
+                case PostAction.DislikeRemoved:
+                    var dislikeChangedPost = this.PostModels.SingleOrDefault(p => p.PostId == model.Post!.PostId);
+                    if (dislikeChangedPost != null)
+                    {
+                        dislikeChangedPost.DisLikesCount = model.Post!.DisLikesCount;
+                        dislikeChangedPost.IsDisliked = model.Post!.IsDisliked;
+                    }
+                    break;
+            }
+            StateHasChanged();
         }
 
         public bool IsConnected =>
@@ -279,7 +329,7 @@ namespace FairPlaySocial.SharedUI.Components
             this.ShowPostEditModal = true;
         }
 
-        private void ReSharePost(PostModel? postModel) 
+        private void ReSharePost(PostModel? postModel)
         {
             this.createSharedPostModel = new CreateSharedPostModel()
             {

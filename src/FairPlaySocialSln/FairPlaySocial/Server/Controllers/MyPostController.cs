@@ -70,6 +70,7 @@ namespace FairPlaySocial.Server.Controllers
             post.OwnerApplicationUserFullName = userEntity.FullName;
             await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
             {
+                PostAction = Models.Notifications.PostAction.PostCreated,
                 From = userEntity.FullName,
                 GroupName = null,
                 Message = postEntity.Text,
@@ -118,6 +119,7 @@ namespace FairPlaySocial.Server.Controllers
             post.OwnerApplicationUserFullName = userEntity.FullName;
             await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
             {
+                PostAction = Models.Notifications.PostAction.PostCreated,
                 From = userEntity.FullName,
                 GroupName = null,
                 Message = entity.Text,
@@ -135,6 +137,7 @@ namespace FairPlaySocial.Server.Controllers
             var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             var postEntity = await this.postService
                 .GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Include(p => p.OwnerApplicationUser)
                 .Where(p => p.PostId == postModel.PostId &&
                 p.OwnerApplicationUserId == myApplicationUserId)
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
@@ -162,6 +165,14 @@ namespace FairPlaySocial.Server.Controllers
             }
             postEntity.Text = postModel.Text;
             await this.postService.UpdatePostAsync(postEntity, cancellationToken: cancellationToken);
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            {
+                PostAction = Models.Notifications.PostAction.PostTextUpdate,
+                From = postEntity.OwnerApplicationUser.FullName,
+                GroupName = null,
+                Message = postEntity.Text,
+                Post = this.mapper.Map<Post, PostModel>(postEntity)
+            });
             var result = this.mapper.Map<Post, PostModel>(postEntity);
             return result;
         }

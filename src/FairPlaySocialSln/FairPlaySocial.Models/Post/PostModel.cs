@@ -24,7 +24,8 @@ namespace FairPlaySocial.Models.Post
             DateTimeOffset.UtcNow.Subtract(RowCreationDateTime!.Value);
         public bool IsLiked { get; set; }
         public bool IsDisliked { get; set; }
-        public int LikesCount { get; set; }
+        public long LikesCount { get; set; }
+        public long DisLikesCount { get; set; }
         public string? Tag1 { get; set; }
         public string? Tag2 { get; set; }
         public string? Tag3 { get; set; }

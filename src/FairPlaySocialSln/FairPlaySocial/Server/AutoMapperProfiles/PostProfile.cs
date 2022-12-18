@@ -44,6 +44,11 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     {
                         dest.LikesCount = source.LikedPost.Count();
                     }
+                    if (source.DislikedPost != null &&
+                    source.DislikedPost.Any())
+                    {
+                        dest.DisLikesCount = source.DislikedPost.Count();
+                    }
                 });
             CreateMap<PostModel, Post>();
             CreateMap<CreatePostModel, Post>()

@@ -42,6 +42,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.OwnerApplicationUser)
                 .Include(P => P.Photo)
                 .Include(p => p.LikedPost)
+                .Include(p => p.DislikedPost)
                 .Include(p => p.PostTag)
                 .Include(p => p.PostUrl)
                 .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public);
@@ -95,7 +96,7 @@ namespace FairPlaySocial.Server.Controllers
                 await this.postService!.GetPostHistoryByPostId(postId)!
                 .Where(p => p.PostVisibilityId ==
                 (short)Common.Enums.PostVisibility.Public)
-                .OrderBy(p=> EF.Property<DateTime>(p, nameof(PostModel.ValidFrom)))
+                .OrderBy(p => EF.Property<DateTime>(p, nameof(PostModel.ValidFrom)))
                 .Select(p => new PostModel()
                 {
                     PostId = p.PostId,
