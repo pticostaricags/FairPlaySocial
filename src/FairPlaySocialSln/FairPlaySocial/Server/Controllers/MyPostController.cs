@@ -63,7 +63,7 @@ namespace FairPlaySocial.Server.Controllers
             postEntity.CreatedFromPostId = createSharedPostModel.CreatedFromPostId;
             postEntity.Text = createSharedPostModel.Text;
             postEntity.OwnerApplicationUserId = myApplicationUserId;
-            postEntity =await this.postService.CreatePostAsync(postEntity, cancellationToken: cancellationToken);
+            postEntity = await this.postService.CreatePostAsync(postEntity, cancellationToken: cancellationToken);
             var post = this.mapper.Map<Post, PostModel>(postEntity);
             //TODO: Consider using groups to send only to users in the "Home Feed" page
             var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
@@ -128,7 +128,9 @@ namespace FairPlaySocial.Server.Controllers
 
         [HttpPut("[action]")]
         public async Task<PostModel> UpdateMyPostTextAsync(PostModel postModel,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            [FromServices] LikedPostService likedPostService,
+            [FromServices] DislikedPostService dislikedPostService)
         {
             var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             var postEntity = await this.postService
@@ -140,6 +142,23 @@ namespace FairPlaySocial.Server.Controllers
             {
                 throw new CustomValidationException($"Unable to find an owned post " +
                     $"with {nameof(postModel.PostId)}: {postModel.PostId}");
+            }
+            else
+            {
+                var likesDeleted = await likedPostService
+                    .GetAllLikedPost(trackEntities: false,
+                    cancellationToken: cancellationToken)
+                    .Where(p => p.PostId == postModel.PostId)
+                    .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var disLikesDeleted = await dislikedPostService
+                    .GetAllDislikedPost(trackEntities: false,
+                    cancellationToken: cancellationToken)
+                    .Where(p => p.PostId == postModel.PostId)
+                    .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var reSharesDeleted = await this.postService
+                    .GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                    .Where(postService => postService.CreatedFromPostId == postModel.PostId)
+                    .ExecuteDeleteAsync(cancellationToken: cancellationToken);
             }
             postEntity.Text = postModel.Text;
             await this.postService.UpdatePostAsync(postEntity, cancellationToken: cancellationToken);
