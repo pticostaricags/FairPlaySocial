@@ -79,6 +79,7 @@
     <Build Include="dbo\Tables\PostUrl.sql" />
     <Build Include="dbo\Tables\ForbiddenUrl.sql" />
     <Build Include="dbo\Tables\PostVisibility.sql" />
+    <Build Include="dbo\Tables\PostType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

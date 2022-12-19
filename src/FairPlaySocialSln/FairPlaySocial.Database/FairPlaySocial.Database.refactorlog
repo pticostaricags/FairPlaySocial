@@ -105,4 +105,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PostVisibilityId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="05e99a5d-e396-46de-9f17-061775b0fc4a" ChangeDateTime="12/19/2022 18:10:53">
+    <Property Name="ElementName" Value="[dbo].[PostType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PostType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f607c9a6-aa01-41c0-b717-f10efb7d8b78" ChangeDateTime="12/19/2022 18:12:09">
+    <Property Name="ElementName" Value="[dbo].[PostType].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PostType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>

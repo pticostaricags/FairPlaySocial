@@ -36,6 +36,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<PostTag> PostTag { get; set; }
 
+    public virtual DbSet<PostType> PostType { get; set; }
+
     public virtual DbSet<PostUrl> PostUrl { get; set; }
 
     public virtual DbSet<PostVisibility> PostVisibility { get; set; }
@@ -99,6 +101,7 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
+            entity.Property(e => e.PostTypeId).HasDefaultValueSql("1");
             entity.Property(e => e.PostVisibilityId).HasDefaultValueSql("1");
 
             entity.HasOne(d => d.CreatedFromPost).WithMany(p => p.InverseCreatedFromPost).HasConstraintName("FK_Post_Post");
@@ -108,6 +111,10 @@ public partial class FairPlaySocialDatabaseContext : DbContext
                 .HasConstraintName("FK_Post_ApplicationUser");
 
             entity.HasOne(d => d.Photo).WithMany(p => p.Post).HasConstraintName("FK_Post_Photo");
+
+            entity.HasOne(d => d.PostType).WithMany(p => p.Post)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post_PostType");
 
             entity.HasOne(d => d.PostVisibility).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -119,6 +126,11 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.Post).WithMany(p => p.PostTag)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PostTag_Post");
+        });
+
+        modelBuilder.Entity<PostType>(entity =>
+        {
+            entity.Property(e => e.PostTypeId).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<PostUrl>(entity =>

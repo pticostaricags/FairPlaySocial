@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
@@ -111,6 +112,7 @@ namespace FairPlaySocial.Server.Controllers
             }
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
             entity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            entity.PostTypeId = (byte)Common.Enums.PostType.Post;
             entity =
             await this.postService.CreatePostAsync(entity, cancellationToken);
             var post = this.mapper.Map<Post, PostModel>(entity);

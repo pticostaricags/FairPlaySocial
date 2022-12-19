@@ -59,6 +59,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PostType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PostUrl]",
          "ObjectType": 0
       },

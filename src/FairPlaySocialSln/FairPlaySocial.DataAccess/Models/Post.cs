@@ -17,6 +17,10 @@ public partial class Post
 
     public long? PhotoId { get; set; }
 
+    public byte PostTypeId { get; set; }
+
+    public long? ReplyToPostId { get; set; }
+
     [Required]
     [StringLength(500)]
     public string Text { get; set; }
@@ -50,6 +54,9 @@ public partial class Post
     [InverseProperty("CreatedFromPost")]
     public virtual ICollection<Post> InverseCreatedFromPost { get; } = new List<Post>();
 
+    [InverseProperty("ReplyToPost")]
+    public virtual ICollection<Post> InverseReplyToPost { get; } = new List<Post>();
+
     [InverseProperty("Post")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
 
@@ -64,10 +71,18 @@ public partial class Post
     [InverseProperty("Post")]
     public virtual ICollection<PostTag> PostTag { get; } = new List<PostTag>();
 
+    [ForeignKey("PostTypeId")]
+    [InverseProperty("Post")]
+    public virtual PostType PostType { get; set; }
+
     [InverseProperty("Post")]
     public virtual ICollection<PostUrl> PostUrl { get; } = new List<PostUrl>();
 
     [ForeignKey("PostVisibilityId")]
     [InverseProperty("Post")]
     public virtual PostVisibility PostVisibility { get; set; }
+
+    [ForeignKey("ReplyToPostId")]
+    [InverseProperty("InverseReplyToPost")]
+    public virtual Post ReplyToPost { get; set; }
 }

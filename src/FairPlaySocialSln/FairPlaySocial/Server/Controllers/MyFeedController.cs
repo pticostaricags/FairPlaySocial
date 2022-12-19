@@ -45,7 +45,9 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Include(p => p.PostTag)
                 .Include(p => p.PostUrl)
-                .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public);
+                .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public &&
+                p.PostTypeId == (byte)Common.Enums.PostType.Post
+                );
             PagedItems<PostModel> result = new PagedItems<PostModel>();
             result.PageSize = Constants.Pagination.DefaultPageSize;
             result.PageNumber = pageRequestModel.PageNumber;

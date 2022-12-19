@@ -40,4 +40,20 @@ BEGIN
 END
 SET IDENTITY_INSERT [dbo].[PostVisibility] OFF
 --END OF DEFAULT POST VISIBILITY
+--START OF DEFAULT POST TYPW
+SET IDENTITY_INSERT [dbo].[PostType] ON
+DECLARE @POST_TYPE_ID TiNYINT = 1
+IF NOT EXISTS (SELECT * FROM [dbo].[PostType] PV WHERE [PV].[Name] = 'Post')
+BEGIN
+    INSERT INTO [dbo].[PostType]([PostTypeId],[Name])
+    VALUES (@POST_TYPE_ID, 'Post')
+END
+SET @POST_TYPE_ID = 2
+IF NOT EXISTS (SELECT * FROM [dbo].[PostType] PV WHERE [PV].[Name] = 'Comment')
+BEGIN
+    INSERT INTO [dbo].[PostType]([PostTypeId],[Name])
+    VALUES (@POST_TYPE_ID, 'Comment')
+END
+SET IDENTITY_INSERT [dbo].[PostType] OFF
+--END OF DEFAULT POST TYPE
 COMMIT
