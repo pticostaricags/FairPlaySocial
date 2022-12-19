@@ -59,6 +59,11 @@ namespace FairPlaySocial.Common.Global
                 public const string CreateMyPost = $"/User/Posts/{nameof(CreateMyPost)}";
                 public const string UpdateMyUserProfile = $"/User/UserProfile/{nameof(UpdateMyUserProfile)}";
             }
+
+            public static  class PublicPagesRoutes
+            {
+                public const string EmbeddedPost = $"/Public/Embedded/{nameof(EmbeddedPost)}";
+            }
         }
 
         public static class EntityNames

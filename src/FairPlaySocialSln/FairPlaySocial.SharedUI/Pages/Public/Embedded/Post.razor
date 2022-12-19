@@ -1,0 +1,70 @@
+﻿@inherits CustomBaseComponent
+@layout EmbeddedPostLayout
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+@if (this.PostModel != null)
+{
+    <div class="@ThemeConfiguration.Chats.ChatItemSection">
+        <label class="@ThemeConfiguration.Chats.ChatSender"
+           style="cursor:pointer;">
+            @this.PostModel.OwnerApplicationUserFullName
+        </label>
+        <label class="@ThemeConfiguration.Labels.DefaultCss"
+           style="display:inline; float:right;">
+            <strong>
+                @(this.PostModel.PostedTime.Hours > 0 ? $"{(int)this.PostModel.PostedTime.Hours}h" : $"{this.PostModel.PostedTime.Minutes}m")
+            </strong>
+        </label>
+        <p class="@ThemeConfiguration.Chats.ChatContent">@this.PostModel.Text</p>
+        <p class="@ThemeConfiguration.Chats.ChatTime"></p>
+        @if (this.PostModel.Photo != null)
+        {
+            <img class="@ThemeConfiguration.Images.ThumbnailDefaultCss"
+         src="data:@this.PostModel.Photo!.ImageType;base64, @Convert.ToBase64String(this.PostModel.Photo.ImageBytes!)" />
+        }
+        <div class="@ThemeConfiguration.Chats.ChatActionsBar">
+            <button class="btn">
+                <i class="bi bi-hand-thumbs-up-fill"></i>
+            </button>
+            (@this.PostModel.LikesCount)
+            else
+            {
+            <button class="btn">
+                <i class="bi bi-hand-thumbs-down-fill"></i>
+            </button>
+            }
+            (@this.PostModel.DisLikesCount)
+            @if (this.PostModel.Tag1 is not null || this.PostModel.Tag2 is not null || this.PostModel.Tag3 is not null)
+            {
+                <p>
+                    Tag(s):
+                </p>
+            }
+            <ul class="nav nav-pills">
+                @if (this.PostModel.Tag1 is not null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">@this.PostModel.Tag1</a>
+                    </li>
+                }
+                @if (this.PostModel.Tag2 is not null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">@this.PostModel.Tag2</a>
+                    </li>
+                }
+                @if (this.PostModel.Tag3 is not null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">@this.PostModel.Tag3</a>
+                    </li>
+                }
+            </ul>
+            @if (!String.IsNullOrWhiteSpace(this.PostModel.Url))
+            {
+                <p>Url: @this.PostModel.Url</p>
+            }
+        </div>
+    </div>
+}
