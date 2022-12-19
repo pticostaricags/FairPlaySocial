@@ -41,6 +41,8 @@ namespace FairPlaySocial.SharedUI.Components
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private MyPostClientService? MyPostClientService { get; set; }
+        [Inject]
+        private PostCommentClientService? PostCommentClientService { get; set; }
         private HubConnection? HubConnection { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
@@ -51,7 +53,9 @@ namespace FairPlaySocial.SharedUI.Components
         private bool ShowPostHistory { get; set; } = false;
         private bool ShowPostEditModal { get; set; } = false;
         private bool ShowReShareModal { get; set; } = false;
+        private bool ShowPostCommentsModal { get; set; } = false;
         private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
+        private CreatePostCommentModel? createPostCommentModel { get; set; } = null;
         private Queue<NotificationModel> NotificationsQueue { get; set; } = new();
         protected override async Task OnInitializedAsync()
         {
@@ -339,6 +343,22 @@ namespace FairPlaySocial.SharedUI.Components
             this.ShowReShareModal = true;
         }
 
+        private void AddCommentToPost(PostModel? postModel)
+        {
+            this.createPostCommentModel = new()
+            {
+                PostId= postModel!.PostId
+            };
+            this.SelectedPostModel = postModel;
+            this.ShowPostCommentsModal = true;
+        }
+
+        private void HidePostCommentsModal()
+        {
+            this.ShowPostCommentsModal = false;
+            this.SelectedPostModel = null;
+        }
+
         private void HidePostEditModal()
         {
             this.ShowPostEditModal = false;
@@ -367,6 +387,28 @@ namespace FairPlaySocial.SharedUI.Components
                     .CreateSharedPostAsync(this.createSharedPostModel!, base.CancellationToken);
                 await ToastService!
                     .ShowSuccessMessageAsync("Post has been Re-Shared", base.CancellationToken);
+                this.HidePostReShareModal();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private async Task OnValidSubmitForAddCommentToPostAsync()
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.PostCommentClientService!
+                    .CreatePostCommentAsync(this.createPostCommentModel!, base.CancellationToken);
+                await ToastService!
+                    .ShowSuccessMessageAsync("Comment has been added", base.CancellationToken);
                 this.HidePostReShareModal();
             }
             catch (Exception ex)

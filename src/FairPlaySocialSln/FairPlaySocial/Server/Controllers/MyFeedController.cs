@@ -45,6 +45,8 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Include(p => p.PostTag)
                 .Include(p => p.PostUrl)
+                .Include(p=>p.ReplyToPost)
+                .Include(p=> p.InverseReplyToPost)
                 .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public &&
                 p.PostTypeId == (byte)Common.Enums.PostType.Post
                 );

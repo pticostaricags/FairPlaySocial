@@ -81,6 +81,18 @@
                 @onclick="@( () => ReSharePost(singlePostModel))">
                     <i class="bi bi-fast-forward-circle-fill"></i>
                 </button>
+                @if (!singlePostModel.IsOwned)
+                {
+                    <button class="btn"
+                @onclick="@( () => AddCommentToPost(singlePostModel))">
+                        <i class="bi bi-chat-text-fill"></i>
+                    </button>
+                }
+                else
+                {
+                    <i class="bi bi-chat-text-fill"></i>
+                }
+                (@singlePostModel.RepliesCount)
                 @if (singlePostModel.Tag1 is not null || singlePostModel.Tag2 is not null || singlePostModel.Tag3 is not null)
                 {
                     <p>
@@ -226,6 +238,35 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
                     <button type="submit"
                         class="@ThemeConfiguration.Buttons.PrimaryButtonCss">
                         ReShare
+                    </button>
+                </div>
+            </EditForm>
+        </Content>
+    </CustomModal>
+}
+@if (this.ShowPostCommentsModal && this.SelectedPostModel != null)
+{
+    <CustomModal OkButtonText="OK"
+             OnCloseButtonClicked="HidePostCommentsModal"
+             ShowFooter="false">
+        <Title>Comments</Title>
+        <Content>
+            <EditForm Model="@this.createPostCommentModel" OnValidSubmit="OnValidSubmitForAddCommentToPostAsync">
+                <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+                    <ValidationSummary></ValidationSummary>
+                </div>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
+                    <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
+                               @bind-Value="@this.createPostCommentModel!.Text"></InputTextArea>
+                    <ValidationMessage For="@( () => this.createPostCommentModel!.Text)"></ValidationMessage>
+                </div>
+                <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                    <button type="submit"
+                        class="@ThemeConfiguration.Buttons.PrimaryButtonCss">
+                        Add Comment
                     </button>
                 </div>
             </EditForm>
