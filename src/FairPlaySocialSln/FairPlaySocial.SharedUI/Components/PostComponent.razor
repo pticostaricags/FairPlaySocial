@@ -115,6 +115,20 @@
                 <p>Url: @PostModel.Url</p>
             }
         </div>
+        @if (this.PostModel.InverseReplyToPost?.LongLength > 0)
+        {
+            <div class="@ThemeConfiguration.Chats.PostReplies">
+                <ul>
+
+                    @foreach (var singlePostReply in this.PostModel.InverseReplyToPost)
+                    {
+                        <li>
+                            <PostComponent PostModel="@singlePostReply"></PostComponent>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
     </div>
 }
 

@@ -43,6 +43,10 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.PostUrl)
                 .Include(p => p.ReplyToPost)
                 .Include(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.OwnerApplicationUser)
+                .Include(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.OwnerApplicationUser)
                 .Where(p => p.PostId == postId)
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (postEntity is null)
@@ -70,6 +74,10 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.PostUrl)
                 .Include(p => p.ReplyToPost)
                 .Include(p => p.InverseReplyToPost)
+                .ThenInclude(p=>p.OwnerApplicationUser)
+                .Include(p=>p.InverseReplyToPost)
+                .ThenInclude(p=>p.InverseReplyToPost)
+                .ThenInclude(p=>p.OwnerApplicationUser)
                 .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public &&
                 p.PostTypeId == (byte)Common.Enums.PostType.Post
                 );

@@ -34,6 +34,7 @@ namespace FairPlaySocial.Models.Post
         public DateTime ValidFrom { get; set; }
         public DateTime ValidTo { get; set; }
         public bool IsOwned { get; set; }
-        public long RepliesCount { get; set; }
+        public long RepliesCount => InverseReplyToPost?.LongLength ?? 0;
+        public PostModel[]? InverseReplyToPost { get; set; }
     }
 }

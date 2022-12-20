@@ -46,6 +46,7 @@ namespace FairPlaySocial.Common.Global
             public static string ChatTime { get; set; } = "time";
             public static string ChatContent { get; set; } = "content";
             public static string ChatActionsBar { get; set; } = "actions-bar";
+            public static string PostReplies { get; set; } = "post-replies";
         }
     }
 }

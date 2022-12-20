@@ -50,7 +50,7 @@ namespace FairPlaySocial.Server.Controllers
             {
                 PostTypeId = (byte)Common.Enums.PostType.Comment,
                 ReplyToPostId = postEntity.PostId,
-                Text = postEntity.Text,
+                Text = createPostCommentModel.Text,
                 OwnerApplicationUserId = myApplicationUserId,
                 PostVisibilityId = postEntity.PostVisibilityId
             };
