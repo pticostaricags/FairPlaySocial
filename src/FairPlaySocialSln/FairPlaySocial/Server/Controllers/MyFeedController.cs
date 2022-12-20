@@ -48,6 +48,8 @@ namespace FairPlaySocial.Server.Controllers
             if (postEntity is null)
                 throw new CustomValidationException($"Unable to find post with Id: {postId}");
             var result = this.mapper.Map<Post, PostModel>(postEntity);
+            result.IsOwned = (result.OwnerApplicationUserId == this.currentUserProvider.GetApplicationUserId());
+
             return result;
         }
 
