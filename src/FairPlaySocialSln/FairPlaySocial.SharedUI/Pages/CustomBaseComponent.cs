@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace FairPlaySocial.SharedUI.Pages
 {
-    public class CustomBaseComponent : ComponentBase, IAsyncDisposable
+    public class CustomBaseComponent : ComponentBase
     {
         [Inject]
         protected IWhiteLabelingService? WhiteLabelingService { get; set; }
@@ -13,14 +13,6 @@ namespace FairPlaySocial.SharedUI.Pages
         protected override async Task OnInitializedAsync()
         {
             await this.WhiteLabelingService!.LoadWhiteLabelingDataAsync();
-        }
-
-        public virtual ValueTask DisposeAsync()
-        {
-            this._cancellationTokenSource.Cancel();
-            this._cancellationTokenSource.Dispose();
-            GC.SuppressFinalize(this);
-            return ValueTask.CompletedTask;
         }
     }
 }

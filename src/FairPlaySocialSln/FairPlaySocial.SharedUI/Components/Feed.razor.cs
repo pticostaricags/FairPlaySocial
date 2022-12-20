@@ -119,10 +119,9 @@ namespace FairPlaySocial.SharedUI.Components
         public bool IsConnected =>
         this.HubConnection!.State == HubConnectionState.Connected;
 
-        public override async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
             await this.HubConnection!.DisposeAsync();
-            await base.DisposeAsync();
         }
     }
 }
