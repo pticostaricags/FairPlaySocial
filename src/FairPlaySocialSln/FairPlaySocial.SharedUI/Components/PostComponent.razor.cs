@@ -31,6 +31,8 @@ namespace FairPlaySocial.SharedUI.Components
         private PostCommentClientService? PostCommentClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private INavigationService? NavigationService { get; set; }
         private bool IsBusy { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private PostModel? SelectedPostModel { get; set; }
@@ -317,6 +319,11 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = false;
             }
+        }
+
+        private void NavigateToPost()
+        {
+            this.NavigationService!.NavigateToPost(postId: this.PostModel!.PostId!.Value);
         }
     }
 }

@@ -19,6 +19,17 @@ namespace FairPlaySocial.ClientServices
             this.httpClientService = httpClientService;
         }
 
+        public async Task<PostModel?> GetPostByPostIdAsync(long postId, CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyFeed/GetPostByPostId" +
+                $"?{nameof(postId)}={postId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.GetAsync(requestUrl, cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<PostModel>(cancellationToken: cancellationToken);
+            return result;
+        }
+
         public async Task<PostModel[]?> GetPostHistoryByPostIdAsync(long postId, CancellationToken cancellationToken)
         {
             var requestUrl = $"api/MyFeed/GetPostHistoryByPostId" +

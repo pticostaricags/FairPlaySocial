@@ -10,5 +10,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToCreateMyPost();
         void NavigateToHomeFeed();
         void NavigateToUpdateMyUserProfile();
+        void NavigateToPost(long postId);
     }
 }

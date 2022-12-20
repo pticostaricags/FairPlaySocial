@@ -3,6 +3,7 @@ using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Services;
@@ -31,6 +32,26 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public async Task<PostModel?> GetPostByPostIdAsync(long postId, CancellationToken cancellationToken)
+        {
+            var postEntity = await this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Include(p => p.OwnerApplicationUser)
+                .Include(P => P.Photo)
+                .Include(p => p.LikedPost)
+                .Include(p => p.DislikedPost)
+                .Include(p => p.PostTag)
+                .Include(p => p.PostUrl)
+                .Include(p => p.ReplyToPost)
+                .Include(p => p.InverseReplyToPost)
+                .Where(p => p.PostId == postId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (postEntity is null)
+                throw new CustomValidationException($"Unable to find post with Id: {postId}");
+            var result = this.mapper.Map<Post, PostModel>(postEntity);
+            return result;
+        }
+
+        [HttpGet("[action]")]
         public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
             [FromQuery] PageRequestModel pageRequestModel,
             [FromServices] LikedPostService likedPostService,
@@ -45,8 +66,8 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Include(p => p.PostTag)
                 .Include(p => p.PostUrl)
-                .Include(p=>p.ReplyToPost)
-                .Include(p=> p.InverseReplyToPost)
+                .Include(p => p.ReplyToPost)
+                .Include(p => p.InverseReplyToPost)
                 .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public &&
                 p.PostTypeId == (byte)Common.Enums.PostType.Post
                 );

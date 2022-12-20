@@ -3,7 +3,8 @@
 
 @if (this.PostModel != null)
 {
-    <div class="@ThemeConfiguration.Chats.ChatItemSection">
+    <div class="@ThemeConfiguration.Chats.ChatItemSection" style="cursor:pointer;"
+    @onclick="NavigateToPost">
         <label @onclick="@( async () => await OnPostAuthorSelectedAsync(this.PostModel))"
            class="@ThemeConfiguration.Chats.ChatSender"
            style="cursor:pointer;">
