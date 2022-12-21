@@ -10,6 +10,7 @@ namespace FairPlaySocial.Common.Global
         public static class Labels
         {
             public static string DefaultCss { get; set; } = "form-label";
+            public static string ErrorCss { get; set; } = "alert alert-danger";
         }
         public static class Buttons
         {

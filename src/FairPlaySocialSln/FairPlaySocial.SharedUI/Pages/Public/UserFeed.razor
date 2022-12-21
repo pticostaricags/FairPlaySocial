@@ -1,0 +1,30 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>User Public Feed</h3>
+
+@if (this.UserPublicFeed != null && this.PostModels != null)
+{
+    <Feed HubUrl="@Constants.Hubs.HomeFeedHub"
+      PostModels="PostModels">
+    </Feed>
+
+    @if (this.UserPublicFeed?.PageNumber > 1)
+    {
+        <button @onclick="OnPreviousPageButtonCllickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+            Previous Page
+        </button>
+    }
+    <label class="@ThemeConfiguration.Labels.DefaultCss">Page @this.UserPublicFeed?.PageNumber of @this.UserPublicFeed?.TotalPages</label>
+    @if (this.UserPublicFeed?.PageNumber < this.UserPublicFeed?.TotalPages)
+    {
+        <button @onclick="OnNextPageButtonClickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+            Next Page
+        </button>
+    }
+}

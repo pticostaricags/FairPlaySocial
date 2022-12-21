@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using FairPlaySocial.Common.Enums;
+using FairPlaySocial.Common.Global;
+using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Models.CustomExceptions;
+using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,12 +18,55 @@ namespace FairPlaySocial.Server.Controllers
     public class PublicFeedController : ControllerBase
     {
         private readonly IMapper mapper;
+        private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
 
-        public PublicFeedController(IMapper mapper, PostService postService)
+        public PublicFeedController(
+            IMapper mapper,
+            ICurrentUserProvider currentUserProvider,
+            PostService postService)
         {
             this.mapper = mapper;
+            this.currentUserProvider = currentUserProvider;
             this.postService = postService;
+        }
+
+        [HttpGet("[action]")]
+        public async Task<PagedItems<PostModel>> GetUserFeedAsync(
+            [FromQuery] long applicationUserId,
+            [FromQuery] PageRequestModel pageRequestModel,
+            [FromServices] LikedPostService likedPostService,
+            [FromServices] DislikedPostService dislikedPostService,
+            CancellationToken cancellationToken)
+        {
+            var query = this.postService.GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Include(p => p.OwnerApplicationUser)
+                .Include(P => P.Photo)
+                .Include(p => p.LikedPost)
+                .Include(p => p.DislikedPost)
+                .Include(p => p.PostTag)
+                .Include(p => p.PostUrl)
+                .Include(p => p.ReplyToPost)
+                .Include(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.OwnerApplicationUser)
+                .Include(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.InverseReplyToPost)
+                .ThenInclude(p => p.OwnerApplicationUser)
+                .Where(p => p.PostVisibilityId == (short)Common.Enums.PostVisibility.Public &&
+                p.PostTypeId == (byte)Common.Enums.PostType.Post
+                && p.OwnerApplicationUserId == applicationUserId
+                );
+            PagedItems<PostModel> result = new PagedItems<PostModel>();
+            result.PageSize = Constants.Pagination.DefaultPageSize;
+            result.PageNumber = pageRequestModel.PageNumber;
+            result.TotalItems = await query.CountAsync(cancellationToken);
+            result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
+            result.Items = await query.OrderByDescending(p => p.PostId)
+                .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
+                .Take(Constants.Pagination.DefaultPageSize)
+                .Select(p => this.mapper.Map<Post, PostModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            return result;
         }
 
         [HttpGet("[action]")]

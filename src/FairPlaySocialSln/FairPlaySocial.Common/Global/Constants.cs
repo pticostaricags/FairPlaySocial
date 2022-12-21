@@ -63,7 +63,8 @@ namespace FairPlaySocial.Common.Global
 
             public static  class PublicPagesRoutes
             {
-                public const string EmbeddedPost = $"/Public/Embedded/{nameof(EmbeddedPost)}";
+                public const string EmbeddedPost = $"/Public/{nameof(EmbeddedPost)}";
+                public const string UserFeed = $"/Public/UserFeed";
             }
         }
 

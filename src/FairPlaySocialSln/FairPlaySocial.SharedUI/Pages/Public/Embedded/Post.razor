@@ -65,3 +65,7 @@
         </div>
     </div>
 }
+@if (this.ErrorMessage != null)
+{
+    <label class="@ThemeConfiguration.Labels.ErrorCss">@this.ErrorMessage</label>
+}

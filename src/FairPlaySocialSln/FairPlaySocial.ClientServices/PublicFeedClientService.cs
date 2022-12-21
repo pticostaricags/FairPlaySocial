@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.Common.Extensions;
+using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,20 @@ namespace FairPlaySocial.ClientServices
             var response = await anonymousHttpClient.GetAsync(requestUrl, cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
             var result = await response.Content.ReadFromJsonAsync<PostModel>(cancellationToken: cancellationToken);
+            return result;
+        }
+
+        public async Task<PagedItems<PostModel>?> GetUserFeedAsync(
+            long applicationUserId,
+            PageRequestModel pageRequestModel,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/PublicFeed/GetUserFeed?{nameof(applicationUserId)}={applicationUserId}" +
+                $"&{nameof(pageRequestModel.PageNumber)}={pageRequestModel.PageNumber}";
+            var anonymousHttpClient = this.httpClientService.CreateAnonymousClient();
+            var response = await anonymousHttpClient.GetAsync(requestUrl, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>(cancellationToken: cancellationToken);
             return result;
         }
     }
