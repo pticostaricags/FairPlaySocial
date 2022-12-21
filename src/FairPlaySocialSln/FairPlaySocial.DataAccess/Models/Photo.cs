@@ -24,6 +24,10 @@ public partial class Photo
     [Required]
     public byte[] ImageBytes { get; set; }
 
+    [Required]
+    [StringLength(50)]
+    public string AlternativeText { get; set; }
+
     public DateTimeOffset RowCreationDateTime { get; set; }
 
     [Required]

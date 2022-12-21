@@ -36,7 +36,8 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                             Filename = source.Photo.Filename,
                             ImageBytes = source.Photo.ImageBytes,
                             ImageType = source.Photo.ImageType,
-                            PhotoId = source.Photo.PhotoId
+                            PhotoId = source.Photo.PhotoId,
+                            AlternativeText = source.Photo.AlternativeText
                         };
                     }
                     if (source.LikedPost != null &&
@@ -67,7 +68,8 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                         {
                             Filename = source.Photo.Filename,
                             ImageBytes = source.Photo.ImageBytes,
-                            ImageType = source.Photo.ImageType
+                            ImageType = source.Photo.ImageType,
+                            AlternativeText = source.Photo.AlternativeText
                         };
                     }
                     dest.PostTag.Add(new PostTag()

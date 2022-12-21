@@ -6,6 +6,10 @@
 <EditForm Model="@this.Model">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
+    <label class="@ThemeConfiguration.Labels.DefaultCss">Image Alternative Text</label>
+    <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+               @bind-Value="@this.Model!.AlternativeText"></InputText>
+    <label class="@ThemeConfiguration.Labels.DefaultCss">Pick an Image</label>
     <InputFile accept="image/*" OnChange="OnFileSelectionChangedAsync"></InputFile>
 </EditForm>
 

@@ -12,5 +12,8 @@ namespace FairPlaySocial.Models.Photo
         public string? ImageType { get; set; }
         [Required]
         public byte[]? ImageBytes { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string? AlternativeText { get; set; }
     }
 }

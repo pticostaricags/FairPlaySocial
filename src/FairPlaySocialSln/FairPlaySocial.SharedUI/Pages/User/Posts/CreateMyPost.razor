@@ -33,6 +33,7 @@
                      OnFileSelected="OnPostPhotoSelectedAsync"
                      MaxHeightForPreview="300"></ImagePicker>
         <ValidationMessage For="@( () => this.createPostModel.Photo)"></ValidationMessage>
+        <ValidationMessage For="@( () => this.createPostModel.Photo!.AlternativeText)"></ValidationMessage>
         <ValidationMessage For="@( () => this.createPostModel.Photo!.Filename)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
