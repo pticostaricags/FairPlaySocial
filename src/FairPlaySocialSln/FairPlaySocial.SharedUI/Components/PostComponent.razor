@@ -1,12 +1,11 @@
-﻿@using FairPlaySocial.SharedUI.Pages;
-@inherits CustomBaseComponent
+﻿@inherits CustomBaseComponent
 
 @if (this.PostModel != null)
 {
     <div class="@ThemeConfiguration.Chats.ChatItemSection">
         <div class="post-navigation-zone" style="cursor:pointer;"
          @onclick="NavigateToPost">
-            <label @onclick="@( async () => await OnPostAuthorSelectedAsync(this.PostModel))"
+            <label @onclick="@( async () => await OnPostAuthorSelectedAsync())"
                class="@ThemeConfiguration.Chats.ChatSender"
                style="cursor:pointer;">
                 @PostModel.OwnerApplicationUserFullName
@@ -64,12 +63,12 @@
             @if (PostModel.IsOwned)
             {
                 <button class="btn"
-                @onclick="@( () => EditPost(PostModel))">
+                @onclick="@( () => EditPost())">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
             }
             <button class="btn"
-                @onclick="@( () => ReSharePost(PostModel))">
+                @onclick="@( () => ReSharePost())">
                 <i class="bi bi-fast-forward-circle-fill"></i>
             </button>
             @if (!PostModel.IsOwned)
@@ -84,6 +83,9 @@
                 <i class="bi bi-chat-text-fill"></i>
             }
             (@PostModel.RepliesCount)
+            <button class="btn" @onclick="@( () => SharePost() )">
+                <i class="bi bi-share-fill"></i>
+            </button>
             @if (PostModel.Tag1 is not null || PostModel.Tag2 is not null || PostModel.Tag3 is not null)
             {
                 <p>
@@ -133,11 +135,11 @@
 }
 
 @if (this.ShowPostAuthorModal && this.MySelectedAuthorFollowStatus != null &&
-this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
+this.PostModel != null && this.MySelectedAuthorUserProfile != null)
 {
     <CustomModal OkButtonText="OK" OnCloseButtonClicked="HidePostAuthorModal"
              ShowFooter="false">
-        <Title>@this.SelectedPostModel!.OwnerApplicationUserFullName</Title>
+        <Title>@this.PostModel!.OwnerApplicationUserFullName</Title>
         <Content>
             <p>
                 Bio: @this.MySelectedAuthorUserProfile.Bio
@@ -206,7 +208,7 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
         </Content>
     </CustomModal>
 }
-@if (this.ShowPostEditModal && this.SelectedPostModel != null)
+@if (this.ShowPostEditModal && this.PostModel != null)
 {
     <CustomModal OkButtonText="OK"
              OnCloseButtonClicked="HidePostEditModal"
@@ -214,12 +216,12 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
         <Title>Edit Post</Title>
         <Content>
             <EditPostModal OnPostUpdated="OnPostUpdated"
-                       PostModel="@this.SelectedPostModel"
+                       PostModel="@this.PostModel"
                        CancellationToken="@this.CancellationToken"></EditPostModal>
         </Content>
     </CustomModal>
 }
-@if (ShowReShareModal && this.SelectedPostModel != null)
+@if (ShowReShareModal && this.PostModel != null)
 {
     <CustomModal OkButtonText="OK"
              OnCloseButtonClicked="HidePostReShareModal"
@@ -248,7 +250,7 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
         </Content>
     </CustomModal>
 }
-@if (this.ShowPostCommentsModal && this.SelectedPostModel != null)
+@if (this.ShowPostCommentsModal && this.PostModel != null)
 {
     <CustomModal OkButtonText="OK"
              OnCloseButtonClicked="HidePostCommentsModal"
@@ -274,6 +276,18 @@ this.SelectedPostModel != null && this.MySelectedAuthorUserProfile != null)
                     </button>
                 </div>
             </EditForm>
+        </Content>
+    </CustomModal>
+}
+
+@if (this.ShowShareModal && this.PostModel != null)
+{
+    <CustomModal OkButtonText="OK"
+             OnCloseButtonClicked="HidePostCommentsModal"
+             ShowFooter="false">
+        <Title>Comments</Title>
+        <Content>
+            <SharePostModal PostModel="@PostModel"></SharePostModal>
         </Content>
     </CustomModal>
 }

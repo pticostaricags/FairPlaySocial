@@ -11,5 +11,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToHomeFeed();
         void NavigateToUpdateMyUserProfile();
         void NavigateToPost(long postId);
+        string GetAbsoluteUrl(string relativePath);
     }
 }

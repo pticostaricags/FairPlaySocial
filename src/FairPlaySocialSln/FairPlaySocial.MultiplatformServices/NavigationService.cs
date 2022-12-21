@@ -79,5 +79,10 @@ namespace FairPlaySocial.MultiplatformServices
             this.NavigateTo(
                 $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.Post}/{postId}", false);
         }
+
+        public string GetAbsoluteUrl(string relativePath)
+        {
+            return this.NavigationManager.ToAbsoluteUri(relativePath).ToString();
+        }
     }
 }

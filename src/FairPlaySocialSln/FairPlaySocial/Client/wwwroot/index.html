@@ -25,6 +25,17 @@
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>
+        window.clipboardCopy = {
+            copyText: function (text) {
+                navigator.clipboard.writeText(text).then(function () {
+                    alert("Copied to clipboard!");
+                })
+                    .catch(function (error) {
+                        alert(error);
+                    });
+            }
+        };
+
         function speakToDefaultSpeakersAsync(text, locale) {
             if (speechSynthesis) {
                 const utterThis = new SpeechSynthesisUtterance(text);

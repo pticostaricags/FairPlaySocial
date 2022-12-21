@@ -4,16 +4,19 @@ using FairPlaySocial.Models.ApplicationUserFollow;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Models.UserProfile;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FairPlaySocial.SharedUI.Components
 {
     public partial class PostComponent
     {
+
         [Parameter]
         [EditorRequired]
         public PostModel? PostModel { get; set; }
@@ -35,7 +38,6 @@ namespace FairPlaySocial.SharedUI.Components
         private INavigationService? NavigationService { get; set; }
         private bool IsBusy { get; set; }
         private bool ShowPostAuthorModal { get; set; }
-        private PostModel? SelectedPostModel { get; set; }
         private ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; set; }
         private UserProfileModel? MySelectedAuthorUserProfile { get; set; }
         private PostModel[]? SelectedPostHistory { get; set; }
@@ -46,21 +48,21 @@ namespace FairPlaySocial.SharedUI.Components
         private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
         private CreatePostCommentModel? createPostCommentModel { get; set; } = null;
         private string ImageDataUrl => $"data:{PostModel!.Photo!.ImageType};base64, {Convert.ToBase64String(PostModel!.Photo!.ImageBytes!)}";
-        private async Task OnPostAuthorSelectedAsync(PostModel selectedPostModel)
+        private bool ShowShareModal { get; set; }
+        private async Task OnPostAuthorSelectedAsync()
         {
             try
             {
                 this.IsBusy = true;
                 this.ShowPostAuthorModal = true;
-                this.SelectedPostModel = selectedPostModel;
                 this.MySelectedAuthorFollowStatus = await this.MyFollowClientService!
                     .GetMyFollowedStatusAsync(
-                    this.SelectedPostModel.OwnerApplicationUserId!.Value,
+                    this.PostModel!.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
                 this.MySelectedAuthorUserProfile =
                     await this.PublicUserProfileClientService!
                     .GetPublicUserProfileByApplicationUserIdAsync(
-                        this.SelectedPostModel.OwnerApplicationUserId!.Value,
+                        this.PostModel!.OwnerApplicationUserId!.Value,
                         CancellationToken.None);
             }
             catch (Exception ex)
@@ -75,7 +77,6 @@ namespace FairPlaySocial.SharedUI.Components
         {
             this.ShowPostAuthorModal = false;
             this.MySelectedAuthorFollowStatus = null;
-            this.SelectedPostModel = null;
         }
 
         private async Task OnFollowSelectedAuthorAsync()
@@ -84,9 +85,9 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.MyFollowClientService!
-                    .FollowUserAsync(this.SelectedPostModel!.OwnerApplicationUserId!.Value,
+                    .FollowUserAsync(this.PostModel!.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
-                await OnPostAuthorSelectedAsync(this.SelectedPostModel);
+                await OnPostAuthorSelectedAsync();
             }
             catch (Exception ex)
             {
@@ -102,9 +103,9 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.MyFollowClientService!
-                    .UnFollowUserAsync(this.SelectedPostModel!.OwnerApplicationUserId!.Value,
+                    .UnFollowUserAsync(this.PostModel!.OwnerApplicationUserId!.Value,
                     CancellationToken.None);
-                await OnPostAuthorSelectedAsync(this.SelectedPostModel);
+                await OnPostAuthorSelectedAsync();
             }
             catch (Exception ex)
             {
@@ -226,19 +227,17 @@ namespace FairPlaySocial.SharedUI.Components
             this.SelectedPostHistory = null;
         }
 
-        private void EditPost(PostModel? postModel)
+        private void EditPost()
         {
-            this.SelectedPostModel = postModel;
             this.ShowPostEditModal = true;
         }
 
-        private void ReSharePost(PostModel? postModel)
+        private void ReSharePost()
         {
             this.createSharedPostModel = new CreateSharedPostModel()
             {
-                CreatedFromPostId = postModel!.PostId
+                CreatedFromPostId = this.PostModel!.PostId
             };
-            this.SelectedPostModel = postModel;
             this.ShowReShareModal = true;
         }
 
@@ -248,20 +247,17 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 PostId = postModel!.PostId
             };
-            this.SelectedPostModel = postModel;
             this.ShowPostCommentsModal = true;
         }
 
         private void HidePostCommentsModal()
         {
             this.ShowPostCommentsModal = false;
-            this.SelectedPostModel = null;
         }
 
         private void HidePostEditModal()
         {
             this.ShowPostEditModal = false;
-            this.SelectedPostModel = null;
         }
 
         private void OnPostUpdated(PostModel postModel)
@@ -273,7 +269,6 @@ namespace FairPlaySocial.SharedUI.Components
         private void HidePostReShareModal()
         {
             this.ShowReShareModal = false;
-            this.SelectedPostModel = null;
             this.createSharedPostModel = null;
         }
 
@@ -324,6 +319,11 @@ namespace FairPlaySocial.SharedUI.Components
         private void NavigateToPost()
         {
             this.NavigationService!.NavigateToPost(postId: this.PostModel!.PostId!.Value);
+        }
+
+        private void SharePost()
+        {
+            this.ShowShareModal = true;
         }
     }
 }

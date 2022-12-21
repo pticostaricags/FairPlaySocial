@@ -1,0 +1,9 @@
+﻿<div class="@ThemeConfiguration.Divisions.DefaultCss">
+    <button class="btn">
+        <i class="bi bi-clipboard-fill" @onclick="CopyEmbeddedPostUrlToClipboardAsync"></i>
+    </button>
+    <a href="@($"https://twitter.com/intent/tweet?text=&url={this.EmbeddedPostAbsolutePath}")"
+       target="_blank">
+        <i class="bi bi-twitter"></i>
+    </a>
+</div>
