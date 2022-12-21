@@ -39,7 +39,7 @@ namespace FairPlaySocial.SharedUI.Pages
                             {
                                 new MenuGrid.MenuGridItem()
                                 {
-                                    CssClass="bi bi-building",
+                                    CssClass="bi bi-people-fill",
                                     OnClick= new EventCallback(this, ()=>this.NavigationService!
                                     .NavigateToUserListForAdmin()),
                                     ShowTitleBelowIcon=true,
@@ -53,7 +53,7 @@ namespace FairPlaySocial.SharedUI.Pages
                             {
                                 new MenuGrid.MenuGridItem()
                                 {
-                                    CssClass="bi bi-building",
+                                    CssClass="bi bi-gear-fill",
                                     OnClick= new EventCallback(this, ()=>
                                     this.NavigationService!
                                     .NavigateToUpdateMyUserPreferences()),
@@ -62,7 +62,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
-                                    CssClass="bi bi-building",
+                                    CssClass="bi bi-person-lines-fill",
                                     OnClick= new EventCallback(this, ()=>
                                     this.NavigationService!
                                     .NavigateToUpdateMyUserProfile()),
@@ -71,7 +71,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
-                                    CssClass="bi bi-building",
+                                    CssClass="bi bi-pencil-square",
                                     OnClick= new EventCallback(this, ()=>
                                     this.NavigationService!
                                     .NavigateToCreateMyPost()),
@@ -80,7 +80,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
-                                    CssClass="bi bi-building",
+                                    CssClass="bi bi-collection-fill",
                                     OnClick= new EventCallback(this, ()=>
                                     this.NavigationService!
                                     .NavigateToHomeFeed()),
