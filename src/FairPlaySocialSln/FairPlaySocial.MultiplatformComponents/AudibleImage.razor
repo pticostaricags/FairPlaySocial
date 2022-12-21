@@ -1,0 +1,7 @@
+﻿@using FairPlaySocial.Common.Global;
+
+<img class="@ThemeConfiguration.Images.ThumbnailDefaultCss"
+     alt="@AlternativeText"
+     src="@Source"
+     @onmouseover="@( async () => await OnMouseOverAsync())"
+     @onmouseout="@( () => OnMouseOut())" />

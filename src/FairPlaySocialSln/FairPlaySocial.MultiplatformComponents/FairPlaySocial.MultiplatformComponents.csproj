@@ -28,4 +28,12 @@
     <ProjectReference Include="..\FairPlaySocial.Models\FairPlaySocial.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="AudibleImage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="AudibleImage.razor" />
+  </ItemGroup>
+
 </Project>

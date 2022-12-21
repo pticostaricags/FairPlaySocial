@@ -45,7 +45,7 @@ namespace FairPlaySocial.SharedUI.Components
         private bool ShowPostCommentsModal { get; set; } = false;
         private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
         private CreatePostCommentModel? createPostCommentModel { get; set; } = null;
-
+        private string ImageDataUrl => $"data:{PostModel!.Photo!.ImageType};base64, {Convert.ToBase64String(PostModel!.Photo!.ImageBytes!)}";
         private async Task OnPostAuthorSelectedAsync(PostModel selectedPostModel)
         {
             try
