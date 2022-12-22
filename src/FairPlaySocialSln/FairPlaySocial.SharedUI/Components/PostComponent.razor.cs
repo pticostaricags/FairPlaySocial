@@ -272,6 +272,11 @@ namespace FairPlaySocial.SharedUI.Components
             this.createSharedPostModel = null;
         }
 
+        private void HidePostShareModal()
+        {
+            this.ShowShareModal = false;
+        }
+
         private async Task OnValidSubmitForReSharePostAsync()
         {
             try
