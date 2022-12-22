@@ -21,6 +21,7 @@ namespace FairPlaySocial.SharedUI.Components
         private INavigationService? NavigationService { get; set; }
         private string EmbeddedPostRelativePath => $"{Common.Global.Constants.MauiBlazorAppPages.PublicPagesRoutes.EmbeddedPost}/{this.PostModel!.PostId}";
         private string EmbeddedPostAbsolutePath => this.NavigationService!.GetAbsoluteUrl(relativePath: EmbeddedPostRelativePath);
+        private string MastodonInstance { get; set; } = "mastodon";
         private async Task CopyEmbeddedPostUrlToClipboardAsync()
         {
             await this.JSRuntime!.InvokeVoidAsync("clipboardCopy.copyText", this.EmbeddedPostAbsolutePath);
