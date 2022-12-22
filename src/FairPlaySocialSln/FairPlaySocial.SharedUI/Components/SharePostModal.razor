@@ -14,12 +14,16 @@
        target="_blank">
         <i class="bi bi-linkedin"></i>
     </a>
+    <a href="@($"whatsapp://send?text={this.EmbeddedPostAbsolutePath}")"
+       target="_blank" data-action="share/whatsapp/share">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 </div>
 <div class="@ThemeConfiguration.Divisions.DefaultCss">
     <a href="@($"https://{this.MastodonInstance}.social/share?text={this.EmbeddedPostAbsolutePath}")"
        target="_blank">
         <i class="bi bi-mastodon"></i>
     </a>
-    <label class="@ThemeConfiguration.Labels.DefaultCss">Input your desired Mastodon instance and lick the icon</label>
+    <label class="@ThemeConfiguration.Labels.DefaultCss">Input your desired Mastodon instance and click the icon</label>
     <input class="@ThemeConfiguration.GenericControls.DefaultCss" type="text" @bind="@this.MastodonInstance" />
 </div>
