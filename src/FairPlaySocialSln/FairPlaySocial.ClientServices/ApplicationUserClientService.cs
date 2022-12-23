@@ -1,4 +1,5 @@
 using FairPlaySocial.Common.CustomAttributes;
+using FairPlaySocial.Common.Extensions;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Models.ApplicationUser;
 using FairPlaySocial.Models.Filtering;
@@ -14,9 +15,11 @@ namespace FairPlaySocial.ClientServices
         public async Task<string[]?> GetMyRolesAsync(CancellationToken cancellationToken)
         {
             var authorizedHttpClient = this._httpClientService.CreateAuthorizedClient();
-            var result = await authorizedHttpClient.GetFromJsonAsync<string[]>(
+            var response = await authorizedHttpClient.GetAsync(
                 Constants.ApiRoutes.AuthController.GetMyRoles,
                 cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<string[]>(cancellationToken: cancellationToken); ;
             return result;
         }
 
