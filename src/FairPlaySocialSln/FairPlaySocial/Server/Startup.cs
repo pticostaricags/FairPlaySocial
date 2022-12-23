@@ -105,6 +105,7 @@ namespace FairPlaySocial.Server
                     dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
                         sqlServerOptionsAction =>
                         {
+                            sqlServerOptionsAction.UseNetTopologySuite();
                             sqlServerOptionsAction.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                             sqlServerOptionsAction.EnableRetryOnFailure(maxRetryCount: 3,
                                 maxRetryDelay: TimeSpan.FromSeconds(5), errorNumbersToAdd: null);

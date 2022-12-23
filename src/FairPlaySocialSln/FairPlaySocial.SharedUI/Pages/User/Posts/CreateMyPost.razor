@@ -61,6 +61,14 @@
         <ValidationMessage For="@( () => this.createPostModel.Tag3)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Press the icon to retrieve your current geolocation"></AudibleLabel>
+        <button type="button" class="btn" @onclick="GetCurrentGeoLocationAsync">
+            <i class="bi bi-geo-alt-fill"></i>
+        </button>
+        <AudibleLabel ItemText="@($"Latitude: {this.createPostModel.CreatedAtLatitude}")"></AudibleLabel>
+        <AudibleLabel ItemText="@($"Longitude: {this.createPostModel.CreatedAtLongitude}")"></AudibleLabel>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <button type="submit"
                 class="@ThemeConfiguration.Buttons.PrimaryButtonCss">
             Create Post

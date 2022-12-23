@@ -13,8 +13,8 @@ using static FairPlaySocial.Common.Global.Constants;
 
 namespace FairPlaySocial.SharedUI.Pages.User.Posts
 {
-    [Authorize(Roles = $"{Constants.Roles.User}")]
-    [Route(Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost)]
+    [Authorize(Roles = $"{Roles.User}")]
+    [Route(MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost)]
     public partial class CreateMyPost
     {
         [Inject]
@@ -23,6 +23,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
+        [Inject]
+        private IGeoLocationService? GeoLocationService { get; set; }
         private CreatePostModel createPostModel = new CreatePostModel()
         {
             Photo = new()
@@ -55,6 +57,30 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         {
             //This should invoke a Content Moderation Service, similar to what FairPlayDating is doing
             return Task.CompletedTask;
+        }
+
+        private async Task GetCurrentGeoLocationAsync()
+        {
+            try
+            {
+                this.IsBusy = true;
+                var currentGeoLocation = await this.GeoLocationService!
+                    .GetCurrentPositionAsync();
+                if (currentGeoLocation != null) 
+                {
+                    this.createPostModel.CreatedAtLatitude = currentGeoLocation.Latitude;
+                    this.createPostModel.CreatedAtLongitude = currentGeoLocation.Longitude;
+                }
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
     }
 }
