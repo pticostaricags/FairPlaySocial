@@ -44,6 +44,10 @@ public partial class Post
 
     public long? CreatedFromPostId { get; set; }
 
+    public double? CreatedAtLatitude { get; set; }
+
+    public double? CreatedAtLongitude { get; set; }
+
     [ForeignKey("CreatedFromPostId")]
     [InverseProperty("InverseCreatedFromPost")]
     public virtual Post CreatedFromPost { get; set; }

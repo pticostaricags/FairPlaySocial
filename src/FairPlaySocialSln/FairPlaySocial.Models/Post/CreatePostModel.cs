@@ -37,5 +37,7 @@ namespace FairPlaySocial.Models.Post
         [Required]
         [Range(1, 2)]
         public short? PostVisibilityId { get; set; }
+        public double? CreatedAtLatitude { get; set; }
+        public double? CreatedAtLongitude { get; set; }
     }
 }

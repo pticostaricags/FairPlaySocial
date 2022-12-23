@@ -84,6 +84,17 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     {
                         Tag = source.Tag3
                     });
+
+                    if (source.CreatedAtLatitude != null && source.CreatedAtLongitude != null)
+                    {
+
+                        dest.CreatedAtGeoLocation = new NetTopologySuite.Geometries.Point(
+                            x: source.CreatedAtLongitude!.Value,
+                            y: source.CreatedAtLatitude!.Value)
+                        {
+                            SRID = Common.Global.Constants.GeoCoordinates.SRID
+                        };
+                    }
                 });
         }
     }
