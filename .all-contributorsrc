@@ -14,6 +14,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "martinwoodward",
+      "name": "Martin Woodward",
+      "avatar_url": "https://avatars.githubusercontent.com/u/856858?v=4",
+      "profile": "https://hachyderm.io/@martinwoodward",
+      "contributions": [
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
