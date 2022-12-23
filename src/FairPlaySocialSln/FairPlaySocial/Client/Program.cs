@@ -36,6 +36,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
 builder.Services.AddBlazoredToast();
 builder.Services.AddTransient<IToastService, ToastService>();
 builder.Services.AddTransient<ITextToSpeechService, TextToSpeechService>();
+builder.Services.AddTransient<IGeoLocationService, BlazorGeoLocationService>();
 builder.Services.AddMultiPlatformServices();
 
 builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUserAccount>(options =>

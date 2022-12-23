@@ -77,6 +77,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
         builder.Services.AddMultiPlatformServices();
+        builder.Services.AddTransient<IGeoLocationService, MauiGeoLocationService>();
         builder.Services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();
 
         return builder.Build();
