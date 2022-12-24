@@ -1,10 +1,11 @@
 ﻿@inherits CustomBaseComponent
 
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
 @if (this.PostModel != null)
 {
     <div class="@ThemeConfiguration.Chats.ChatItemSection">
-        <div class="post-navigation-zone" style="cursor:pointer;"
-         @onclick="NavigateToPost">
+        <div class="post-header">
             <label @onclick="@( async () => await OnPostAuthorSelectedAsync())"
                class="@ThemeConfiguration.Chats.ChatSender"
                style="cursor:pointer;">
@@ -16,6 +17,9 @@
                     @(PostModel.PostedTime.Hours > 0 ? $"{(int)PostModel.PostedTime.Hours}h" : $"{PostModel.PostedTime.Minutes}m")
                 </strong>
             </label>
+        </div>
+        <div class="post-navigation-zone" style="cursor:pointer;"
+         @onclick="NavigateToPost">
             <p class="@ThemeConfiguration.Chats.ChatContent">@PostModel.Text</p>
             <p class="@ThemeConfiguration.Chats.ChatTime"></p>
             @if (PostModel.Photo != null)
