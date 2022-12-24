@@ -19,15 +19,18 @@ namespace FairPlaySocial.Server.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly PostService postService;
 
         public PublicFeedController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
+            IHttpContextAccessor httpContextAccessor,
             PostService postService)
         {
             this.mapper = mapper;
             this.currentUserProvider = currentUserProvider;
+            this.httpContextAccessor = httpContextAccessor;
             this.postService = postService;
         }
 
@@ -66,6 +69,13 @@ namespace FairPlaySocial.Server.Controllers
                 .Take(Constants.Pagination.DefaultPageSize)
                 .Select(p => this.mapper.Map<Post, PostModel>(p))
                 .ToArrayAsync(cancellationToken: cancellationToken);
+            foreach (var singlePost in result.Items)
+            {
+                singlePost.Photo!.ImageUrl =
+                            $"{this.httpContextAccessor!.HttpContext!.Request.Scheme}://" +
+                            $"{this.httpContextAccessor!.HttpContext!.Request.Host}/" +
+                            $"api/PublicPhoto/GetPhotoByPhotoId?photoId={singlePost.Photo.PhotoId}";
+            }
             return result;
         }
 
@@ -86,6 +96,10 @@ namespace FairPlaySocial.Server.Controllers
             if (postEntity is null)
                 throw new CustomValidationException($"Unable to find post with Id: {postId}");
             var result = this.mapper.Map<Post, PostModel>(postEntity);
+            result.Photo!.ImageUrl =
+                            $"{this.httpContextAccessor!.HttpContext!.Request.Scheme}://" +
+                            $"{this.httpContextAccessor!.HttpContext!.Request.Host}/" +
+                            $"api/PublicPhoto/GetPhotoByPhotoId?photoId={result.Photo.PhotoId}";
             return result;
         }
     }

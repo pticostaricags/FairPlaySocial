@@ -33,9 +33,6 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     {
                         dest.Photo = new Models.Photo.PhotoModel()
                         {
-                            Filename = source.Photo.Filename,
-                            ImageBytes = source.Photo.ImageBytes,
-                            ImageType = source.Photo.ImageType,
                             PhotoId = source.Photo.PhotoId,
                             AlternativeText = source.Photo.AlternativeText
                         };
