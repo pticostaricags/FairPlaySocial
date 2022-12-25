@@ -2,6 +2,7 @@
 using FairPlaySocial.Models.Photo;
 using FairPlaySocial.Models.PostTag;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -39,5 +40,7 @@ namespace FairPlaySocial.Models.Post
         public short? PostVisibilityId { get; set; }
         public double? CreatedAtLatitude { get; set; }
         public double? CreatedAtLongitude { get; set; }
+        [ProhibitDuplicateStrings(ErrorMessage = "Tags must not be repeated")]
+        public string?[] CombinedTags => new string?[] { Tag1, Tag2, Tag3 };
     }
 }
