@@ -61,6 +61,9 @@
         <ValidationMessage For="@( () => this.createPostModel.Tag3)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <ValidationMessage For="@( () => this.createPostModel.CombinedTags)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <AudibleLabel ItemText="Press the icon to retrieve your current geolocation"></AudibleLabel>
         <button type="button" class="btn" @onclick="GetCurrentGeoLocationAsync">
             <i class="bi bi-geo-alt-fill"></i>
