@@ -7,22 +7,33 @@ using FairPlaySocial.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Net;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 var faifairplaysocialApiAddress = builder.HostEnvironment.BaseAddress;
 builder.Services.AddHttpClient(
-            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI", client =>
-    client.BaseAddress = new Uri(faifairplaysocialApiAddress))
+            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
+            client =>
+            {
+                client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+                client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                client.DefaultRequestVersion = HttpVersion.Version30;
+            })
     //.AddHttpMessageHandler<LocalizationMessageHandler>()
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
 
 builder.Services.AddHttpClient(
-    $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", client =>
-    client.BaseAddress = new Uri(faifairplaysocialApiAddress))
+    $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", 
+    client =>
+    {
+        client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+        client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+        client.DefaultRequestVersion = HttpVersion.Version30;
+    })
     //.AddHttpMessageHandler<LocalizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());

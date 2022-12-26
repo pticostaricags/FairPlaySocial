@@ -8,6 +8,7 @@ using FairPlaySocial.MAUIBlazor.MultiPlatformServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
+using System.Net;
 using System.Reflection;
 
 namespace FairPlaySocial.MAUIBlazor;
@@ -53,16 +54,26 @@ public static class MauiProgram
         //string fairplaysocialApiAddress = "REPLACE_WITH_NGROK_GENERATED_URL";
         builder.Services.AddScoped<BaseAddressAuthorizationMessageHandler>();
         builder.Services.AddHttpClient(
-            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI", client =>
-    client.BaseAddress = new Uri(fairPlayTubeapiAddress))
+            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI", 
+            client =>
+            {
+                client.BaseAddress = new Uri(fairPlayTubeapiAddress);
+                client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                client.DefaultRequestVersion = HttpVersion.Version30;
+            })
     //.AddHttpMessageHandler<LocalizationMessageHandler>()
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
 
         builder.Services.AddHttpClient(
-            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", client =>
-            client.BaseAddress = new Uri(fairPlayTubeapiAddress))
+            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", 
+            client =>
+            {
+                client.BaseAddress = new Uri(fairPlayTubeapiAddress);
+                client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                client.DefaultRequestVersion = HttpVersion.Version30;
+            })
             //.AddHttpMessageHandler<LocalizationMessageHandler>()
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
             .AddPolicyHandler(PollyHelper.GetRetryPolicy());
