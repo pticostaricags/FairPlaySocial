@@ -70,6 +70,10 @@
                 @onclick="@( () => EditPost())">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
+                <button class="btn"
+                @onclick="@( () => DeletePost())">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
             }
             <button class="btn"
                 @onclick="@( () => ReSharePost())">
@@ -222,6 +226,22 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
             <EditPostModal OnPostUpdated="OnPostUpdated"
                        PostModel="@this.PostModel"
                        CancellationToken="@this.CancellationToken"></EditPostModal>
+        </Content>
+    </CustomModal>
+}
+@if (this.ShowPostDeleteModal && this.PostModel != null)
+{
+    <CustomModal OkButtonText="OK"
+             OnCloseButtonClicked="HidePostDeleteModal"
+             ShowFooter="false">
+        <Title>Delete Post</Title>
+        <Content>
+            <label class="@ThemeConfiguration.Labels.ErrorCss">Are you sure you want to delete the post?</label>
+            <button 
+                type="button" 
+                class="@ThemeConfiguration.Buttons.SecondaryButtonCss"
+            @onclick="DeletePostAsync"
+            >Yes, Delete</button>
         </Content>
     </CustomModal>
 }

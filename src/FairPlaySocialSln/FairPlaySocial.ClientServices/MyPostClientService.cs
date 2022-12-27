@@ -18,6 +18,15 @@ namespace FairPlaySocial.ClientServices
             this.httpClientService = httpClientService;
         }
 
+        public async Task DeleteMyPostAsync(
+            long postId,
+            CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyPost/DeleteMyPost?{nameof(postId)}={postId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.DeleteAsync(requestUrl, cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+        }
         public async Task CreateSharedPostAsync(
             CreateSharedPostModel createSharedPostModel,
             CancellationToken cancellationToken)
