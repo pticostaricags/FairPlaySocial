@@ -16,6 +16,8 @@
     }
     foreach (var singlePostModel in this.PostModels)
     {
-        <PostComponent PostModel="@singlePostModel"></PostComponent>
+        <PostComponent PostModel="@singlePostModel"
+        OnPostDeleted="@( () => OnPostDeleted(singlePostModel))"    
+        ></PostComponent>
     }
 }

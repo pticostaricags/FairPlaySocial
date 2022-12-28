@@ -8,6 +8,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -20,6 +21,9 @@ namespace FairPlaySocial.SharedUI.Components
         [Parameter]
         [EditorRequired]
         public PostModel? PostModel { get; set; }
+        [Parameter]
+        [EditorRequired]
+        public EventCallback OnPostDeleted { get; set; }
         [Inject]
         private MyFollowClientService? MyFollowClientService { get; set; }
         [Inject]
@@ -43,6 +47,7 @@ namespace FairPlaySocial.SharedUI.Components
         private PostModel[]? SelectedPostHistory { get; set; }
         private bool ShowPostHistory { get; set; } = false;
         private bool ShowPostEditModal { get; set; } = false;
+        private bool ShowPostDeleteModal { get; set; } = false;
         private bool ShowReShareModal { get; set; } = false;
         private bool ShowPostCommentsModal { get; set; } = false;
         private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
@@ -231,6 +236,11 @@ namespace FairPlaySocial.SharedUI.Components
             this.ShowPostEditModal = true;
         }
 
+        private void DeletePost()
+        {
+            this.ShowPostDeleteModal = true;
+        }
+
         private void ReSharePost()
         {
             this.createSharedPostModel = new CreateSharedPostModel()
@@ -257,6 +267,33 @@ namespace FairPlaySocial.SharedUI.Components
         private void HidePostEditModal()
         {
             this.ShowPostEditModal = false;
+        }
+
+        private void HidePostDeleteModal()
+        {
+            this.ShowPostDeleteModal = false;
+        }
+
+        private async Task DeletePostAsync()
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.MyPostClientService!
+                    .DeleteMyPostAsync(this.PostModel!.PostId!.Value, base.CancellationToken);
+                await this.ToastService!
+                    .ShowSuccessMessageAsync("Post has been deleted", base.CancellationToken);
+                await this.OnPostDeleted.InvokeAsync();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private void OnPostUpdated(PostModel postModel)
@@ -328,6 +365,12 @@ namespace FairPlaySocial.SharedUI.Components
         private void SharePost()
         {
             this.ShowShareModal = true;
+        }
+
+        private void OnPostReplyDeleted(PostModel? postModel)
+        {
+            PostModel!.InverseReplyToPost =
+                PostModel!.InverseReplyToPost!.Where(p => p.PostId != postModel!.PostId).ToArray();
         }
     }
 }

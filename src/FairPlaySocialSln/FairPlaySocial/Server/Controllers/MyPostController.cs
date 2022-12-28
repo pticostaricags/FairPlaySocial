@@ -2,6 +2,7 @@
 using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
+using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.Post;
@@ -15,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Hosting;
+using Polly;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -79,6 +81,60 @@ namespace FairPlaySocial.Server.Controllers
             });
             return Ok();
 
+        }
+
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> DeleteMyPostAsync(
+            long postId,
+            [FromServices] FairPlaySocialDatabaseContext fairPlaySocialDatabaseContext,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var postEntity = await this.postService
+                .GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
+                .Include(p => p.InverseReplyToPost)
+                .Where(p => p.PostId == postId && p.OwnerApplicationUserId == myApplicationUserId)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (postEntity is null)
+                throw new CustomValidationException($"Unable to find an owned post with Id: {postId}");
+            if (postEntity.InverseReplyToPost.Count > 0)
+                throw new CustomValidationException($"Deleting posts with replies is not allowed");
+
+            var executionStrategy = fairPlaySocialDatabaseContext.Database.CreateExecutionStrategy();
+            await executionStrategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await fairPlaySocialDatabaseContext.Database
+                .BeginTransactionAsync(cancellationToken:cancellationToken);
+                var deletedDislikedPosts =
+                await fairPlaySocialDatabaseContext
+                .DislikedPost
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedlikedPosts =
+                    await fairPlaySocialDatabaseContext
+                    .LikedPost
+                    .Where(p => p.PostId == postId)
+                    .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedTags =
+                    await fairPlaySocialDatabaseContext
+                    .PostTag
+                    .Where(p => p.PostId == postId)
+                    .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPosts =
+                await fairPlaySocialDatabaseContext.Post
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPhotos =
+                await fairPlaySocialDatabaseContext.Photo
+                .Where(p => p.PhotoId == postEntity.PhotoId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPostUrls =
+                await fairPlaySocialDatabaseContext.PostUrl
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                await transaction.CommitAsync(cancellationToken: cancellationToken);
+            });
+            return Ok();
         }
 
         [HttpPost("[action]")]

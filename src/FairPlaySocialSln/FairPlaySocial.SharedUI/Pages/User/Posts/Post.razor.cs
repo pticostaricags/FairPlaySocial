@@ -22,6 +22,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private INavigationService? NavigationService { get; set; }
         private bool IsBusy { get; set; } = false;
         private PostModel? PostModel { get; set; }
 
@@ -42,6 +44,11 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
             {
                 this.IsBusy = false;
             }
+        }
+
+        private void OnPostDeleted()
+        {
+            this.NavigationService!.NavigateToHomeFeed();
         }
     }
 }
