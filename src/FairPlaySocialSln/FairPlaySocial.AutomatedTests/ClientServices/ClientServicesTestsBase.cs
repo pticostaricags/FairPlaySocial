@@ -121,6 +121,18 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
             ApplicationUserClientService applicationUserClientService = new(CreateHttpClientService());
             return applicationUserClientService;
         }
+
+        protected MyPostClientService CreateMyPostClientService()
+        {
+            MyPostClientService myPostClientService = new(CreateHttpClientService());
+            return myPostClientService;
+        }
+
+        protected MyFeedClientService CreateMyFeedClientService()
+        {
+            MyFeedClientService myFeedClientService= new(CreateHttpClientService());
+            return myFeedClientService;
+        }
     }
 
     public class TestsHttpClientFactory : IHttpClientFactory
