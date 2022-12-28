@@ -103,23 +103,36 @@ namespace FairPlaySocial.Server.Controllers
             var executionStrategy = fairPlaySocialDatabaseContext.Database.CreateExecutionStrategy();
             await executionStrategy.ExecuteAsync(async () =>
             {
-                await using var transaction = await fairPlaySocialDatabaseContext.Database.BeginTransactionAsync();
+                await using var transaction = await fairPlaySocialDatabaseContext.Database
+                .BeginTransactionAsync(cancellationToken:cancellationToken);
                 var deletedDislikedPosts =
-                fairPlaySocialDatabaseContext
+                await fairPlaySocialDatabaseContext
                 .DislikedPost
                 .Where(p => p.PostId == postId)
                 .ExecuteDeleteAsync(cancellationToken: cancellationToken);
                 var deletedlikedPosts =
-                    fairPlaySocialDatabaseContext
+                    await fairPlaySocialDatabaseContext
                     .LikedPost
                     .Where(p => p.PostId == postId)
                     .ExecuteDeleteAsync(cancellationToken: cancellationToken);
                 var deletedTags =
-                    fairPlaySocialDatabaseContext
+                    await fairPlaySocialDatabaseContext
                     .PostTag
                     .Where(p => p.PostId == postId)
                     .ExecuteDeleteAsync(cancellationToken: cancellationToken);
-                await transaction.CommitAsync();
+                var deletedPosts =
+                await fairPlaySocialDatabaseContext.Post
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPhotos =
+                await fairPlaySocialDatabaseContext.Photo
+                .Where(p => p.PhotoId == postEntity.PhotoId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPostUrls =
+                await fairPlaySocialDatabaseContext.PostUrl
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                await transaction.CommitAsync(cancellationToken: cancellationToken);
             });
             return Ok();
         }
