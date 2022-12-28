@@ -25,8 +25,16 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
             var otherUser = await dbContext.ApplicationUser
                 .FirstAsync(p => p.AzureAdB2cobjectId.ToString() !=
             ClientServicesTestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId);
+            byte[] bytes = await GetTestImageBytes();
             var myPost = new Post()
             {
+                Photo = new()
+                {
+                    AlternativeText = "Test Image",
+                    Filename = "TestImage1",
+                    ImageBytes = bytes,
+                    ImageType = System.Net.Mime.MediaTypeNames.Image.Jpeg
+                },
                 OwnerApplicationUserId = myUser.ApplicationUserId,
                 PostTypeId = (byte)Common.Enums.PostType.Post,
                 PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
@@ -37,6 +45,13 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
 
             var otherUserPost = new Post()
             {
+                Photo = new()
+                {
+                    AlternativeText = "Test Image",
+                    Filename = "TestImage1",
+                    ImageBytes = bytes,
+                    ImageType = System.Net.Mime.MediaTypeNames.Image.Jpeg
+                },
                 OwnerApplicationUserId = otherUser.ApplicationUserId,
                 PostTypeId = (byte)Common.Enums.PostType.Post,
                 PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
@@ -64,11 +79,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
             await base.SignIn(Role.User);
             var myPostClientService = base.CreateMyPostClientService();
             string postText = $"Automated Test Post Created at : {DateTimeOffset.UtcNow}";
-            var imageStreamFullName = "FairPlaySocial.AutomatedTests.Resources.Images.TestImage1.jpg";
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(imageStreamFullName);
-            MemoryStream memoryStream = new MemoryStream();
-            await stream!.CopyToAsync(memoryStream);
-            var bytes = memoryStream.ToArray();
+            byte[] bytes = await GetTestImageBytes();
             await myPostClientService.CreateMyPostAsync(createPostModel: new()
             {
                 Photo = new()
@@ -90,7 +101,17 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 PageNumber = 1
             }, CancellationToken.None);
             Assert.IsNotNull(myHomeFeed);
-            Assert.IsTrue(myHomeFeed.Items!.Length == 1);
+            Assert.IsNotNull(myHomeFeed.Items!.SingleOrDefault(p=>p.Text == postText));
+        }
+
+        private static async Task<byte[]> GetTestImageBytes()
+        {
+            var imageStreamFullName = "FairPlaySocial.AutomatedTests.Resources.Images.TestImage1.jpg";
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(imageStreamFullName);
+            MemoryStream memoryStream = new MemoryStream();
+            await stream!.CopyToAsync(memoryStream);
+            var bytes = memoryStream.ToArray();
+            return bytes;
         }
 
         private static void CreateTestUsers()
