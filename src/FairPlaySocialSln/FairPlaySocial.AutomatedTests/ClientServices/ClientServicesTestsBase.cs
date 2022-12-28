@@ -1,10 +1,12 @@
 ﻿using FairPlaySocial.ClientServices;
 using FairPlaySocial.Common.Global;
+using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Net.Http.Json;
 using System.Text;
@@ -38,6 +40,11 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 .UseStartup<Startup>();
             ClientServicesTestsBase.Server = new TestServer(builder);
             this.TestsHttpClientFactory = new TestsHttpClientFactory();
+        }
+
+        internal static FairPlaySocialDatabaseContext GetDbContextInstance()
+        {
+            return Server!.Services.GetRequiredService<FairPlaySocialDatabaseContext>();
         }
 
         public enum Role
