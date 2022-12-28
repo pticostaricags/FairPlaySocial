@@ -133,7 +133,8 @@
                     @foreach (var singlePostReply in this.PostModel.InverseReplyToPost)
                     {
                         <li>
-                            <PostComponent PostModel="@singlePostReply"></PostComponent>
+                            <PostComponent PostModel="@singlePostReply"
+                               OnPostDeleted="@( ()=> OnPostReplyDeleted(singlePostReply))"></PostComponent>
                         </li>
                     }
                 </ul>
@@ -237,11 +238,11 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
         <Title>Delete Post</Title>
         <Content>
             <label class="@ThemeConfiguration.Labels.ErrorCss">Are you sure you want to delete the post?</label>
-            <button 
-                type="button" 
+            <button type="button"
                 class="@ThemeConfiguration.Buttons.SecondaryButtonCss"
-            @onclick="DeletePostAsync"
-            >Yes, Delete</button>
+                @onclick="DeletePostAsync">
+                Yes, Delete
+            </button>
         </Content>
     </CustomModal>
 }

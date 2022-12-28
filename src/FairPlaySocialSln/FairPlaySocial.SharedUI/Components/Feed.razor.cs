@@ -116,6 +116,15 @@ namespace FairPlaySocial.SharedUI.Components
             StateHasChanged();
         }
 
+        private void OnPostDeleted(PostModel? postModel)
+        {
+            var matchingPost = this.PostModels.SingleOrDefault(p => p.PostId == postModel!.PostId);
+            if (matchingPost != null)
+            {
+                this.PostModels.Remove(matchingPost);
+            }
+        }
+
         public bool IsConnected =>
         this.HubConnection!.State == HubConnectionState.Connected;
 

@@ -21,6 +21,9 @@ namespace FairPlaySocial.SharedUI.Components
         [Parameter]
         [EditorRequired]
         public PostModel? PostModel { get; set; }
+        [Parameter]
+        [EditorRequired]
+        public EventCallback OnPostDeleted { get; set; }
         [Inject]
         private MyFollowClientService? MyFollowClientService { get; set; }
         [Inject]
@@ -280,7 +283,7 @@ namespace FairPlaySocial.SharedUI.Components
                     .DeleteMyPostAsync(this.PostModel!.PostId!.Value, base.CancellationToken);
                 await this.ToastService!
                     .ShowSuccessMessageAsync("Post has been deleted", base.CancellationToken);
-                this.NavigationService!.NavigateToHomeFeed();
+                await this.OnPostDeleted.InvokeAsync();
             }
             catch (Exception ex)
             {
@@ -362,6 +365,12 @@ namespace FairPlaySocial.SharedUI.Components
         private void SharePost()
         {
             this.ShowShareModal = true;
+        }
+
+        private void OnPostReplyDeleted(PostModel? postModel)
+        {
+            PostModel!.InverseReplyToPost =
+                PostModel!.InverseReplyToPost!.Where(p => p.PostId != postModel!.PostId).ToArray();
         }
     }
 }
