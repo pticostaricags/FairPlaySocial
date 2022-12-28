@@ -93,10 +93,12 @@ namespace FairPlaySocial.Server.Controllers
             var postEntity = await this.postService
                 .GetAllPost(trackEntities: false, cancellationToken: cancellationToken)
                 .Include(p => p.InverseReplyToPost)
-                .Where(p => p.PostId == postId && p.OwnerApplicationUserId == myApplicationUserId)
+                .Where(p => p.PostId == postId)
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (postEntity is null)
                 throw new CustomValidationException($"Unable to find an owned post with Id: {postId}");
+            if (postEntity.OwnerApplicationUserId != myApplicationUserId)
+                throw new CustomValidationException($"Deleting other users posts is not allowed");
             if (postEntity.InverseReplyToPost.Count > 0)
                 throw new CustomValidationException($"Deleting posts with replies is not allowed");
 

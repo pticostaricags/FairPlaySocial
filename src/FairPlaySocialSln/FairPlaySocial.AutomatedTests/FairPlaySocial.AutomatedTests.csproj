@@ -19,6 +19,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\TestImage1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\TestImage1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
@@ -37,6 +45,10 @@
     <ProjectReference Include="..\FairPlaySocial.ClientServices\FairPlaySocial.ClientServices.csproj" />
     <ProjectReference Include="..\FairPlaySocial.Services\FairPlaySocial.Services.csproj" />
     <ProjectReference Include="..\FairPlaySocial\Server\FairPlaySocial.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
