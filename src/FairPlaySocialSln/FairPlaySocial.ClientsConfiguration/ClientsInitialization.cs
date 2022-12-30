@@ -23,6 +23,7 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<MyLikedPostsClientService>();
             services.AddTransient<PublicFeedClientService>();
             services.AddTransient<PostCommentClientService>();
+            services.AddTransient<LocalizationClientService>();
             services.AddSingleton(new UserPreferenceModel());
             services.AddSingleton<IWhiteLabelingService, WhiteLabelingService>();
         }

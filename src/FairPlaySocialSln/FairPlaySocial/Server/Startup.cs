@@ -12,6 +12,10 @@ using FairPlaySocial.Notifications.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Identity.Web;
 using System.Security.Claims;
+using Microsoft.Extensions.Localization;
+using FairPlaySocial.Server.CustomLocalization.EF;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace FairPlaySocial.Server
 {
@@ -40,6 +44,9 @@ namespace FairPlaySocial.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
+            services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
+            services.AddSingleton<IStringLocalizer, EFStringLocalizer>();
+            services.AddLocalization();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -233,6 +240,8 @@ namespace FairPlaySocial.Server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IServiceProvider sp)
         {
+            ConfigureRequestLocalization(app, sp);
+
             app.UseResponseCompression();
             ExceptionsHelper.HandleExceptions(app);
             // Configure the HTTP request pipeline.
@@ -266,6 +275,20 @@ namespace FairPlaySocial.Server
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapFallbackToFile("index.html");
             });
+        }
+
+        private static void ConfigureRequestLocalization(IApplicationBuilder app, IServiceProvider sp)
+        {
+            var dbContext = sp.GetRequiredService<FairPlaySocialDatabaseContext>();
+
+            var supportedCultures = dbContext.Culture.Select(p => new CultureInfo(p.Name)).ToList();
+            var options = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(supportedCultures.First().Name),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+            app.UseRequestLocalization(options);
         }
     }
 }

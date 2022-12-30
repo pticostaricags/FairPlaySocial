@@ -35,6 +35,11 @@ namespace FairPlaySocial.Common.Global
 
         public static class ApiRoutes
         {
+            public static class LocalizationController
+            {
+                public const string GetAllResources = "api/Localization/GetAllResources";
+                public const string GetSupportedCultures = "api/Localization/GetSupportedCultures";
+            }
             public static class AuthController
             {
                 public const string GetMyRoles = "api/Auth/GetMyRoles";

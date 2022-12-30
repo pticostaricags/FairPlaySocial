@@ -3,15 +3,26 @@ using FairPlaySocial.Client;
 using FairPlaySocial.Client.CustomClaims;
 using FairPlaySocial.Client.Services;
 using FairPlaySocial.ClientsConfiguration;
+using FairPlaySocial.ClientServices.CustomLocalization.Api;
 using FairPlaySocial.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Localization;
 using System.Net;
+using System.Net.Http.Headers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddBlazoredToast();
+builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
+builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
+builder.Services.AddLocalization();
+
+builder.Services.AddScoped<LocalizationMessageHandler>();
+
 var faifairplaysocialApiAddress = builder.HostEnvironment.BaseAddress;
 builder.Services.AddHttpClient(
             $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
@@ -21,7 +32,7 @@ builder.Services.AddHttpClient(
                 client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
                 client.DefaultRequestVersion = HttpVersion.Version30;
             })
-    //.AddHttpMessageHandler<LocalizationMessageHandler>()
+    .AddHttpMessageHandler<LocalizationMessageHandler>()
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
@@ -34,7 +45,7 @@ builder.Services.AddHttpClient(
         client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
         client.DefaultRequestVersion = HttpVersion.Version30;
     })
-    //.AddHttpMessageHandler<LocalizationMessageHandler>()
+    .AddHttpMessageHandler<LocalizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
@@ -61,3 +72,22 @@ builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUs
 }).AddAccountClaimsPrincipalFactory<
                 RemoteAuthenticationState, CustomRemoteUserAccount, CustomAccountClaimsPrincipalFactory>();
 await builder.Build().RunAsync();
+
+public class LocalizationMessageHandler : DelegatingHandler
+{
+    protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
+        request.Headers.AcceptLanguage.Clear();
+        request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
+        return base.Send(request, cancellationToken);
+    }
+
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
+        request.Headers.AcceptLanguage.Clear();
+        request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
+        return await base.SendAsync(request, cancellationToken);
+    }
+}
