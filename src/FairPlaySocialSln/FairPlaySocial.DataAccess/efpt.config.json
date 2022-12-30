@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Culture]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[DislikedPost]",
          "ObjectType": 0
       },
@@ -68,6 +72,10 @@
       },
       {
          "Name": "[dbo].[PostVisibility]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Resource]",
          "ObjectType": 0
       },
       {
