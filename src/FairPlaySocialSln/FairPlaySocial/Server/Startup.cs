@@ -106,6 +106,16 @@ namespace FairPlaySocial.Server
                         fairplaysocialDatabaseContext.ApplicationRole.Add(adminRole);
                         fairplaysocialDatabaseContext.SaveChanges();
                     }
+                    var enCulture = new DataAccess.Models.Culture()
+                    {
+                        CultureId = 1,
+                        Name = "en",
+                    };
+                    if (!fairplaysocialDatabaseContext.Culture.Any(p=>p.CultureId == enCulture.CultureId))
+                    {
+                        fairplaysocialDatabaseContext.Culture.Add(enCulture);
+                        fairplaysocialDatabaseContext.SaveChanges();
+                    }
                 }
                 else
                 {
