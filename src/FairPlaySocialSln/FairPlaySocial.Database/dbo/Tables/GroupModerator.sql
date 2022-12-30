@@ -1,6 +1,5 @@
-CREATE TABLE [dbo].[GroupModerator]
-(
-	[GroupModeratorId] BIGINT NOT NULL CONSTRAINT PK_GroupModerator PRIMARY KEY IDENTITY, 
+CREATE TABLE [dbo].[GroupModerator](
+    [GroupModeratorId] BIGINT NOT NULL CONSTRAINT PK_GroupModerator PRIMARY KEY IDENTITY, 
     [GroupId] BIGINT NOT NULL, 
     [ModeratorApplicationUserId] BIGINT NOT NULL, 
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
