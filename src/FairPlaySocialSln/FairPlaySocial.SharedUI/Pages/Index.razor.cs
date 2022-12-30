@@ -1,11 +1,13 @@
 using FairPlaySocial.ClientServices;
 using FairPlaySocial.Common;
+using FairPlaySocial.Common.CustomAttributes.Localization;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.ApplicationUser;
 using FairPlaySocial.MultiplatformComponents;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Localization;
 
 namespace FairPlaySocial.SharedUI.Pages
 {
@@ -15,6 +17,10 @@ namespace FairPlaySocial.SharedUI.Pages
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
+        [Inject]
+        private IStringLocalizer<Index>? Localizer { get; set; }
+        [Inject]
+        private LocalizationClientService? LocalizationClientService { get; set; }
         private MenuGrid.MenuGridItem[]? MainMenuItems { get; set; }
         private bool IsLoading { get; set; } = false;
         private string? WelcomeMessage;
@@ -25,9 +31,10 @@ namespace FairPlaySocial.SharedUI.Pages
             {
                 IsLoading = true;
                 await base.OnInitializedAsync();
-                this.WelcomeMessage = $"Welcome to " +
-                    $"{base.WhiteLabelingService!.WhiteLabelingData!.ApplicationName}.\r\n" +
-                    $"The Multi-platform system to share your thoughts.";
+                await this.LocalizationClientService!.LoadDataAsync();
+                this.WelcomeMessage = String.Format(
+                    Localizer![WelcomeMessageTextKey],
+                    base.WhiteLabelingService!.WhiteLabelingData!.ApplicationName);
                 if (UserState.UserContext?.IsLoggedOn == true)
                 {
                     var state = await this.AuthenticationStateProvider!.GetAuthenticationStateAsync();
@@ -98,5 +105,11 @@ namespace FairPlaySocial.SharedUI.Pages
                 StateHasChanged();
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Welcome to {0}" +
+                    $"The Multi-platform system to share your thoughts.")]
+        public const string WelcomeMessageTextKey = "WelcomeMessageText";
+        #endregion Resource Keys
     }
 }
