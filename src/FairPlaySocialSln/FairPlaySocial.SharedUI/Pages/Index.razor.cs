@@ -107,8 +107,7 @@ namespace FairPlaySocial.SharedUI.Pages
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue: "Welcome to {0}" +
-                    $"The Multi-platform system to share your thoughts.")]
+        [ResourceKey(defaultValue: "Welcome to {0}. The Multi-platform system to share your thoughts.")]
         public const string WelcomeMessageTextKey = "WelcomeMessageText";
         #endregion Resource Keys
     }
