@@ -1,10 +1,7 @@
-﻿using FairPlaySocial.Common.Interfaces.Services;
+﻿using FairPlaySocial.Common.CustomAttributes.Localization;
+using FairPlaySocial.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 namespace FairPlaySocial.MultiplatformComponents
 {
@@ -18,8 +15,10 @@ namespace FairPlaySocial.MultiplatformComponents
         public string? Source { get; set; }
         [Inject]
         private ITextToSpeechService? TextToSpeechService { get; set; }
+        [Inject]
+        private IStringLocalizer<AudibleImage>? Localizer { get; set; }
         private CancellationTokenSource? CancellationTokenSource = null;
-        private string AudibleTextCue => $"Image Alternative Text: {this.AlternativeText}";
+        private string AudibleTextCue => $"{Localizer![ImageAlternativeTextHintKey]}: {this.AlternativeText}";
 
         private async Task OnMouseOverAsync()
         {
@@ -33,5 +32,10 @@ namespace FairPlaySocial.MultiplatformComponents
             this.CancellationTokenSource!.Cancel();
             await this.TextToSpeechService!.CancelRunningAudioAsync();
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Image Alternative Text")]
+        public const string ImageAlternativeTextHintKey = "ImageAlternativeTextHint";
+        #endregion
     }
 }

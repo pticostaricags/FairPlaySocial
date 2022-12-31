@@ -41,7 +41,8 @@
         function speakToDefaultSpeakersAsync(text, locale) {
             if (speechSynthesis) {
                 const utterThis = new SpeechSynthesisUtterance(text);
-                utterThis.locale = locale;
+                utterThis.lang = locale;
+                //utterThis.locale = locale;
                 speechSynthesis.speak(utterThis);
             }
         }

@@ -17,6 +17,9 @@ namespace FairPlaySocial.Client.Services
         }
         public async Task SpeakToDefaultSpeakersAsync(string text, CancellationToken cancellationToken)
         {
+            this.Locale =await this._jsRuntime!.InvokeAsync<string>("blazorCulture.get");
+            if (Locale == "undefined")
+                this.Locale = Constants.Locales.DefaultLocale;
             await this._jsRuntime!.InvokeVoidAsync("speakToDefaultSpeakersAsync", text, this.Locale);
         }
 

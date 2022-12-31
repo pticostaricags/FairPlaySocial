@@ -69,12 +69,16 @@ namespace FairPlaySocial.Server.Translations
             var commonAssembly = typeof(Common.Global.Constants).Assembly;
             var commonTypes = commonAssembly.GetTypes();
 
+            var multiPlatformComponentsAssembly = typeof(MultiplatformComponents._Imports).Assembly;
+            var multiPlatformTypes = multiPlatformComponentsAssembly.GetTypes();
+
             List<Type> typesToCheck = new();
             typesToCheck.AddRange(clientAppTypes);
             typesToCheck.AddRange(componentsTypes);
             typesToCheck.AddRange(modelsTypes);
             typesToCheck.AddRange(servicesTypes);
             typesToCheck.AddRange(commonTypes);
+            typesToCheck.AddRange(multiPlatformTypes);
 
             foreach (var singleTypeToCheck in typesToCheck)
             {

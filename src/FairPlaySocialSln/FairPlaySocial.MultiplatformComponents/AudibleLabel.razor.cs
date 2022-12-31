@@ -1,5 +1,7 @@
+using FairPlaySocial.Common.CustomAttributes.Localization;
 using FairPlaySocial.Common.Interfaces.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +17,10 @@ namespace FairPlaySocial.MultiplatformComponents
         public string? ItemText { get; set; }
         [Inject]
         private ITextToSpeechService? TextToSpeechService { get; set; }
+        [Inject]
+        private IStringLocalizer<AudibleLabel>? Localizer { get; set; }
         private CancellationTokenSource? CancellationTokenSource = null;
-        private string AudibleTextCue => $"Label Text: {this.ItemText}";
+        private string AudibleTextCue => $"{Localizer![LabelTextHintKey]}: {this.ItemText}";
         private async Task OnMouseOverAsync()
         {
             CancellationTokenSource = new CancellationTokenSource();
@@ -29,5 +33,10 @@ namespace FairPlaySocial.MultiplatformComponents
             this.CancellationTokenSource!.Cancel();
             await this.TextToSpeechService!.CancelRunningAudioAsync();
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Label Text")]
+        public const string LabelTextHintKey = "LabelTextHint";
+        #endregion Resource Keys
     }
 }
