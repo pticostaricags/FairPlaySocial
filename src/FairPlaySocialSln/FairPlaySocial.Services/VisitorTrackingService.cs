@@ -45,9 +45,18 @@ namespace FairPlaySocial.Services
                     remoteIpAddress = ipAddresses.First();
                 }
                 var parsedIpAddress = System.Net.IPAddress.Parse(remoteIpAddress);
-                var ipGeoLocationInfo = await IpDataService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
-                //var ipGeoLocationInfo = await IpStackService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
-                string country = ipGeoLocationInfo.country_name;
+                string country = string.Empty;
+                try
+                {
+                    var ipGeoLocationInfo = await IpDataService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
+                    //var ipGeoLocationInfo = await IpStackService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
+                    country = ipGeoLocationInfo.country_name;
+                }
+                catch (Exception ex) 
+                {
+                    string message = $"IpDataService.GetIpGeoLocationInfoAsync failed for Ip: {parsedIpAddress}. Error: {ex.ToString()}";
+                    throw new Exception(message, ex);
+                }
                 var host = httpContext.Request.Host.Value;
                 var userAgent = httpContext.Request.Headers["User-Agent"].First();
                 ApplicationUser? userEntity = null;
