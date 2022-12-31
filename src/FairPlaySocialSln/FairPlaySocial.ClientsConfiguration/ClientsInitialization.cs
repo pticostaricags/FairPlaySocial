@@ -10,6 +10,7 @@ namespace FairPlaySocial.ClientsConfiguration
     {
         public static void AddMultiPlatformServices(this IServiceCollection services)
         {
+            #region START OF TRANSIENT SERVICES
             services.AddTransient<INavigationService, NavigationService>();
             services.AddTransient<HttpClientService>();
             services.AddTransient<ApplicationUserClientService>();
@@ -23,9 +24,15 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<MyLikedPostsClientService>();
             services.AddTransient<PublicFeedClientService>();
             services.AddTransient<PostCommentClientService>();
+            services.AddTransient<VisitorTrackingClientService>();
+            services.AddTransient<ClientSideErrorLogClientService>();
+            #endregion END OF TRANSIENT SERVICES
+
+            #region START OF SINGLETON SERVICES
             services.AddSingleton<LocalizationClientService>();
             services.AddSingleton(new UserPreferenceModel());
             services.AddSingleton<IWhiteLabelingService, WhiteLabelingService>();
+            #endregion END OF SINGLETON SERVICES
         }
     }
 }

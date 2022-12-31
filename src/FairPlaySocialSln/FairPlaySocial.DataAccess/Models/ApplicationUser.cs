@@ -66,4 +66,7 @@ public partial class ApplicationUser
 
     [InverseProperty("ApplicationUser")]
     public virtual UserProfile UserProfile { get; set; }
+
+    [InverseProperty("ApplicationUser")]
+    public virtual ICollection<VisitorTracking> VisitorTracking { get; } = new List<VisitorTracking>();
 }

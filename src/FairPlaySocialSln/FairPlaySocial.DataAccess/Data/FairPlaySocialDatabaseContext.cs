@@ -22,6 +22,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
 
+    public virtual DbSet<ClientSideErrorLog> ClientSideErrorLog { get; set; }
+
     public virtual DbSet<Culture> Culture { get; set; }
 
     public virtual DbSet<DislikedPost> DislikedPost { get; set; }
@@ -49,6 +51,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
     public virtual DbSet<UserPreference> UserPreference { get; set; }
 
     public virtual DbSet<UserProfile> UserProfile { get; set; }
+
+    public virtual DbSet<VisitorTracking> VisitorTracking { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -163,6 +167,11 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.ApplicationUser).WithOne(p => p.UserProfile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserProfile_ApplicationUser");
+        });
+
+        modelBuilder.Entity<VisitorTracking>(entity =>
+        {
+            entity.HasOne(d => d.ApplicationUser).WithMany(p => p.VisitorTracking).HasConstraintName("FK_VisitorTracking_ApplicationUser");
         });
 
         OnModelCreatingPartial(modelBuilder);

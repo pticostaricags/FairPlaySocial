@@ -71,7 +71,7 @@ namespace FairPlaySocial.Server
             {
                 hubOptions.MaximumReceiveMessageSize = 20 * 1024 * 1024;
             });
-            services.AddPlatformServices();
+            services.AddPlatformServices(this.Configuration);
 
             services.AddTransient(serviceProvider =>
             {

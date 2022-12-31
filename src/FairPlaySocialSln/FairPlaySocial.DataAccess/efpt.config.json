@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ClientSideErrorLog]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Culture]",
          "ObjectType": 0
       },
@@ -85,9 +89,14 @@
       {
          "Name": "[dbo].[UserProfile]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VisitorTracking]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "FairPlaySocial.Database\\FairPlaySocial.Database.sqlproj",
+   "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
@@ -97,9 +106,7 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,
-   "UseNoConstructor": false,
    "UseNoDefaultConstructor": false,
-   "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
