@@ -35,6 +35,16 @@ namespace FairPlaySocial.Common.Global
 
         public static class ApiRoutes
         {
+            public static class ClientSideErrorLogController
+            {
+                public const string AddClientSideError = "api/ClientSideErrorLog/AddClientSideError";
+            }
+            public static class VisitorTrackingController
+            {
+                public const string TrackAnonymousClientInformation = "api/VisitorTracking/TrackAnonymousClientInformation";
+                public const string TrackAuthenticatedClientInformation = "api/VisitorTracking/TrackAuthenticatedClientInformation";
+                public const string UpdateVisitTimeElapsed = "api/VisitorTracking/UpdateVisitTimeElapsed";
+            }
             public static class LocalizationController
             {
                 public const string GetAllResources = "api/Localization/GetAllResources";

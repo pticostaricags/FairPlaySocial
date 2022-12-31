@@ -15,11 +15,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="PTI.Microservices.Library.AzureTranslator" Version="7.0.0.1" />
+    <PackageReference Include="PTI.Microservices.Library.IpData" Version="7.0.0.1" />
+    <PackageReference Include="PTI.Microservices.Library.IpStack" Version="7.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

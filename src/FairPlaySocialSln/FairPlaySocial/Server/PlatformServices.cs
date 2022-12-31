@@ -1,10 +1,16 @@
 ﻿using FairPlaySocial.Services;
+using Microsoft.Extensions.Configuration;
+using PTI.Microservices.Library.Configuration;
+using PTI.Microservices.Library.IpData.Configuration;
+using PTI.Microservices.Library.IpData.Services;
+using PTI.Microservices.Library.Services;
 
 namespace FairPlaySocial.Server
 {
     public static class PlatformServices
     {
-        internal static void AddPlatformServices(this IServiceCollection services)
+        internal static void AddPlatformServices(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddTransient<ApplicationUserService>();
             services.AddTransient<PhotoService>();
@@ -17,6 +23,31 @@ namespace FairPlaySocial.Server
             services.AddTransient<PostTagService>();
             services.AddTransient<PostUrlService>();
             services.AddTransient<ForbiddenUrlService>();
+            services.AddTransient<VisitorTrackingService>();
+            services.AddTransient<ClientSideErrorLogService>();
+
+            ConfigureIpDataService(services, configuration);
+            ConfigureIpStackService(services, configuration);
+        }
+
+        private static void ConfigureIpDataService(IServiceCollection services, 
+            IConfiguration configuration)
+        {
+            IpDataConfiguration ipDataConfiguration =
+                            configuration.GetSection(nameof(IpDataConfiguration))
+                            .Get<IpDataConfiguration>()!;
+            services.AddSingleton(ipDataConfiguration);
+            services.AddTransient<IpDataService>();
+        }
+
+        private static void ConfigureIpStackService(IServiceCollection services,
+            IConfiguration configuration)
+        {
+            IpStackConfiguration ipStackConfiguration =
+                            configuration.GetSection(nameof(IpStackConfiguration))
+                            .Get<IpStackConfiguration>()!;
+            services.AddSingleton(ipStackConfiguration);
+            services.AddTransient<IpStackService>();
         }
     }
 }
