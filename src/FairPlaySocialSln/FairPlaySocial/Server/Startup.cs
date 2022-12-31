@@ -16,6 +16,10 @@ using Microsoft.Extensions.Localization;
 using FairPlaySocial.Server.CustomLocalization.EF;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using FairPlaySocial.Server.Translations;
+using PTI.Microservices.Library.Configuration;
+using PTI.Microservices.Library.Interceptors;
+using PTI.Microservices.Library.Services;
 
 namespace FairPlaySocial.Server
 {
@@ -63,9 +67,9 @@ namespace FairPlaySocial.Server
             services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddTransient<IEmailService, EmailService>();
-            services.AddSignalR(hubOptions => 
+            services.AddSignalR(hubOptions =>
             {
-                hubOptions.MaximumReceiveMessageSize= 20 * 1024 * 1024;
+                hubOptions.MaximumReceiveMessageSize = 20 * 1024 * 1024;
             });
             services.AddPlatformServices();
 
@@ -111,7 +115,7 @@ namespace FairPlaySocial.Server
                         CultureId = 1,
                         Name = "en",
                     };
-                    if (!fairplaysocialDatabaseContext.Culture.Any(p=>p.CultureId == enCulture.CultureId))
+                    if (!fairplaysocialDatabaseContext.Culture.Any(p => p.CultureId == enCulture.CultureId))
                     {
                         fairplaysocialDatabaseContext.Culture.Add(enCulture);
                         fairplaysocialDatabaseContext.SaveChanges();
@@ -238,6 +242,26 @@ namespace FairPlaySocial.Server
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+            var shouldEnabledPTILibraries = Convert.ToBoolean(Configuration["EnablePTILibraries"]);
+            if (shouldEnabledPTILibraries)
+            {
+                GlobalPackageConfiguration.RapidApiKey = Configuration["RapidApiKey"];
+                GlobalPackageConfiguration.EnableHttpRequestInformationLog = false;
+
+                services.AddTransient<CustomHttpClientHandler>();
+                services.AddTransient<CustomHttpClient>();
+                
+                var azureTranslatorConfiguration =
+                    this.Configuration.GetSection(nameof(AzureTranslatorConfiguration))
+                    .Get<AzureTranslatorConfiguration>();
+                if (azureTranslatorConfiguration != null)
+                {
+                    services.AddTransient<TranslationService>();
+                    services.AddSingleton(azureTranslatorConfiguration);
+                    services.AddTransient<AzureTranslatorService>();
+                    services.AddHostedService<BackgroundTranslationService>();
+                }
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -277,7 +301,7 @@ namespace FairPlaySocial.Server
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => 
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
