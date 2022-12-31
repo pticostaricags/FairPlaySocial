@@ -25,12 +25,11 @@ namespace FairPlaySocial.Server
             services.AddTransient<ForbiddenUrlService>();
             services.AddTransient<VisitorTrackingService>();
             services.AddTransient<ClientSideErrorLogService>();
-
-            ConfigureIpDataService(services, configuration);
-            ConfigureIpStackService(services, configuration);
+            services.ConfigureIpDataService(configuration);
+            services.ConfigureIpStackService(configuration);
         }
 
-        private static void ConfigureIpDataService(IServiceCollection services, 
+        private static void ConfigureIpDataService(this IServiceCollection services, 
             IConfiguration configuration)
         {
             IpDataConfiguration ipDataConfiguration =
@@ -40,7 +39,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<IpDataService>();
         }
 
-        private static void ConfigureIpStackService(IServiceCollection services,
+        private static void ConfigureIpStackService(this IServiceCollection services,
             IConfiguration configuration)
         {
             IpStackConfiguration ipStackConfiguration =
