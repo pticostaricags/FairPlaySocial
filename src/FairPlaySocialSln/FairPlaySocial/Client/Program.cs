@@ -1,6 +1,7 @@
 using Blazored.Toast;
 using FairPlaySocial.Client;
 using FairPlaySocial.Client.CustomClaims;
+using FairPlaySocial.Client.Extensions;
 using FairPlaySocial.Client.Services;
 using FairPlaySocial.ClientsConfiguration;
 using FairPlaySocial.ClientServices.CustomLocalization.Api;
@@ -38,7 +39,7 @@ builder.Services.AddHttpClient(
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
 
 builder.Services.AddHttpClient(
-    $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", 
+    $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous",
     client =>
     {
         client.BaseAddress = new Uri(faifairplaysocialApiAddress);
@@ -71,7 +72,9 @@ builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUs
     options.UserOptions.RoleClaim = "Role";
 }).AddAccountClaimsPrincipalFactory<
                 RemoteAuthenticationState, CustomRemoteUserAccount, CustomAccountClaimsPrincipalFactory>();
-await builder.Build().RunAsync();
+var host = builder.Build();
+await host.SetDefaultCulture();
+await host.RunAsync();
 
 public class LocalizationMessageHandler : DelegatingHandler
 {

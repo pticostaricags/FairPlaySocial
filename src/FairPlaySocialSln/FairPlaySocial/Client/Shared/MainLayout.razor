@@ -1,10 +1,15 @@
 @using FairPlaySocial.Common
+@using FairPlaySocial.MultiplatformComponents.Bootstrap
 @inherits LayoutComponentBase
 
 <div class="main-page-grid">
     <div class="main-page-header">
         <div class="nav-bar-section">
             <div class="nav-bar-icon">
+                <a class="btn btn-outline-primary" style="margin:0;"
+                   @onclick="OnShowCultureSelectorClicked">
+                    <i class="bi bi-globe"></i>
+                </a>
                 <AuthorizeView>
                     <Authorized>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>
@@ -52,4 +57,17 @@
         </div>
     </div>
 </div>
+@if (ShowCultureSelector)
+{
+    <CustomModal OnCloseButtonClicked="HideCultureSelector"
+             ShowFooter="false">
+        <Title>
+            Select Culture
+        </Title>
+        <Content>
+            <CultureSelector></CultureSelector>
+        </Content>
+    </CustomModal>
+
+}
 <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight" Timeout="10"></BlazoredToasts>

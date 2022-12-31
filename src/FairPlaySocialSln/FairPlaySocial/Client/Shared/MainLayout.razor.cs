@@ -11,6 +11,7 @@ namespace FairPlaySocial.Client.Shared
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private NavigationManager? NavigationManager { get; set; }
+        private bool ShowCultureSelector { get; set; }
 
         private void OnLogoutClickedAsync()
         {
@@ -20,6 +21,16 @@ namespace FairPlaySocial.Client.Shared
         private void OnLoginClicked()
         {
             this.NavigationManager!.NavigateTo("authentication/login");
+        }
+
+        private void OnShowCultureSelectorClicked()
+        {
+            this.ShowCultureSelector = true;
+        }
+
+        private void HideCultureSelector()
+        {
+            this.ShowCultureSelector = false;
         }
     }
 }
