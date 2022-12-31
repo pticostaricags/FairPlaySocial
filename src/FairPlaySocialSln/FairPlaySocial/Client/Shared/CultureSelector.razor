@@ -1,0 +1,16 @@
+﻿@if (this.SupportedCultures is not null)
+{
+
+    <strong>@Localizer![LanguageTextKey]</strong>
+
+    <select class="form-select" @bind="Culture" style="width:300px; margin-left:10px;">
+        @foreach (var culture in this.SupportedCultures)
+        {
+            <option value="@culture">@GetDisplayName(culture)</option>
+        }
+    </select>
+
+    <strong>
+        @Localizer[TranslationsDisclaimerTextKey]
+    </strong>
+}
