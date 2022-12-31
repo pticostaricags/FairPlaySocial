@@ -37,6 +37,7 @@ namespace FairPlaySocial.Client.Shared
             }
             catch (Exception ex)
             {
+                await this.Error!.ProcessErrorAsync(ex, this.CancellationTokenSource.Token);
                 await ToastService!
                     .ShowErrorMessageAsync(ex.Message, this.CancellationTokenSource.Token);
             }
