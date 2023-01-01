@@ -48,6 +48,8 @@ public partial class Post
 
     public double? CreatedAtLongitude { get; set; }
 
+    public long? RootPostId { get; set; }
+
     [ForeignKey("CreatedFromPostId")]
     [InverseProperty("InverseCreatedFromPost")]
     public virtual Post CreatedFromPost { get; set; }
@@ -60,6 +62,9 @@ public partial class Post
 
     [InverseProperty("ReplyToPost")]
     public virtual ICollection<Post> InverseReplyToPost { get; } = new List<Post>();
+
+    [InverseProperty("RootPost")]
+    public virtual ICollection<Post> InverseRootPost { get; } = new List<Post>();
 
     [InverseProperty("Post")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
@@ -89,4 +94,8 @@ public partial class Post
     [ForeignKey("ReplyToPostId")]
     [InverseProperty("InverseReplyToPost")]
     public virtual Post ReplyToPost { get; set; }
+
+    [ForeignKey("RootPostId")]
+    [InverseProperty("InverseRootPost")]
+    public virtual Post RootPost { get; set; }
 }

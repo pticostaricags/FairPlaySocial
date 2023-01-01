@@ -99,8 +99,6 @@ namespace FairPlaySocial.Server.Controllers
                 throw new CustomValidationException($"Unable to find an owned post with Id: {postId}");
             if (postEntity.OwnerApplicationUserId != myApplicationUserId)
                 throw new CustomValidationException($"Deleting other users posts is not allowed");
-            if (postEntity.InverseReplyToPost.Count > 0)
-                throw new CustomValidationException($"Deleting posts with replies is not allowed");
 
             var executionStrategy = fairPlaySocialDatabaseContext.Database.CreateExecutionStrategy();
             await executionStrategy.ExecuteAsync(async () =>
@@ -122,6 +120,13 @@ namespace FairPlaySocial.Server.Controllers
                     .PostTag
                     .Where(p => p.PostId == postId)
                     .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPostUrls =
+                await fairPlaySocialDatabaseContext.PostUrl
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+                var deletedPostReplies =
+                await fairPlaySocialDatabaseContext.Post.Where(p => p.RootPostId == postId)
+                .OrderByDescending(p => p.PostId).ExecuteDeleteAsync(cancellationToken: cancellationToken);
                 var deletedPosts =
                 await fairPlaySocialDatabaseContext.Post
                 .Where(p => p.PostId == postId)
@@ -129,10 +134,6 @@ namespace FairPlaySocial.Server.Controllers
                 var deletedPhotos =
                 await fairPlaySocialDatabaseContext.Photo
                 .Where(p => p.PhotoId == postEntity.PhotoId)
-                .ExecuteDeleteAsync(cancellationToken: cancellationToken);
-                var deletedPostUrls =
-                await fairPlaySocialDatabaseContext.PostUrl
-                .Where(p => p.PostId == postId)
                 .ExecuteDeleteAsync(cancellationToken: cancellationToken);
                 await transaction.CommitAsync(cancellationToken: cancellationToken);
             });

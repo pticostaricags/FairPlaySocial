@@ -127,6 +127,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.PostVisibility).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_PostVisibility");
+
+            entity.HasOne(d => d.RootPost).WithMany(p => p.InverseRootPost).HasConstraintName("FK_Post_Post_RootPost");
         });
 
         modelBuilder.Entity<PostTag>(entity =>

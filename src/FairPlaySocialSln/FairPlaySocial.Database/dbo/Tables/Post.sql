@@ -18,11 +18,13 @@
     [CreatedAtLatitude] FLOAT NULL, 
     [CreatedAtLongitude] FLOAT NULL, 
     [CreatedAtGeoLocation] [sys].[geography] NULL, 
+    [RootPostId] BIGINT NULL, 
     CONSTRAINT [FK_Post_ApplicationUser] FOREIGN KEY ([OwnerApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]),  
     CONSTRAINT [FK_Post_Photo] FOREIGN KEY ([PhotoId]) REFERENCES [Photo]([PhotoId]), 
     CONSTRAINT [FK_Post_PostVisibility] FOREIGN KEY ([PostVisibilityId]) REFERENCES [PostVisibility]([PostVisibilityId]), 
     CONSTRAINT [FK_Post_Post] FOREIGN KEY ([CreatedFromPostId]) REFERENCES [Post]([PostId]), 
     CONSTRAINT [FK_Post_Post_ReplyToPostId] FOREIGN KEY ([ReplyToPostId]) REFERENCES [Post]([PostId]), 
-    CONSTRAINT [FK_Post_PostType] FOREIGN KEY ([PostTypeId]) REFERENCES [PostType]([PostTypeId])
+    CONSTRAINT [FK_Post_PostType] FOREIGN KEY ([PostTypeId]) REFERENCES [PostType]([PostTypeId]), 
+    CONSTRAINT [FK_Post_Post_RootPost] FOREIGN KEY ([RootPostId]) REFERENCES [Post]([PostId])
 )
 WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.PostHistory))
