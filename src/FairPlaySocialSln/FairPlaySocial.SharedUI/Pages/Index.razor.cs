@@ -3,7 +3,6 @@ using FairPlaySocial.Common;
 using FairPlaySocial.Common.CustomAttributes.Localization;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
-using FairPlaySocial.Models.ApplicationUser;
 using FairPlaySocial.MultiplatformComponents;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -50,7 +49,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                     OnClick= new EventCallback(this, ()=>this.NavigationService!
                                     .NavigateToUserListForAdmin()),
                                     ShowTitleBelowIcon=true,
-                                    Title="User List"
+                                    Title=Localizer![UserListTextKey]
                                 }
                             };
                         }
@@ -65,7 +64,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                     this.NavigationService!
                                     .NavigateToUpdateMyUserPreferences()),
                                     ShowTitleBelowIcon=true,
-                                    Title="User Preferences"
+                                    Title=Localizer![UserPreferencesTextKey]
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
@@ -74,7 +73,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                     this.NavigationService!
                                     .NavigateToUpdateMyUserProfile()),
                                     ShowTitleBelowIcon=true,
-                                    Title="User Profile"
+                                    Title=Localizer![UserProfileTextKey]
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
@@ -83,7 +82,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                     this.NavigationService!
                                     .NavigateToCreateMyPost()),
                                     ShowTitleBelowIcon=true,
-                                    Title="Create Post"
+                                    Title=Localizer![CreatePostTextKey]
                                 },
                                 new MenuGrid.MenuGridItem()
                                 {
@@ -92,7 +91,7 @@ namespace FairPlaySocial.SharedUI.Pages
                                     this.NavigationService!
                                     .NavigateToHomeFeed()),
                                     ShowTitleBelowIcon=true,
-                                    Title="Home Feed"
+                                    Title=Localizer![HomeFeedTextKey]
                                 }
                             };
                         }
@@ -109,6 +108,16 @@ namespace FairPlaySocial.SharedUI.Pages
         #region Resource Keys
         [ResourceKey(defaultValue: "Welcome to {0}. The Multi-platform system to share your thoughts.")]
         public const string WelcomeMessageTextKey = "WelcomeMessageText";
+        [ResourceKey(defaultValue: "User List")]
+        public const string UserListTextKey = "UserListText";
+        [ResourceKey(defaultValue: "User Preferences")]
+        public const string UserPreferencesTextKey = "UserPreferencesText";
+        [ResourceKey(defaultValue: "User Profile")]
+        public const string UserProfileTextKey = "UserProfileText";
+        [ResourceKey(defaultValue: "Create Post")]
+        public const string CreatePostTextKey = "CreatePostText";
+        [ResourceKey(defaultValue: "Home Feed")]
+        public const string HomeFeedTextKey = "HomeFeedText";
         #endregion Resource Keys
     }
 }
