@@ -52,7 +52,8 @@ namespace FairPlaySocial.Server.Controllers
                 ReplyToPostId = postEntity.PostId,
                 Text = createPostCommentModel.Text,
                 OwnerApplicationUserId = myApplicationUserId,
-                PostVisibilityId = postEntity.PostVisibilityId
+                PostVisibilityId = postEntity.PostVisibilityId,
+                RootPostId= postEntity.RootPostId ?? postEntity.PostId
             };
             postCommentEntity = await this.postService.CreatePostAsync(postCommentEntity, cancellationToken: cancellationToken);
             postCommentEntity = (await this.postService
