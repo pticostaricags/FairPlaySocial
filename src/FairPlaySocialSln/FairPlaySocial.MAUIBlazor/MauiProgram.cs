@@ -1,6 +1,8 @@
 using CommunityToolkit.Maui;
 using FairPlaySocial.ClientsConfiguration;
+using FairPlaySocial.ClientServices.CustomLocalization.Api;
 using FairPlaySocial.Common;
+using FairPlaySocial.Common.Handlers;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.MAUIBlazor.Authentication;
 using FairPlaySocial.MAUIBlazor.Features.LogOn;
@@ -8,6 +10,7 @@ using FairPlaySocial.MAUIBlazor.MultiPlatformServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 using System.Net;
 using System.Reflection;
 
@@ -28,6 +31,12 @@ public static class MauiProgram
 
         builder.Services.AddMauiBlazorWebView();
 
+        builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
+        builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
+        builder.Services.AddLocalization();
+
+        builder.Services.AddScoped<LocalizationMessageHandler>();
+
         builder.Services.AddOptions();
         builder.Services.AddAuthorizationCore();
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
@@ -42,8 +51,8 @@ public static class MauiProgram
         var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
         builder.Configuration.AddJsonStream(stream);
 
-        string fairPlayTubeapiAddress = builder.Configuration["ApiBaseUrl"];
-        B2CConstants b2CConstants = builder.Configuration.GetSection("B2CConstants").Get<B2CConstants>();
+        string fairPlayTubeapiAddress = builder.Configuration["ApiBaseUrl"]!;
+        B2CConstants b2CConstants = builder.Configuration.GetSection("B2CConstants").Get<B2CConstants>()!;
         builder.Services.AddSingleton(b2CConstants);
 
         /* When running in an emulator localhost woult not work as expected.
@@ -54,27 +63,27 @@ public static class MauiProgram
         //string fairplaysocialApiAddress = "REPLACE_WITH_NGROK_GENERATED_URL";
         builder.Services.AddScoped<BaseAddressAuthorizationMessageHandler>();
         builder.Services.AddHttpClient(
-            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI", 
+            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
             client =>
             {
                 client.BaseAddress = new Uri(fairPlayTubeapiAddress);
                 client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
                 client.DefaultRequestVersion = HttpVersion.Version30;
             })
-    //.AddHttpMessageHandler<LocalizationMessageHandler>()
+    .AddHttpMessageHandler<LocalizationMessageHandler>()
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
     .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
     .AddPolicyHandler(PollyHelper.GetRetryPolicy());
 
         builder.Services.AddHttpClient(
-            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous", 
+            $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous",
             client =>
             {
                 client.BaseAddress = new Uri(fairPlayTubeapiAddress);
                 client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
                 client.DefaultRequestVersion = HttpVersion.Version30;
             })
-            //.AddHttpMessageHandler<LocalizationMessageHandler>()
+            .AddHttpMessageHandler<LocalizationMessageHandler>()
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
             .AddPolicyHandler(PollyHelper.GetRetryPolicy());
         builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
