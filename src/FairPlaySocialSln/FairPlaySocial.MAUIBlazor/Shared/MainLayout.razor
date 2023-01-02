@@ -6,6 +6,10 @@
     <div class="main-page-header">
         <div class="nav-bar-section">
             <div class="nav-bar-icon">
+                <a class="btn btn-outline-primary" style="margin:0;"
+                   @onclick="OnShowCultureSelectorClicked">
+                    <i class="bi bi-globe"></i>
+                </a>
                 @if (!UserState.UserContext.IsLoggedOn)
                 {
                     <AudibleButton CssClass="@ThemeConfiguration.Buttons.PrimaryButtonCss"
@@ -57,3 +61,16 @@
         </div>
     </div>
 </div>
+@if (ShowCultureSelector)
+{
+    <CustomModal OnCloseButtonClicked="HideCultureSelector"
+             ShowFooter="false">
+        <Title>
+            Select Culture
+        </Title>
+        <Content>
+            <CultureSelector></CultureSelector>
+        </Content>
+    </CustomModal>
+
+}

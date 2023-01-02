@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Net;
 using System.Reflection;
 
@@ -96,10 +97,12 @@ public static class MauiProgram
 
         builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
+        builder.Services.AddTransient<ICultureSelectionService, MauiCultureSelectionService>();
         builder.Services.AddMultiPlatformServices();
         builder.Services.AddTransient<IGeoLocationService, MauiGeoLocationService>();
         builder.Services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();
-
+        CultureInfo.DefaultThreadCurrentCulture=CultureInfo.DefaultThreadCurrentUICulture = 
+            CultureInfo.GetCultureInfo("en-US");
         return builder.Build();
     }
 
