@@ -4,10 +4,9 @@ using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.Localization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Microsoft.JSInterop;
 using System.Globalization;
 
-namespace FairPlaySocial.Client.Shared
+namespace FairPlaySocial.MultiplatformComponents
 {
     public partial class CultureSelector
     {
@@ -15,15 +14,16 @@ namespace FairPlaySocial.Client.Shared
         public NavigationManager? NavManager { get; set; }
 
         [Inject]
-        public IJSRuntime? JSRuntime { get; set; }
-        [Inject]
         private IStringLocalizer<CultureSelector>? Localizer { get; set; }
         [Inject]
         private LocalizationClientService? LocalizationClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private ICultureSelectionService? CultureSelectionService { get; set; }
         private CultureModel[]? CultureModels { get; set; }
         private CultureInfo[]? SupportedCultures { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,9 +48,7 @@ namespace FairPlaySocial.Client.Shared
             {
                 if (CultureInfo.CurrentCulture != value)
                 {
-                    var js = (IJSInProcessRuntime)JSRuntime!;
-                    js.InvokeVoid("blazorCulture.set", value.Name);
-
+                    this.CultureSelectionService!.SetCurrentCulture(value);
                     NavManager!.NavigateTo(NavManager.Uri, forceLoad: true);
                 }
             }

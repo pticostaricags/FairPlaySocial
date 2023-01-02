@@ -15,6 +15,7 @@ namespace FairPlaySocial.MAUIBlazor.Shared
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        private bool ShowCultureSelector { get; set; }
 
         private async Task OnLogoutClickedAsync()
         {
@@ -92,6 +93,16 @@ namespace FairPlaySocial.MAUIBlazor.Shared
             }
 
             return null;
+        }
+
+        private void OnShowCultureSelectorClicked()
+        {
+            this.ShowCultureSelector = true;
+        }
+
+        private void HideCultureSelector()
+        {
+            this.ShowCultureSelector = false;
         }
     }
 }

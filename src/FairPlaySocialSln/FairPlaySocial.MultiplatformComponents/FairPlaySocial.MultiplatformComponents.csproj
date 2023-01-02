@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FairPlaySocial.ClientServices\FairPlaySocial.ClientServices.csproj" />
     <ProjectReference Include="..\FairPlaySocial.Common\FairPlaySocial.Common.csproj" />
     <ProjectReference Include="..\FairPlaySocial.Models\FairPlaySocial.Models.csproj" />
   </ItemGroup>
