@@ -15,6 +15,8 @@ namespace FairPlaySocial.MAUIBlazor.Shared
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private ICultureSelectionService? CultureSelectionService { get; set; }
         private bool ShowCultureSelector { get; set; }
 
         private async Task OnLogoutClickedAsync()
@@ -47,6 +49,8 @@ namespace FairPlaySocial.MAUIBlazor.Shared
             {
                 try
                 {
+                    var currentCultureInfo = this.CultureSelectionService!
+                        .GetCurrentCulture();
                     authResult = await B2CConstants.PublicClientApp
                         .AcquireTokenInteractive(B2CConstants.ApiScopesArray)
 #if ANDROID
@@ -55,6 +59,7 @@ namespace FairPlaySocial.MAUIBlazor.Shared
                         .WithAccount(
                         MainLayout.GetAccountByPolicy(accounts, 
                         B2CConstants!.PolicySignUpSignIn!))
+                        .WithExtraQueryParameters($"ui_locales={currentCultureInfo.Name}")
                         .WithPrompt(Prompt.SelectAccount)
                         .ExecuteAsync();
                     CompleteAuthentication(authResult);
