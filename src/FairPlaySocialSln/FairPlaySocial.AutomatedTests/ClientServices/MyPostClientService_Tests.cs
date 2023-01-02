@@ -12,9 +12,46 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
     [TestClass]
     public class MyPostClientService_Tests : ClientServicesTestsBase
     {
+        [TestMethod]
+        public async Task Test_DeleteMyPostAsync_Allowed()
+        {
+            await base.SignIn(Role.User);
+            var dbContext = ClientServicesTestsBase.GetDbContextInstance();
+            var myUser = await dbContext.ApplicationUser
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() ==
+            ClientServicesTestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId);
+            byte[] bytes = await GetTestImageBytes();
+            var myPost = new Post()
+            {
+                Photo = new()
+                {
+                    AlternativeText = "Test Image",
+                    Filename = "TestImage1",
+                    ImageBytes = bytes,
+                    ImageType = System.Net.Mime.MediaTypeNames.Image.Jpeg
+                },
+                OwnerApplicationUserId = myUser.ApplicationUserId,
+                PostTypeId = (byte)Common.Enums.PostType.Post,
+                PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
+                Text = "My Post Text"
+            };
+            await dbContext.Post.AddAsync(myPost);
+            await dbContext.SaveChangesAsync();
+
+            MyPostClientService myPostClientService = base.CreateMyPostClientService();
+            try
+            {
+                await myPostClientService.DeleteMyPostAsync(myPost.PostId, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                if (!ex.Message.Contains("Deleting other users posts is not allowed"))
+                    Assert.Fail(ex.Message);
+            }
+        }
 
         [TestMethod]
-        public async Task Test_CreateMyPostAsync_NotAllowed()
+        public async Task Test_DeleteMyPostAsync_NotAllowed()
         {
             CreateTestUsers();
             await base.SignIn(Role.User);
@@ -74,7 +111,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
         }
 
         [TestMethod]
-        public async Task Test_CreateMyPostAsync_Allowed()
+        public async Task Test_CreateMyPostAsync()
         {
             await base.SignIn(Role.User);
             var myPostClientService = base.CreateMyPostClientService();
@@ -101,7 +138,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 PageNumber = 1
             }, CancellationToken.None);
             Assert.IsNotNull(myHomeFeed);
-            Assert.IsNotNull(myHomeFeed.Items!.SingleOrDefault(p=>p.Text == postText));
+            Assert.IsNotNull(myHomeFeed.Items!.SingleOrDefault(p => p.Text == postText));
         }
 
         private static async Task<byte[]> GetTestImageBytes()
@@ -121,21 +158,26 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
             var userRole = dbContext.ApplicationRole.Single(p => p.Name == Constants.Roles.User);
             for (int i = 0; i < 10; i++)
             {
-                DataAccess.Models.ApplicationUser entity = new()
+                string userEmailAddress = $"Test-{i}@test.test";
+                if (!dbContext.ApplicationUser.Any(p => p.EmailAddress == userEmailAddress))
                 {
-                    AzureAdB2cobjectId = Guid.NewGuid(),
-                    EmailAddress = $"Test-{i}@test.test",
-                    FullName = $"Test User {i}",
-                    LastLogIn = DateTimeOffset.UtcNow,
-                };
-                dbContext.ApplicationUser.Add(entity);
-                dbContext.SaveChanges(true);
-                dbContext.ApplicationUserRole.Add(new()
-                {
-                    ApplicationUserId = entity.ApplicationUserId,
-                    ApplicationRoleId = userRole.ApplicationRoleId
-                });
-                dbContext.SaveChanges(true);
+
+                    DataAccess.Models.ApplicationUser entity = new()
+                    {
+                        AzureAdB2cobjectId = Guid.NewGuid(),
+                        EmailAddress = $"Test-{i}@test.test",
+                        FullName = $"Test User {i}",
+                        LastLogIn = DateTimeOffset.UtcNow,
+                    };
+                    dbContext.ApplicationUser.Add(entity);
+                    dbContext.SaveChanges(true);
+                    dbContext.ApplicationUserRole.Add(new()
+                    {
+                        ApplicationUserId = entity.ApplicationUserId,
+                        ApplicationRoleId = userRole.ApplicationRoleId
+                    });
+                    dbContext.SaveChanges(true);
+                }
             }
         }
     }
