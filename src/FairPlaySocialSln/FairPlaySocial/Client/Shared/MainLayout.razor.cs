@@ -6,8 +6,9 @@ using FairPlaySocial.Models.VisitorTracking;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using System.Globalization;
+using System.Text.Json;
 using System.Timers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FairPlaySocial.Client.Shared
 {
@@ -72,7 +73,7 @@ namespace FairPlaySocial.Client.Shared
 
             if (createNewSession)
             {
-                this.VisitsTimer = new (TimeSpan.FromSeconds(60).TotalMilliseconds);
+                this.VisitsTimer = new(TimeSpan.FromSeconds(60).TotalMilliseconds);
                 this.VisitsTimer.Elapsed += VisitsTimer_Elapsed;
                 this.VisitsTimer.Start();
             }
@@ -90,7 +91,7 @@ namespace FairPlaySocial.Client.Shared
             }
         }
 
-        private async void NavigationManager_LocationChanged(object? sender, 
+        private async void NavigationManager_LocationChanged(object? sender,
             Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
         {
             try
@@ -110,7 +111,21 @@ namespace FairPlaySocial.Client.Shared
         }
         private void OnLoginClicked()
         {
-            this.NavigationManager!.NavigateTo("authentication/login");
+            InteractiveRequestOptions interactiveRequestOptions =
+                new InteractiveRequestOptions()
+                {
+                    Interaction = InteractionType.SignIn,
+                    ReturnUrl = this.NavigationManager!.Uri
+                };
+            var extraQueryParametersDictionary = new Dictionary<string, string>
+            {
+                ["ui_locales"] = CultureInfo.DefaultThreadCurrentUICulture!.Name
+            };
+            interactiveRequestOptions.TryAddAdditionalParameter("extraQueryParameters",
+                JsonSerializer.Deserialize<JsonElement>(
+                    JsonSerializer.Serialize(extraQueryParametersDictionary)));
+            this.NavigationManager!
+                .NavigateToLogin("authentication/login", interactiveRequestOptions);
         }
 
         private void OnShowCultureSelectorClicked()
