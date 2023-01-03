@@ -21,7 +21,7 @@ jobs:
     - name: Build Pre-Deployment Tests Project
       run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
     - name: List Files
-      run: ls src
+      run: ls src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests
     - name: Install Browsers
       shell: pwsh
       run: ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/bin/Debug/net7.0/playwright.ps1 -install
