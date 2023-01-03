@@ -20,6 +20,8 @@ jobs:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Build Pre-Deployment Tests Project
       run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
+    - name: Install Browsers
+      run: pwsh bin/Debug/net7.0/playwright.ps1 install
     - name: Lists Post-Deployment Tests
       run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Post-Deployment Tests
