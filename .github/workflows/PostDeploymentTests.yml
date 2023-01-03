@@ -1,0 +1,26 @@
+name: Post Deployment Tests
+on:
+  push:
+    branches:
+    - main
+env:
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 7.0.x
+  WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
+  TESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
+  POSTDEPLOYMENTTESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Build Pre-Deployment Tests Project
+      run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
+    - name: Lists Post-Deployment Tests
+      run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+    - name: Run Post-Deployment Tests
+      run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.POSTDEPLOYMENTAPPSETTINGSCONTENT }}
