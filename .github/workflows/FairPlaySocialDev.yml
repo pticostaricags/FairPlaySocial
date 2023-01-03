@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Build Test Project
+    - name: Build Pre-Deployment Tests Project
       run: dotnet build "${{ env.TESTS_WORKING_DIRECTORY }}"
     - name: List Pre-Deployment Tests
       run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
@@ -52,6 +52,8 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.FairPlaySocialDev_0EB1 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Build Pre-Deployment Tests Project
+      run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
     - name: Lists Post-Deployment Tests
       run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Post-Deployment Tests
