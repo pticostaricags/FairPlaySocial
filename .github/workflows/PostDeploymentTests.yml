@@ -8,7 +8,7 @@ env:
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
   TESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
-  POSTDEPLOYMENTTESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.PostDeploymentTests
+  POSTDEPLOYMENTTESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests
 jobs:
   build:
     runs-on: windows-latest
