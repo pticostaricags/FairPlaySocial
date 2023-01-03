@@ -21,10 +21,10 @@ jobs:
     - name: Build Pre-Deployment Tests Project
       run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
     - name: List Files
-      run: ls src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests/bin/Debug
+      run: ls src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests/bin/Release
     - name: Install Browsers
       shell: pwsh
-      run: ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/bin/Debug/net7.0/playwright.ps1 -install
+      run: ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/bin/Release/net7.0/playwright.ps1 -install
     - name: Lists Post-Deployment Tests
       run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Post-Deployment Tests
