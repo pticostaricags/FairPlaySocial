@@ -23,9 +23,9 @@ jobs:
     - name: Build Pre-Deployment Tests Project
       run: dotnet build "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}"
     - name: List Files
-      run: ls ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/${{ env.CONFIGURATION }}
+      run: ls ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/bin/${{ env.CONFIGURATION }}
     - name: Install Browsers
-      run: pwsh ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/${{ env.CONFIGURATION }}/net7.0/playwright.ps1 install
+      run: pwsh ${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}/bin/${{ env.CONFIGURATION }}/net7.0/playwright.ps1 install
     - name: Lists Post-Deployment Tests
       run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Post-Deployment Tests
