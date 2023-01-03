@@ -9,6 +9,8 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
+  TESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
+  POSTDEPLOYMENTTESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedPostDeploymentTests
 jobs:
   build:
     runs-on: windows-latest
@@ -22,8 +24,12 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Build Test Project
+      run: dotnet build "${{ env.TESTS_WORKING_DIRECTORY }}"
+    - name: List Pre-Deployment Tests
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+    - name: Run Pre-Deployment Tests
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.APPSETTINGSCONTENT }}
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Publish Artifacts
@@ -46,3 +52,7 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.FairPlaySocialDev_0EB1 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Lists Post-Deployment Tests
+      run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+    - name: Run Post-Deployment Tests
+      run: dotnet test "${{ env.POSTDEPLOYMENTTESTS_WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.POSTDEPLOYMENTAPPSETTINGSCONTENT }}
