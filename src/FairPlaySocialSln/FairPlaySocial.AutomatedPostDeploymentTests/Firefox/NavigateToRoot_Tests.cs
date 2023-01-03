@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace FairPlaySocial.AutomatedPostDeploymentTests
+namespace FairPlaySocial.AutomatedPostDeploymentTests.Firefox
 {
     [TestClass]
     public class NavigateToRoot_Tests : PostDeploymentTestsBase
@@ -9,7 +9,7 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests
         public async Task Test_NavigateToHomeAsync()
         {
             using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            await using var browser = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = false,
             });
@@ -17,7 +17,7 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests
 
             var page = await context.NewPageAsync();
 
-            await page.GotoAsync(PostDeploymentTestsBase.BaseUrl);
+            await page.GotoAsync(BaseUrl);
 
             await page.GetByText("FairPlaySocial (Beta)").ClickAsync();
 
