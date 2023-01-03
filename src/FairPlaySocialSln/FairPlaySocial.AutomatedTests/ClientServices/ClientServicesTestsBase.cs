@@ -1,4 +1,5 @@
-﻿using FairPlaySocial.ClientServices;
+﻿using FairPlaySocial.AutomatedTests.BlazorWasmTests.Configuration;
+using FairPlaySocial.ClientServices;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.Models.CustomExceptions;
@@ -17,6 +18,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
     public abstract class ClientServicesTestsBase
     {
         internal static TestServer? Server { get; private set; }
+        public static ClientAppConfiguration? ClientAppConfiguration { get; set; }
         private HttpClient? UserRoleAuthorizedHttpClient { get; set; }
         private HttpClient? AdminRoleAuthorizedHttpClient { get; set; }
         internal static string? UserBearerToken { get; set; }
@@ -39,6 +41,9 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
             ClientServicesTestsBase.Server = new TestServer(builder);
+
+            ClientServicesTestsBase.ClientAppConfiguration =
+                configuration.GetSection(nameof(ClientAppConfiguration)).Get<ClientAppConfiguration>();
             this.TestsHttpClientFactory = new TestsHttpClientFactory();
         }
 
@@ -137,7 +142,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
 
         protected MyFeedClientService CreateMyFeedClientService()
         {
-            MyFeedClientService myFeedClientService= new(CreateHttpClientService());
+            MyFeedClientService myFeedClientService = new(CreateHttpClientService());
             return myFeedClientService;
         }
     }
