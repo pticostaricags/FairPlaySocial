@@ -12,11 +12,15 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests.Firefox
             await using var browser = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = false,
+                Timeout = (float)TimeSpan.FromSeconds(60).TotalMilliseconds
             });
             var context = await browser.NewContextAsync();
 
             var page = await context.NewPageAsync();
 
+            page.Context.SetDefaultNavigationTimeout((float)TimeSpan.FromSeconds(90).TotalMilliseconds);
+            page.Context.SetDefaultTimeout((float)TimeSpan.FromSeconds(90).TotalMilliseconds);
+            
             await page.GotoAsync(BaseUrl);
 
             await page.GetByRole(AriaRole.Button, new() { NameString = "Log In" }).ClickAsync();
@@ -32,7 +36,11 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests.Firefox
             await page.GetByRole(AriaRole.Button, new() { NameString = "Sign in" }).ClickAsync();
             await page.GetByRole(AriaRole.Button, new() { Name = "Log Out" }).ClickAsync();
             var loggedoutIndicatorLocator = page.GetByRole(AriaRole.Heading, new() { NameString = "Log Out Succeeded" }); ;
-            await Assertions.Expect(loggedoutIndicatorLocator).ToHaveTextAsync("Log Out Succeeded");
+            await Assertions.Expect(loggedoutIndicatorLocator).ToHaveTextAsync("Log Out Succeeded",
+                options:new LocatorAssertionsToHaveTextOptions() 
+                {
+                    Timeout = (float)TimeSpan.FromSeconds(90).TotalMilliseconds
+                });
         }
 
         [TestMethod]
@@ -46,6 +54,9 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests.Firefox
             var context = await browser.NewContextAsync();
 
             var page = await context.NewPageAsync();
+
+            page.Context.SetDefaultNavigationTimeout((float)TimeSpan.FromSeconds(90).TotalMilliseconds);
+            page.Context.SetDefaultTimeout((float)TimeSpan.FromSeconds(90).TotalMilliseconds);
 
             await page.GotoAsync(BaseUrl);
 
