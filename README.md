@@ -4,11 +4,15 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Build Status
-[![Build Web App](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildWebApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildWebApp.yml)
-
 [![Build .NET MAUI Android](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiAndroidApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiAndroidApp.yml)
 
 [![Build .NET MAUI Windows](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiWindowsApp.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/BuildMauiWindowsApp.yml)
+
+[![Build and deploy .NET Core application to Web App FairPlaySocialDev](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/FairPlaySocialDev.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/FairPlaySocialDev.yml)
+
+[![Post Deployment Tests](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/PostDeploymentTests.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/PostDeploymentTests.yml)
+
+[![Security Scanning](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/codeql.yml/badge.svg)](https://github.com/pticostaricags/FairPlaySocial/actions/workflows/codeql.yml)
 
 ## What is FairPlaySocial
 A multi-platform social system, part of the FairPlay initiative:
