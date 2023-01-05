@@ -49,8 +49,17 @@ https://fairplaysocialdev.azurewebsites.net/
 <img width="950" alt="image" src="https://user-images.githubusercontent.com/3481899/208936176-bdca5562-a02d-4306-b3ff-774ade40f7ee.png">
 
 ## Known Supported Browsers
+### Desktop
 * Google Chrome:  108.0.5359.125
 * Microsoft Edge: 108.0.1462.54
+* Firefox: 108.0.1
+
+### iOS
+* Safari: 16.1.1
+* Google Chrome: 108.0.5359.112 
+
+### Android
+*  Google Chrome: 106.0.5249.126
 
 ## Contributors ✨
 
