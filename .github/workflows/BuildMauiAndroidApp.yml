@@ -22,4 +22,4 @@ jobs:
     - name: Restore Web App
       run: dotnet restore "src/FairPlaySocialSln/FairPlaySocial.MAUIBlazor"
     - name: Build
-      run: dotnet build src/FairPlaySocialSln/FairPlaySocial.MAUIBlazor/FairPlaySocial.MAUIBlazor.csproj -c Release -f net7.0-android
+      run: dotnet build src/FairPlaySocialSln/FairPlaySocial.MAUIBlazor/FairPlaySocial.MAUIBlazor.csproj -c Release -f net7.0-android33.0
