@@ -50,7 +50,7 @@ public static class MauiProgram
 #endif
         var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MauiProgram)).Assembly;
         var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
-        builder.Configuration.AddJsonStream(stream);
+        builder.Configuration.AddJsonStream(stream!);
 
         string fairPlayTubeapiAddress = builder.Configuration["ApiBaseUrl"]!;
         B2CConstants b2CConstants = builder.Configuration.GetSection("B2CConstants").Get<B2CConstants>()!;
