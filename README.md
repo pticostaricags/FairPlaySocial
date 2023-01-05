@@ -48,7 +48,7 @@ https://fairplaysocialdev.azurewebsites.net/
 ### Post Actions Bar
 <img width="950" alt="image" src="https://user-images.githubusercontent.com/3481899/208936176-bdca5562-a02d-4306-b3ff-774ade40f7ee.png">
 
-## Known Supported Browsers
+## Known Supported Browsers (Blazor Webassembly)
 ### Desktop
 * Google Chrome:  108.0.5359.125
 * Microsoft Edge: 108.0.1462.54
@@ -60,6 +60,23 @@ https://fairplaysocialdev.azurewebsites.net/
 
 ### Android
 *  Google Chrome: 106.0.5249.126
+* Samsung Internet: 18.0.4.14
+
+## Known Supported Operating Systems (MAUI App)
+### Windows
+* Windows 11
+
+### Android
+* Android 12
+
+### iPhone
+* Not Tested
+
+### iPad
+* Not Tested
+
+### Mac OS
+* Not Tested
 
 ## Contributors ✨
 
