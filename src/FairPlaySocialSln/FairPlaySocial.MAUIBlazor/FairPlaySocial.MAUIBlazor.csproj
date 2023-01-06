@@ -94,6 +94,8 @@
 
     <ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
 		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.1" />

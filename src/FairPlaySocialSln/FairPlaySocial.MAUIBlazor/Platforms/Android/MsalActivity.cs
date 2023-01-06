@@ -17,7 +17,7 @@ namespace FairPlaySocial.MAUIBlazor.Platforms.Android
             Categories = new[] { global::Android.Content.Intent.CategoryBrowsable,
                 global::Android.Content.Intent.CategoryDefault },
             DataHost = "auth",
-            DataScheme = "msal?")]
+            DataScheme = "msal86fd3439-fca2-4b8f-89c0-bdb4b13c520e")]
 #endif
     public class MsalActivity : BrowserTabActivity
     {
