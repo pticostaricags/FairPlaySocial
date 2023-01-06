@@ -1,11 +1,8 @@
 using FairPlaySocial.Common.CustomAttributes;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.CustomExceptions;
-using FairPlaySocial.Models.Filtering;
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.FilteringSorting;
-using FairPlaySocial.Models.Sorting;
 using FairPlaySocial.Services.Utils;
-using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Services
 {

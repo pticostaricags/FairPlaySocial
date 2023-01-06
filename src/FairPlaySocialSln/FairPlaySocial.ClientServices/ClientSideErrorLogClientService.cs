@@ -1,13 +1,8 @@
-﻿using FairPlaySocial.Common.Global;
+﻿using FairPlaySocial.Common.CustomExceptions;
+using FairPlaySocial.Common.Global;
 using FairPlaySocial.Models.ClientSideErrorLog;
-using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.CustomHttpResponse;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FairPlaySocial.ClientServices
 {

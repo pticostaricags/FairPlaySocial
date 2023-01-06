@@ -1,6 +1,6 @@
 ﻿using BrowserInterop.Extensions;
 using FairPlaySocial.Common.Interfaces.Services;
-using FairPlaySocial.Models.CustomExceptions;
+using FairPlaySocial.Common.CustomExceptions;
 using Microsoft.JSInterop;
 
 namespace FairPlaySocial.Client.Services

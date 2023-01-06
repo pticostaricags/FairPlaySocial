@@ -1,4 +1,4 @@
-﻿using FairPlaySocial.Models.CustomExceptions;
+﻿using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.CustomHttpResponse;
 using System.Net.Http.Json;
 

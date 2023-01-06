@@ -3,7 +3,7 @@ using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.CustomExceptions;
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Services;

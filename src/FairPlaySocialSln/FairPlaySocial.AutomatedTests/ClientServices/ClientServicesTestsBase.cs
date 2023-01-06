@@ -1,15 +1,13 @@
-﻿using FairPlaySocial.ClientServices;
-using FairPlaySocial.Common.Global;
+﻿using FairPlaySocial.ClientsConfiguration;
+using FairPlaySocial.ClientServices;
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.DataAccess.Data;
-using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Net.Http.Json;
-using System.Text;
 using static FairPlaySocial.Common.Global.Constants;
 
 namespace FairPlaySocial.AutomatedTests.ClientServices
@@ -39,6 +37,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
             ClientServicesTestsBase.Server = new TestServer(builder);
+            ModelsLocalizationSetup.ConfigureModelsLocalizers(Server.Services);
             this.TestsHttpClientFactory = new TestsHttpClientFactory();
         }
 
