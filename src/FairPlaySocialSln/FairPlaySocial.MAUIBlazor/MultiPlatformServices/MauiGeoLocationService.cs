@@ -1,10 +1,4 @@
 ﻿using FairPlaySocial.Common.Interfaces.Services;
-using FairPlaySocial.Models.GeoLocation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FairPlaySocial.MAUIBlazor.MultiPlatformServices
 {

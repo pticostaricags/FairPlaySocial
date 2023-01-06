@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.Common.Extensions;
+using FairPlaySocial.Models.Extensions;
 using FairPlaySocial.Models.UserProfile;
 using System;
 using System.Collections.Generic;

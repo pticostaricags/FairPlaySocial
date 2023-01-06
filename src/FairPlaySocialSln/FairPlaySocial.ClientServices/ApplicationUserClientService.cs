@@ -2,6 +2,7 @@ using FairPlaySocial.Common.CustomAttributes;
 using FairPlaySocial.Common.Extensions;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Models.ApplicationUser;
+using FairPlaySocial.Models.Extensions;
 using FairPlaySocial.Models.Filtering;
 using FairPlaySocial.Models.FilteringSorting;
 using System.Net.Http.Json;

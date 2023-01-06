@@ -1,7 +1,6 @@
 ﻿using BrowserInterop.Extensions;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.CustomExceptions;
-using FairPlaySocial.Models.GeoLocation;
 using Microsoft.JSInterop;
 
 namespace FairPlaySocial.Client.Services
