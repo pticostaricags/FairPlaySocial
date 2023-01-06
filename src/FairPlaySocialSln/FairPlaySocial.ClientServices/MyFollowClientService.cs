@@ -1,5 +1,6 @@
 ﻿using FairPlaySocial.Common.Extensions;
 using FairPlaySocial.Models.ApplicationUserFollow;
+using FairPlaySocial.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

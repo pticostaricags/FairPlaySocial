@@ -103,7 +103,9 @@ public static class MauiProgram
         builder.Services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();
         CultureInfo.DefaultThreadCurrentCulture=CultureInfo.DefaultThreadCurrentUICulture = 
             CultureInfo.GetCultureInfo("en-US");
-        return builder.Build();
+        var host = builder.Build();
+        ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
+        return host;
     }
 
     public class CustomBoundaryLogger : IErrorBoundaryLogger

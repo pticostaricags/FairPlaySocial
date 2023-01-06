@@ -1,6 +1,7 @@
 ﻿using FairPlaySocial.Common.CustomAttributes;
 using FairPlaySocial.Common.Extensions;
 using FairPlaySocial.Common.Global;
+using FairPlaySocial.Models.Extensions;
 using FairPlaySocial.Models.UserProfile;
 using System;
 using System.Collections.Generic;

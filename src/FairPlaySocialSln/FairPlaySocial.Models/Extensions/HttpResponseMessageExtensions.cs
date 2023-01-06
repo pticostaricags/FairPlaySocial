@@ -1,13 +1,8 @@
 ﻿using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.CustomHttpResponse;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FairPlaySocial.Common.Extensions
+namespace FairPlaySocial.Models.Extensions
 {
     public static class HttpResponseMessageExtensions
     {
@@ -27,8 +22,8 @@ namespace FairPlaySocial.Common.Extensions
                     if (problemHttpResponse.Errors?.Count > 0)
                     {
                         var allValues =
-                        problemHttpResponse.Errors.Values.Select(p => String.Join(",", p));
-                        throw new CustomValidationException(String.Join(",", allValues));
+                        problemHttpResponse.Errors.Values.Select(p => string.Join(",", p));
+                        throw new CustomValidationException(string.Join(",", allValues));
                     }
                 }
                 else

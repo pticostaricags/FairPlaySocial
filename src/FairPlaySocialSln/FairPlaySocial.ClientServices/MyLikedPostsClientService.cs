@@ -1,5 +1,6 @@
 ﻿using FairPlaySocial.Common.Extensions;
 using FairPlaySocial.Models.DislikedPost;
+using FairPlaySocial.Models.Extensions;
 using FairPlaySocial.Models.LikedPost;
 using System;
 using System.Collections.Generic;

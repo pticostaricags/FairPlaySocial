@@ -75,5 +75,6 @@ builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUs
 }).AddAccountClaimsPrincipalFactory<
                 RemoteAuthenticationState, CustomRemoteUserAccount, CustomAccountClaimsPrincipalFactory>();
 var host = builder.Build();
+ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
 await host.SetDefaultCulture();
 await host.RunAsync();

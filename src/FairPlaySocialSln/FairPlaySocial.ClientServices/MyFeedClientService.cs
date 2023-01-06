@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.Common.Extensions;
+using FairPlaySocial.Models.Extensions;
 using FairPlaySocial.Models.Pagination;
 using FairPlaySocial.Models.Post;
 using System;
