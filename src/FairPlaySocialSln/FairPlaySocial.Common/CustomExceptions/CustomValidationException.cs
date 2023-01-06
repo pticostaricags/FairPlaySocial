@@ -1,4 +1,4 @@
-namespace FairPlaySocial.Models.CustomExceptions
+namespace FairPlaySocial.Common.CustomExceptions
 {
     public class CustomValidationException : Exception
     {

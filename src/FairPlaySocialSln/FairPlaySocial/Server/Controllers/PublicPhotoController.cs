@@ -1,7 +1,6 @@
-﻿using FairPlaySocial.Models.CustomExceptions;
+﻿using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FairPlaySocial.Server.Controllers

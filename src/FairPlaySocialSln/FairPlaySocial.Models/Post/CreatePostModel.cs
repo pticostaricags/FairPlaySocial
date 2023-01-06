@@ -21,12 +21,14 @@ namespace FairPlaySocial.Models.Post
         [ProhibitUrls(ErrorMessage = "Text cannot contain Urls",
             ErrorMessageResourceName = nameof(CreatePostModelLocalizer.TextProhibitUrls),
             ErrorMessageResourceType = typeof(CreatePostModelLocalizer))]
+        [Display(Name = nameof(CreatePostModelLocalizer.TextDisplayName),
+            ResourceType = typeof(CreatePostModelLocalizer))]
         public string? Text { get; set; }
         [Required]
         [ValidateComplexType]
         public CreatePhotoModel? Photo { get; set; }
-        [Required(ErrorMessageResourceName =nameof(CreatePostModelLocalizer.TagRequired),
-            ErrorMessageResourceType =typeof(CreatePostModelLocalizer))]
+        [Required(ErrorMessageResourceName = nameof(CreatePostModelLocalizer.TagRequired),
+            ErrorMessageResourceType = typeof(CreatePostModelLocalizer))]
         [RegularExpression(PATTERN_JUST_ONE_WORD,
             ErrorMessageResourceName = nameof(CreatePostModelLocalizer.InvalidTagPattern),
             ErrorMessageResourceType = typeof(CreatePostModelLocalizer))]
@@ -67,6 +69,7 @@ namespace FairPlaySocial.Models.Post
         public static string TextProhibitUrls => Localizer![TextProhibitUrlsTextKey];
         public static string TagRequired => Localizer![TagRequiredTextKey];
         public static string UrlValidFormatRequired => Localizer![UrlValidFormatRequiredTextKey];
+        public static string TextDisplayName => Localizer![TextDisplayNameTextKey];
         #region Resource Keys
         [ResourceKey(defaultValue: "Text is required")]
         public const string TextRequiredTextKey = "TextRequiredText";
@@ -82,6 +85,8 @@ namespace FairPlaySocial.Models.Post
         public const string TagRequiredTextKey = "TagRequiredText";
         [ResourceKey(defaultValue: "Urls must have a valid format")]
         public const string UrlValidFormatRequiredTextKey = "UrlValidFormatRequiredText";
+        [ResourceKey(defaultValue: "Post Text")]
+        public const string TextDisplayNameTextKey = "TextDisplayNameText";
         #endregion Resource Keys
     }
 }

@@ -1,11 +1,6 @@
-using FairPlaySocial.Models.CustomExceptions;
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.Filtering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FairPlaySocial.Services.Utils
 {

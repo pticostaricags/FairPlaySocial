@@ -1,22 +1,16 @@
 ﻿using AutoMapper;
-using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.CustomExceptions;
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.Post;
 using FairPlaySocial.Notifications.Hubs;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Microsoft.Extensions.Hosting;
-using Polly;
 
 namespace FairPlaySocial.Server.Controllers
 {

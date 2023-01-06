@@ -1,4 +1,5 @@
 ﻿@using FairPlaySocial.Common.Enums;
+@using FairPlaySocial.Models.Post;
 @inherits CustomBaseComponent
 
 <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
@@ -10,9 +11,10 @@
         <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
-        <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
+        <AudibleLabel ItemText="@(DisplayHelper.DisplayFor<CreatePostModel>(p=>p.Text))"></AudibleLabel>
         <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
-                       @bind-Value="@this.createPostModel.Text"></InputTextArea>
+                       @bind-Value="@this.createPostModel.Text"
+                       maxlength="@( DisplayHelper.MaxLengthFor<CreatePostModel>(p=>p.Text) )"></InputTextArea>
         <ValidationMessage For="@( () => this.createPostModel.Text)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">

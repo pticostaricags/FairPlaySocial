@@ -1,6 +1,6 @@
+using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.CustomExceptions;
 using FairPlaySocial.Models.CustomHttpResponse;
 using Microsoft.AspNetCore.Diagnostics;
 
