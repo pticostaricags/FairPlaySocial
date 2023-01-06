@@ -1,3 +1,4 @@
+using FairPlaySocial.ClientsConfiguration;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.Common.Interfaces.Services;
@@ -26,6 +27,7 @@ public class Program
     public static void Main(string[] args)
     {
         var host = CreateHostBuilder(args).Build();
+        ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
         host.Run();
     }
 
