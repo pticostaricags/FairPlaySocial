@@ -1,4 +1,4 @@
-name: [development] - Build Web App
+name: (development) Build Web App
 on:  
   push:
   pull_request:
