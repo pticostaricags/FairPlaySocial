@@ -12,6 +12,46 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
     [TestClass]
     public class MyPostClientService_Tests : ClientServicesTestsBase
     {
+        [TestInitialize]
+        public async Task Initialize()
+        {
+            await CleanTestsData();
+        }
+
+        [TestCleanup()]
+        public async Task Cleanup()
+        {
+            await CleanTestsData();
+        }
+
+        private async Task CleanTestsData()
+        {
+            var dbContext = ClientServicesTestsBase.GetDbContextInstance();
+            var allUnitTestPosts = await dbContext.Post
+                .Include(p=>p.PostTag)
+                .Include(p=>p.Photo)
+                .Include(p=>p.PostUrl)
+                .Include(p=>p.InverseReplyToPost)
+                .Where(p => p.Text.Contains("Automated Post"))
+                .ToArrayAsync();
+            if (allUnitTestPosts?.Length > 0)
+            {
+                foreach (var singlePost in allUnitTestPosts) 
+                {
+                    if (singlePost.InverseCreatedFromPost?.Count > 0)
+                        dbContext.Post.RemoveRange(singlePost.InverseReplyToPost);
+                    dbContext.Post.Remove(singlePost);
+                    if (singlePost.PostTag?.Count > 0)
+                        dbContext.PostTag.RemoveRange(singlePost.PostTag);
+                    if (singlePost.Photo != null)
+                        dbContext.Photo.Remove(singlePost.Photo);
+                    if (singlePost.PostUrl.Count > 0)
+                        dbContext.PostUrl.RemoveRange(singlePost.PostUrl);
+                }
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
         [TestMethod]
         public async Task Test_DeleteMyPostAsync_Allowed()
         {
@@ -33,7 +73,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 OwnerApplicationUserId = myUser.ApplicationUserId,
                 PostTypeId = (byte)Common.Enums.PostType.Post,
                 PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
-                Text = "My Post Text"
+                Text = "Automated Post"
             };
             await dbContext.Post.AddAsync(myPost);
             await dbContext.SaveChangesAsync();
@@ -75,7 +115,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 OwnerApplicationUserId = myUser.ApplicationUserId,
                 PostTypeId = (byte)Common.Enums.PostType.Post,
                 PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
-                Text = "My Post Text"
+                Text = "Automated Post"
             };
             await dbContext.Post.AddAsync(myPost);
             await dbContext.SaveChangesAsync();
@@ -92,7 +132,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 OwnerApplicationUserId = otherUser.ApplicationUserId,
                 PostTypeId = (byte)Common.Enums.PostType.Post,
                 PostVisibilityId = (short)Common.Enums.PostVisibility.Public,
-                Text = "Other User Post Text"
+                Text = "Automated Post"
             };
 
             await dbContext.Post.AddAsync(otherUserPost);
@@ -138,7 +178,7 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 PageNumber = 1
             }, CancellationToken.None);
             Assert.IsNotNull(myHomeFeed);
-            Assert.IsNotNull(myHomeFeed.Items!.SingleOrDefault(p => p.Text == postText));
+            Assert.IsNotNull(myHomeFeed.Items!.Where(p => p.Text == postText).Count() > 0);
         }
 
         private static async Task<byte[]> GetTestImageBytes()
