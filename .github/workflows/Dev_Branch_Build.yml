@@ -8,6 +8,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
+  TESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
 jobs:
   build:
     runs-on: windows-latest
@@ -18,10 +19,10 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      run: dotnet restore "${{ env.TESTS_WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build "${{ env.TESTS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: List Tests
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
     - name: Run Tests
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.APPSETTINGSCONTENT }}
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.APPSETTINGSCONTENT }}
