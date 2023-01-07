@@ -9,6 +9,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src\FairPlaySocialSln\FairPlaySocial\Server
+  TESTS_WORKING_DIRECTORY: src/FairPlaySocialSln/FairPlaySocial.AutomatedTests
 jobs:
   build:
     runs-on: windows-latest
@@ -22,8 +23,14 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Restore Tests Project Packages
+      run: dotnet restore "${{ env.TESTS_WORKING_DIRECTORY }}"
+    - name: Build Test Project
+      run: dotnet build "${{ env.TESTS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: List Tests
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+    - name: Run Tests
+      run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal -e AppSettingsContent=${{ secrets.APPSETTINGSCONTENT }}
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Publish Artifacts
