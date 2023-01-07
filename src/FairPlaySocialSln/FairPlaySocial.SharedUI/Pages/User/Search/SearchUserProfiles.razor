@@ -1,0 +1,34 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>UserProfiles</h3>
+
+@if (UserProfiles != null)
+{
+    foreach (var singleUserProfile in UserProfiles!.Items!)
+    {
+        <Card>
+            <CardHeader>@singleUserProfile.FullName</CardHeader>
+            <CardBody>@singleUserProfile.Bio</CardBody>
+        </Card>
+    }
+}
+
+@if (this.UserProfiles?.PageNumber > 1)
+{
+    <button @onclick="OnPreviousPageButtonCllickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+        Previous Page
+    </button>
+}
+<label class="@ThemeConfiguration.Labels.DefaultCss">Page @this.UserProfiles?.PageNumber of @this.UserProfiles?.TotalPages</label>
+@if (this.UserProfiles?.PageNumber < this.UserProfiles?.TotalPages)
+{
+    <button @onclick="OnNextPageButtonClickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+        Next Page
+    </button>
+}

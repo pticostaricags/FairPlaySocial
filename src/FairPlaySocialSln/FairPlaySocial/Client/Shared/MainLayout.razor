@@ -10,6 +10,7 @@
                    @onclick="OnShowCultureSelectorClicked">
                     <i class="bi bi-globe"></i>
                 </a>
+                <FairPlaySocial.SharedUI.Components.SearchModal></FairPlaySocial.SharedUI.Components.SearchModal>
                 <AuthorizeView>
                     <Authorized>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>

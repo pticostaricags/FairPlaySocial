@@ -26,7 +26,9 @@ namespace FairPlaySocial.ClientServices
             string searchTerm,
             CancellationToken cancellationToken)
         {
-            var requestUrl = "api/Search/SearchUserProfiles";
+            var requestUrl = $"api/Search/SearchUserProfiles" +
+                $"?{nameof(PageRequestModel.PageNumber)}={pageRequestModel.PageNumber}" +
+                $"&{nameof(searchTerm)}={searchTerm}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient
                 .PostAsJsonAsync(requestUrl, pageRequestModel, 
@@ -41,7 +43,9 @@ namespace FairPlaySocial.ClientServices
             string searchTerm,
             CancellationToken cancellationToken)
         {
-            var requestUrl = "api/Search/SearchPosts";
+            var requestUrl = $"api/Search/SearchPosts" +
+                $"?{nameof(PageRequestModel.PageNumber)}={pageRequestModel.PageNumber}" +
+                $"&{nameof(searchTerm)}={searchTerm}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient
                 .PostAsJsonAsync(requestUrl, pageRequestModel,
@@ -56,7 +60,9 @@ namespace FairPlaySocial.ClientServices
             string searchTerm,
             CancellationToken cancellationToken)
         {
-            var requestUrl = "api/Search/SearchGroups";
+            var requestUrl = $"api/Search/SearchGroups" +
+                $"?{nameof(PageRequestModel.PageNumber)}={pageRequestModel.PageNumber}" +
+                $"&{nameof(searchTerm)}={searchTerm}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient
                 .PostAsJsonAsync(requestUrl, pageRequestModel,

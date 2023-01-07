@@ -1,0 +1,48 @@
+﻿@using FairPlaySocial.Models.Search;
+
+<Microsoft.AspNetCore.Components.Authorization.AuthorizeView Context="authContext"
+                                                             Roles="@FairPlaySocial.Common.Global.Constants.Roles.User">
+    <Authorized>
+        @if (!ShowSearchModal)
+        {
+            <button type="button" class="btn btn-primary" @onclick="OpenSearchModal">
+                <i class="bi bi-search"></i>
+            </button>
+        }
+        else
+        {
+            <CustomModal OkButtonText="OK" OnCloseButtonClicked="HideSearchModal"
+                     ShowFooter="false">
+                <Title>Search</Title>
+                <Content>
+                    <EditForm Model="@this.searchModel" OnValidSubmit="OnSearch">
+                        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                            <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+                        </div>
+                        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                            <AudibleLabel ItemText="Text To Search"></AudibleLabel>
+                            <InputText @bind-Value="this.searchModel.SearchTerm"
+                                   class="@ThemeConfiguration.GenericControls.DefaultCss"
+                                   style="max-width:150px;"></InputText>
+                            <ValidationMessage For="@( () => this.searchModel.SearchTerm)"></ValidationMessage>
+                        </div>
+                        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                            <AudibleLabel ItemText="Search Type"></AudibleLabel>
+                            <InputSelect @bind-Value="this.searchModel.SearchType"
+                                     class="@ThemeConfiguration.Selects.DefaultCss">
+                                <option value=""></option>
+                                <option value="@SearchType.UserProfiles">@SearchType.UserProfiles.ToString()</option>
+                            </InputSelect>
+                            <ValidationMessage For="@( () => this.searchModel.SearchType)"></ValidationMessage>
+                        </div>
+                        <div class="@ThemeConfiguration.Divisions.DefaultCss">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </EditForm>
+                </Content>
+            </CustomModal>
+        }
+    </Authorized>
+</Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
