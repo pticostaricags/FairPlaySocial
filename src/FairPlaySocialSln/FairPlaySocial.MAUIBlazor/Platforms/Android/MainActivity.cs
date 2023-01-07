@@ -12,6 +12,7 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         App.ParentWindow = this;
+        Microsoft.AppCenter.Distribute.Distribute.SetEnabledForDebuggableBuild(true);
         base.OnCreate(savedInstanceState);
     }
 

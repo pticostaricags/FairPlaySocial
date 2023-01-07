@@ -112,6 +112,13 @@
       <ProjectReference Include="..\FairPlaySocial\Shared\FairPlaySocial.Shared.csproj" />
     </ItemGroup>
 
+	<ItemGroup Condition=" '$(Configuration)' != 'GooglePlay' ">
+		<PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.1" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(Configuration)' == 'GooglePlay' ">
+		<PackageReference Include="Microsoft.AppCenter.DistributePlay" Version="3.3.0" />
+	</ItemGroup>
+
     <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
 
 </Project>
