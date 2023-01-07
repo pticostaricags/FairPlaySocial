@@ -82,6 +82,7 @@ namespace FairPlaySocial.Common.Global
                 public const string CreateMyPost = $"/User/Posts/{nameof(CreateMyPost)}";
                 public const string UpdateMyUserProfile = $"/User/UserProfile/{nameof(UpdateMyUserProfile)}";
                 public const string Post = $"/User/Posts/{nameof(Post)}";
+                public const string CreateMyGroup = $"/User/Groups/{nameof(CreateMyGroup)}";
             }
 
             public static  class PublicPagesRoutes

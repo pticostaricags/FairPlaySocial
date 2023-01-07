@@ -28,7 +28,7 @@ namespace FairPlaySocial.Server.Controllers
             this.groupService = groupService;
         }
 
-        [HttpPost("action")]
+        [HttpPost("[action]")]
         public async Task<GroupModel?> CreateMyGroupAsync(CreateGroupModel createGroupModel,
             CancellationToken cancellationToken)
         {
@@ -39,6 +39,7 @@ namespace FairPlaySocial.Server.Controllers
                 throw new CustomValidationException($"Unable to create group {createGroupModel.Name}. That name is already being used");
             }
             Group groupEntity = this.mapper.Map<CreateGroupModel, Group>(createGroupModel);
+            groupEntity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             groupEntity = await this.groupService.CreateGroupAsync(groupEntity, cancellationToken);
             var result = this.mapper.Map<Group, GroupModel>(groupEntity);
             return result;
