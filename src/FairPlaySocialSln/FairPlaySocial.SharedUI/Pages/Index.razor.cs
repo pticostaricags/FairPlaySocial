@@ -20,6 +20,10 @@ namespace FairPlaySocial.SharedUI.Pages
         private IStringLocalizer<Index>? Localizer { get; set; }
         [Inject]
         private LocalizationClientService? LocalizationClientService { get; set; }
+        [Inject]
+        private IAnalyticsService? AppCenterService { get; set; }
+        [Inject]
+        private IToastService? ToastService { get; set; }
         private MenuGrid.MenuGridItem[]? MainMenuItems { get; set; }
         private bool IsLoading { get; set; } = false;
         private string? WelcomeMessage;
@@ -28,6 +32,7 @@ namespace FairPlaySocial.SharedUI.Pages
         {
             try
             {
+                this.AppCenterService?.LogEvent(EventType.LoadIndexPage);
                 IsLoading = true;
                 await base.OnInitializedAsync();
                 await this.LocalizationClientService!.LoadDataAsync();
@@ -97,6 +102,11 @@ namespace FairPlaySocial.SharedUI.Pages
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                await ToastService!.ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+                this.AppCenterService?.LogException(ex);
             }
             finally
             {

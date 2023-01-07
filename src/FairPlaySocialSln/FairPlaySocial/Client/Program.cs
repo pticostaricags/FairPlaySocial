@@ -62,6 +62,7 @@ builder.Services.AddTransient<IToastService, ToastService>();
 builder.Services.AddTransient<ITextToSpeechService, TextToSpeechService>();
 builder.Services.AddTransient<IGeoLocationService, BlazorGeoLocationService>();
 builder.Services.AddTransient<ICultureSelectionService, BlazorCultureSelectionService>();
+builder.Services.AddTransient<IAnalyticsService, BlazorAnalyticsService>();
 builder.Services.AddMultiPlatformServices();
 
 builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUserAccount>(options =>

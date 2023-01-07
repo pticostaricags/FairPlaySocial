@@ -22,6 +22,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private IAnalyticsService? AppCenterService { get; set; }
         private PageRequestModel PageRequestModel { get; set; } = new PageRequestModel()
         {
             PageNumber = 1
@@ -33,6 +35,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
 
         protected override async Task OnInitializedAsync()
         {
+            this.AppCenterService?.LogEvent(EventType.LoadHomeFeedPage);
             await LoadDataAsync();
         }
 
