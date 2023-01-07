@@ -26,6 +26,7 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<PostCommentClientService>();
             services.AddTransient<VisitorTrackingClientService>();
             services.AddTransient<ClientSideErrorLogClientService>();
+            services.AddTransient<MyGroupClientService>();
             #endregion END OF TRANSIENT SERVICES
 
             #region START OF SINGLETON SERVICES
