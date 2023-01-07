@@ -17,10 +17,13 @@ namespace FairPlaySocial.MAUIBlazor.Shared
         private IToastService? ToastService { get; set; }
         [Inject]
         private ICultureSelectionService? CultureSelectionService { get; set; }
+        [Inject]
+        private IAppCenterService? AppCenterService { get; set; }
         private bool ShowCultureSelector { get; set; }
 
         private async Task OnLogoutClickedAsync()
         {
+            this.AppCenterService?.LogEvent(EventType.Logout);
             //Based on https://learn.microsoft.com/en-us/xamarin/xamarin-forms/data-cloud/authentication/azure-ad-b2c
             var accounts = await B2CConstants!.PublicClientApp!.GetAccountsAsync();
             while (accounts.Any())
@@ -33,6 +36,7 @@ namespace FairPlaySocial.MAUIBlazor.Shared
         }
         private async Task OnLoginClickedAsync()
         {
+            this.AppCenterService?.LogEvent(EventType.Login);
             AuthenticationResult? authResult = null;
             IEnumerable<IAccount> accounts = await B2CConstants!.PublicClientApp!.GetAccountsAsync();
             try
@@ -66,12 +70,14 @@ namespace FairPlaySocial.MAUIBlazor.Shared
                 }
                 catch (Exception ex)
                 {
+                    this.AppCenterService?.LogException(ex);
                     await this.ToastService!.ShowErrorMessageAsync(ex.Message,
                         CancellationToken.None);
                 }
             }
             catch (Exception ex)
             {
+                this.AppCenterService?.LogException(ex);
                 string message = $"Users:{string.Join(",", accounts.Select(u => u.Username))}{Environment.NewLine}Error Acquiring Token:{Environment.NewLine}{ex}";
                 await this.ToastService!.ShowErrorMessageAsync(message, CancellationToken.None);
             }
