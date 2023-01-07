@@ -84,5 +84,10 @@ namespace FairPlaySocial.MultiplatformServices
         {
             return this.NavigationManager.ToAbsoluteUri(relativePath).ToString();
         }
+
+        public void NavigateToCreateMyGroup()
+        {
+            this.NavigateTo(Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyGroup, false);
+        }
     }
 }

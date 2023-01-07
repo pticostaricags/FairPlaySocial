@@ -1,4 +1,5 @@
-﻿using FairPlaySocial.Models.Post;
+﻿using FairPlaySocial.Models.Group;
+using FairPlaySocial.Models.Post;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using System;
@@ -17,6 +18,9 @@ namespace FairPlaySocial.ClientsConfiguration
             CreatePostModelLocalizer.Localizer =
                 localizerFactory.Create(typeof(CreatePostModelLocalizer))
                 as IStringLocalizer<CreatePostModelLocalizer>;
+            CreateGroupModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(CreateGroupModelLocalizer))
+                as IStringLocalizer<CreateGroupModelLocalizer>;
         }
     }
 }

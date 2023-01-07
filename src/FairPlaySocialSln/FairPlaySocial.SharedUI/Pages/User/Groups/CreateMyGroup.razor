@@ -1,0 +1,30 @@
+﻿@using FairPlaySocial.Models.Group;
+@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@IsBusy"></LoadingIndicator>
+
+<h3>CreateMyGroup</h3>
+
+<EditForm Model="@this.createGroupModel" OnValidSubmit="OnValidSubmitAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="@( DisplayHelper.DisplayFor<CreateGroupModel>(p=>p.Name))"></AudibleLabel>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss" @bind-Value="@this.createGroupModel.Name"></InputText>
+        <ValidationMessage For="@( () => this.createGroupModel.Name)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="@( DisplayHelper.DisplayFor<CreateGroupModel>(p=>p.Description))"></AudibleLabel>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss" @bind-Value="@this.createGroupModel.Description"></InputText>
+        <ValidationMessage For="@( () => this.createGroupModel.Description)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="@( DisplayHelper.DisplayFor<CreateGroupModel>(p=>p.TopicTag))"></AudibleLabel>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss" @bind-Value="@this.createGroupModel.TopicTag"></InputText>
+        <ValidationMessage For="@( () => this.createGroupModel.TopicTag)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <button type="submit" class="@ThemeConfiguration.Buttons.PrimaryButtonCss">Create Group</button>
+    </div>
+</EditForm>
