@@ -98,7 +98,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
         builder.Services.AddTransient<ICultureSelectionService, MauiCultureSelectionService>();
-        builder.Services.AddTransient<IAppCenterService, MauiAppCenterService>();
+        builder.Services.AddTransient<IAnalyticsService, MauiAnalyticsService>();
         builder.Services.AddMultiPlatformServices();
         builder.Services.AddTransient<IGeoLocationService, MauiGeoLocationService>();
         builder.Services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();

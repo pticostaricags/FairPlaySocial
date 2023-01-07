@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FairPlaySocial.Common.Interfaces.Services
 {
-    public interface IAppCenterService
+    public interface IAnalyticsService
     {
         void LogEvent(EventType eventType);
         void LogException(Exception ex);

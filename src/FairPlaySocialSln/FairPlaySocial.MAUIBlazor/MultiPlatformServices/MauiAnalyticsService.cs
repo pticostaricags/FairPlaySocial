@@ -2,7 +2,7 @@
 
 namespace FairPlaySocial.MAUIBlazor.MultiPlatformServices
 {
-    public class MauiAppCenterService : Common.Interfaces.Services.IAppCenterService
+    public class MauiAnalyticsService : Common.Interfaces.Services.IAnalyticsService
     {
         public void LogEvent(EventType eventType)
         {

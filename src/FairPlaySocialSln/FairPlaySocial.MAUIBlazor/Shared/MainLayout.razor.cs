@@ -18,7 +18,7 @@ namespace FairPlaySocial.MAUIBlazor.Shared
         [Inject]
         private ICultureSelectionService? CultureSelectionService { get; set; }
         [Inject]
-        private IAppCenterService? AppCenterService { get; set; }
+        private IAnalyticsService? AppCenterService { get; set; }
         private bool ShowCultureSelector { get; set; }
 
         private async Task OnLogoutClickedAsync()

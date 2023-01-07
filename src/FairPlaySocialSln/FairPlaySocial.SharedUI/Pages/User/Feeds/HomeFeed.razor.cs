@@ -23,7 +23,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         [Inject]
         private IToastService? ToastService { get; set; }
         [Inject]
-        private IAppCenterService? AppCenterService { get; set; }
+        private IAnalyticsService? AppCenterService { get; set; }
         private PageRequestModel PageRequestModel { get; set; } = new PageRequestModel()
         {
             PageNumber = 1

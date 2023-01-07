@@ -21,7 +21,7 @@ namespace FairPlaySocial.SharedUI.Pages
         [Inject]
         private LocalizationClientService? LocalizationClientService { get; set; }
         [Inject]
-        private IAppCenterService? AppCenterService { get; set; }
+        private IAnalyticsService? AppCenterService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
         private MenuGrid.MenuGridItem[]? MainMenuItems { get; set; }
