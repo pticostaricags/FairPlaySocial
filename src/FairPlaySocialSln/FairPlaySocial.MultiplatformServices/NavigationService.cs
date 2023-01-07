@@ -89,5 +89,23 @@ namespace FairPlaySocial.MultiplatformServices
         {
             this.NavigateTo(Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyGroup, false);
         }
+
+        public void NavigateToSearchUserProfiles(string searchTerm)
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.SearchUserProfiles}" +
+                $"?searchTerm={searchTerm}", false);
+        }
+
+        public void NavigateToSearchPosts(string searchTerm)
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.SearchPosts}" +
+                $"?searchTerm={searchTerm}", false);
+        }
+
+        public void NavigateToSearchGroups(string searchTerm)
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.SearchGroups}" +
+                $"?searchTerm={searchTerm}", false);
+        }
     }
 }

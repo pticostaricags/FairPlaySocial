@@ -13,5 +13,8 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToPost(long postId);
         string GetAbsoluteUrl(string relativePath);
         void NavigateToCreateMyGroup();
+        void NavigateToSearchUserProfiles(string searchTerm);
+        void NavigateToSearchPosts(string searchTerm);
+        void NavigateToSearchGroups(string searchTerm);
     }
 }
