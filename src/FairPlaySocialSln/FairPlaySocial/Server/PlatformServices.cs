@@ -25,6 +25,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<ForbiddenUrlService>();
             services.AddTransient<VisitorTrackingService>();
             services.AddTransient<ClientSideErrorLogService>();
+            services.AddTransient<GroupService>();
             services.ConfigureIpDataService(configuration);
             services.ConfigureIpStackService(configuration);
         }

@@ -55,11 +55,23 @@ public partial class ApplicationUser
     [InverseProperty("DislikingApplicationUser")]
     public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
 
+    [InverseProperty("OwnerApplicationUser")]
+    public virtual ICollection<Group> Group { get; } = new List<Group>();
+
+    [InverseProperty("MemberApplicationUser")]
+    public virtual ICollection<GroupMember> GroupMember { get; } = new List<GroupMember>();
+
+    [InverseProperty("ModeratorApplicationUser")]
+    public virtual ICollection<GroupModerator> GroupModerator { get; } = new List<GroupModerator>();
+
     [InverseProperty("LikingApplicationUser")]
     public virtual ICollection<LikedPost> LikedPost { get; } = new List<LikedPost>();
 
     [InverseProperty("OwnerApplicationUser")]
     public virtual ICollection<Post> Post { get; } = new List<Post>();
+
+    [InverseProperty("ReachedByApplicationUser")]
+    public virtual ICollection<PostReach> PostReach { get; } = new List<PostReach>();
 
     [InverseProperty("ApplicationUser")]
     public virtual UserPreference UserPreference { get; set; }

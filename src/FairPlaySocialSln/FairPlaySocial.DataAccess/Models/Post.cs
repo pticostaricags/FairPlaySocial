@@ -78,6 +78,9 @@ public partial class Post
     public virtual Photo Photo { get; set; }
 
     [InverseProperty("Post")]
+    public virtual ICollection<PostReach> PostReach { get; } = new List<PostReach>();
+
+    [InverseProperty("Post")]
     public virtual ICollection<PostTag> PostTag { get; } = new List<PostTag>();
 
     [ForeignKey("PostTypeId")]

@@ -32,11 +32,19 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ForbiddenUrl> ForbiddenUrl { get; set; }
 
+    public virtual DbSet<Group> Group { get; set; }
+
+    public virtual DbSet<GroupMember> GroupMember { get; set; }
+
+    public virtual DbSet<GroupModerator> GroupModerator { get; set; }
+
     public virtual DbSet<LikedPost> LikedPost { get; set; }
 
     public virtual DbSet<Photo> Photo { get; set; }
 
     public virtual DbSet<Post> Post { get; set; }
+
+    public virtual DbSet<PostReach> PostReach { get; set; }
 
     public virtual DbSet<PostTag> PostTag { get; set; }
 
@@ -96,6 +104,31 @@ public partial class FairPlaySocialDatabaseContext : DbContext
                 .HasConstraintName("FK_DislikedPost_Post");
         });
 
+        modelBuilder.Entity<Group>(entity =>
+        {
+            entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Group)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Group_ApplicationUser");
+        });
+
+        modelBuilder.Entity<GroupMember>(entity =>
+        {
+            entity.HasOne(d => d.MemberApplicationUser).WithMany(p => p.GroupMember)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GroupMember_ApplicationUser");
+        });
+
+        modelBuilder.Entity<GroupModerator>(entity =>
+        {
+            entity.HasOne(d => d.Group).WithMany(p => p.GroupModerator)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GroupModerator_Group");
+
+            entity.HasOne(d => d.ModeratorApplicationUser).WithMany(p => p.GroupModerator)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GroupModerator_ApplicationUser");
+        });
+
         modelBuilder.Entity<LikedPost>(entity =>
         {
             entity.HasOne(d => d.LikingApplicationUser).WithMany(p => p.LikedPost)
@@ -129,6 +162,17 @@ public partial class FairPlaySocialDatabaseContext : DbContext
                 .HasConstraintName("FK_Post_PostVisibility");
 
             entity.HasOne(d => d.RootPost).WithMany(p => p.InverseRootPost).HasConstraintName("FK_Post_Post_RootPost");
+        });
+
+        modelBuilder.Entity<PostReach>(entity =>
+        {
+            entity.HasOne(d => d.Post).WithMany(p => p.PostReach)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PostReach_Post");
+
+            entity.HasOne(d => d.ReachedByApplicationUser).WithMany(p => p.PostReach)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PostReach_ApplicationUser");
         });
 
         modelBuilder.Entity<PostTag>(entity =>

@@ -84,6 +84,10 @@
     <Build Include="dbo\Tables\Resource.sql" />
     <Build Include="dbo\Tables\VisitorTracking.sql" />
     <Build Include="dbo\Tables\ClientSideErrorLog.sql" />
+    <Build Include="dbo\Tables\Group.sql" />
+    <Build Include="dbo\Tables\GroupMember.sql" />
+    <Build Include="dbo\Tables\GroupModerator.sql" />
+    <Build Include="dbo\Tables\PostReach.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
