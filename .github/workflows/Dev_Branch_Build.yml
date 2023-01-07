@@ -18,9 +18,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    - name: Restore
+    - name: Restore Tests Project Packages
       run: dotnet restore "${{ env.TESTS_WORKING_DIRECTORY }}"
-    - name: Build
+    - name: Build Test Project
       run: dotnet build "${{ env.TESTS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: List Tests
       run: dotnet test "${{ env.TESTS_WORKING_DIRECTORY }}" --no-build --verbosity normal -t
