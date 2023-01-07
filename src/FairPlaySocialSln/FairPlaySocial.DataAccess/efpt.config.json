@@ -51,6 +51,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GroupMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GroupModerator]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[LikedPost]",
          "ObjectType": 0
       },
@@ -60,6 +72,10 @@
       },
       {
          "Name": "[dbo].[Post]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PostReach]",
          "ObjectType": 0
       },
       {
