@@ -21,5 +21,7 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: List Tests
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal -t
+    - name: Run Tests
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build -l "console;verbosity=detailed" --verbosity normal
