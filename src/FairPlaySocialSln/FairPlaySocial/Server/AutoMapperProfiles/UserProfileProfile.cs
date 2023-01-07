@@ -9,7 +9,14 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
     {
         public UserProfileProfile() 
         {
-            CreateMap<UserProfile, UserProfileModel>();
+            CreateMap<UserProfile, UserProfileModel>()
+                .AfterMap((source, dest) => 
+                {
+                    if (source.ApplicationUser != null)
+                    {
+                        dest.FullName = source.ApplicationUser.FullName;
+                    }
+                });
             CreateMap<UserProfileModel, UserProfile>();
             CreateMap<CreateUserProfileModel, UserProfile>();
         }
