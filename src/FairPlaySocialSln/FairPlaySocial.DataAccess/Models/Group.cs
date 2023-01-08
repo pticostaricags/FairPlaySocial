@@ -44,6 +44,9 @@ public partial class Group
     public string OriginatorIpaddress { get; set; }
 
     [InverseProperty("Group")]
+    public virtual ICollection<GroupMember> GroupMember { get; } = new List<GroupMember>();
+
+    [InverseProperty("Group")]
     public virtual ICollection<GroupModerator> GroupModerator { get; } = new List<GroupModerator>();
 
     [ForeignKey("OwnerApplicationUserId")]

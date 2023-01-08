@@ -10,7 +10,13 @@
     {
         <Card>
             <CardHeader>@singleGroup.Name</CardHeader>
-            <CardBody>@singleGroup.Description</CardBody>
+            <CardBody>
+                @singleGroup.Description
+                <a class="btn btn-outline-primary" style="margin:0;"
+           @onclick="@( async () => await OnJoinGroupClickedAsync(singleGroup.GroupId!.Value))">
+                    <i class="bi bi-person-fill-add"></i>
+                </a>
+            </CardBody>
         </Card>
     }
 }

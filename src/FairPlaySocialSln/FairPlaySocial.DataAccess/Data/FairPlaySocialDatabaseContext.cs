@@ -113,6 +113,10 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
         modelBuilder.Entity<GroupMember>(entity =>
         {
+            entity.HasOne(d => d.Group).WithMany(p => p.GroupMember)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GroupMember_Group");
+
             entity.HasOne(d => d.MemberApplicationUser).WithMany(p => p.GroupMember)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GroupMember_ApplicationUser");
