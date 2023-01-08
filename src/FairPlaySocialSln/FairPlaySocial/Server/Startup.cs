@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using FairPlaySocial.Notifications.Hubs;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Identity.Web;
 using System.Security.Claims;
 using Microsoft.Extensions.Localization;
@@ -52,45 +51,8 @@ namespace FairPlaySocial.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
-            services.AddRateLimiter(options =>
-            {
-                //check https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html#:~:text=Rate%20limiting%20is%20a%20way,prevent%20it%20from%20becoming%20unresponsive.
-                options.RejectionStatusCode = (int)HttpStatusCode.TooManyRequests;
-                options.OnRejected = async (context, token) =>
-                {
-                    var statusCode = (int)HttpStatusCode.TooManyRequests;
-                    context.HttpContext.Response.StatusCode = statusCode;
-                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
-                    {
-                        ProblemHttpResponse problemHttpResponse = new ProblemHttpResponse()
-                        {
-                            Detail = $"Too many requests. Please try again after {retryAfter.TotalMinutes} minute(s). ",
-                            Status = statusCode,
-                            Title = "Too many requests"
-                        };
-
-                        await context.HttpContext.Response.WriteAsJsonAsync(problemHttpResponse, cancellationToken: token);
-                    }
-                    else
-                    {
-                        ProblemHttpResponse problemHttpResponse = new ProblemHttpResponse()
-                        {
-                            Detail = "Too many requests. Please try again later. ",
-                            Status = statusCode,
-                            Title = "Too many requests"
-                        };
-                        await context.HttpContext.Response.WriteAsJsonAsync(problemHttpResponse, cancellationToken: token);
-                    }
-                };
-                options.AddFixedWindowLimiter(policyName: Common.Global.Constants.Policies.RateLimiting.HomeFeed,
-                    options =>
-                    {
-                        options.AutoReplenishment = true;
-                        options.PermitLimit = 3;
-                        options.QueueLimit = 0;
-                        options.Window = TimeSpan.FromMinutes(1);
-                    });
-            });
+            services.ConfigurePlatformOutputCache();
+            services.ConfigurePlatformRateLimiter();
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
             services.AddSingleton<IStringLocalizer, EFStringLocalizer>();
             services.AddLocalization();
@@ -344,6 +306,7 @@ namespace FairPlaySocial.Server
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseOutputCache();
             app.UseRateLimiter();
 
             app.UseEndpoints(endpoints =>

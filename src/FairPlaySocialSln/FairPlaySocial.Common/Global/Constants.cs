@@ -8,6 +8,11 @@ namespace FairPlaySocial.Common.Global
             {
                 public const string HomeFeed = nameof(HomeFeed);
             }
+            public static class OutputCaching
+            {
+                public const string LocalizationResources = nameof(LocalizationResources);
+                public const string SupportedCultures = nameof(SupportedCultures);
+            }
         }
         public static class GeoCoordinates
         {
