@@ -107,5 +107,11 @@ namespace FairPlaySocial.MultiplatformServices
             this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.SearchGroups}" +
                 $"?searchTerm={searchTerm}", false);
         }
+
+        public void NavigateToGroupFeed(long groupId)
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.GroupFeed}/{groupId}",
+                false);
+        }
     }
 }

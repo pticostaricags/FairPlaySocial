@@ -16,6 +16,10 @@
            @onclick="@( async () => await OnJoinGroupClickedAsync(singleGroup.GroupId!.Value))">
                     <i class="bi bi-person-fill-add"></i>
                 </a>
+                <a class="btn btn-outline-primary" style="margin:0;"
+           @onclick="@( () => OnViewGroupFeedClicked(singleGroup.GroupId!.Value))">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
             </CardBody>
         </Card>
     }
