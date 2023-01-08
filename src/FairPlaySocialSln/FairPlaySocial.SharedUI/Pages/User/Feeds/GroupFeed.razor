@@ -4,6 +4,12 @@
 
 <h3>Group @GroupId Feed</h3>
 
+<button @onclick="OnNavigateToCreatePostClicked"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+    Create Post  In Group
+</button>
+
 @if (this.MyHomeFeed != null && this.PostModels != null)
 {
     <Feed HubUrl="@Constants.Hubs.HomeFeedHub"

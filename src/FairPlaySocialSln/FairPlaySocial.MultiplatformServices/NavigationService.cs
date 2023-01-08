@@ -62,6 +62,12 @@ namespace FairPlaySocial.MultiplatformServices
                 $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost}", false);
         }
 
+        public void NavigateToCreateMyPostInGroup(long groupId)
+        {
+            this.NavigateTo(
+                $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost}/{groupId}", false);
+        }
+
         public void NavigateToHomeFeed()
         {
             this.NavigateTo(

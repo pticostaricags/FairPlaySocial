@@ -12,6 +12,7 @@ namespace FairPlaySocial.Models.Post
     {
         [Required]
         public long? PostId { get; set; }
+        public long? GroupId { get; set; }
 
         [Required]
         [StringLength(500)]

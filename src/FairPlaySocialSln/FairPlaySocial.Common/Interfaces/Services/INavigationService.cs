@@ -8,6 +8,7 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToUserListForAdmin();
         void NavigateToUpdateMyUserPreferences();
         void NavigateToCreateMyPost();
+        void NavigateToCreateMyPostInGroup(long groupId);
         void NavigateToHomeFeed();
         void NavigateToUpdateMyUserProfile();
         void NavigateToPost(long postId);

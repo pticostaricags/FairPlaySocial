@@ -151,6 +151,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
             entity.HasOne(d => d.CreatedFromPost).WithMany(p => p.InverseCreatedFromPost).HasConstraintName("FK_Post_Post");
 
+            entity.HasOne(d => d.Group).WithMany(p => p.Post).HasConstraintName("FK_Post_Group");
+
             entity.HasOne(d => d.OwnerApplicationUser).WithMany(p => p.Post)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Post_ApplicationUser");

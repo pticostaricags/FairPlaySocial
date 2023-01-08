@@ -245,7 +245,8 @@ namespace FairPlaySocial.SharedUI.Components
         {
             this.createSharedPostModel = new CreateSharedPostModel()
             {
-                CreatedFromPostId = this.PostModel!.PostId
+                CreatedFromPostId = this.PostModel!.PostId,
+                GroupId = this.PostModel!.GroupId
             };
             this.ShowReShareModal = true;
         }

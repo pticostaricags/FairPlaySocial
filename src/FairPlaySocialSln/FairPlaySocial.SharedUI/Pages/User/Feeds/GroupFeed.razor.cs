@@ -22,6 +22,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         private IToastService? ToastService { get; set; }
         [Inject]
         private IAnalyticsService? AppCenterService { get; set; }
+        [Inject]
+        private INavigationService? NavigationService { get; set; }
         private PageRequestModel PageRequestModel { get; set; } = new PageRequestModel()
         {
             PageNumber = 1
@@ -45,7 +47,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
                 this.MyHomeFeed = null;
                 StateHasChanged();
                 this.MyHomeFeed = await this.MyFeedClientService!
-                    .GetMyHomeFeedAsync(this.PageRequestModel, base.CancellationToken);
+                    .GetGroupFeedAsync(this.PageRequestModel, this.GroupId, base.CancellationToken);
                 this.PostModels = MyHomeFeed!.Items!.ToList();
             }
             catch (Exception ex)
@@ -68,6 +70,11 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         {
             this.PageRequestModel.PageNumber++;
             await LoadDataAsync();
+        }
+
+        private void OnNavigateToCreatePostClicked()
+        {
+            this.NavigationService!.NavigateToCreateMyPostInGroup(this.GroupId!.Value);
         }
     }
 }

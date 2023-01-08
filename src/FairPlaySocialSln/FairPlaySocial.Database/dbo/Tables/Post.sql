@@ -5,6 +5,7 @@
     [PhotoId] BIGINT NULL,
     [PostTypeId] TINYINT NOT NULL DEFAULT 1, 
     [ReplyToPostId] BIGINT NULL,
+    [GroupId] BIGINT NULL,
     [Text] NVARCHAR(500) NOT NULL,
     [OwnerApplicationUserId] BIGINT NOT NULL, 
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
@@ -25,6 +26,7 @@
     CONSTRAINT [FK_Post_Post] FOREIGN KEY ([CreatedFromPostId]) REFERENCES [Post]([PostId]), 
     CONSTRAINT [FK_Post_Post_ReplyToPostId] FOREIGN KEY ([ReplyToPostId]) REFERENCES [Post]([PostId]), 
     CONSTRAINT [FK_Post_PostType] FOREIGN KEY ([PostTypeId]) REFERENCES [PostType]([PostTypeId]), 
-    CONSTRAINT [FK_Post_Post_RootPost] FOREIGN KEY ([RootPostId]) REFERENCES [Post]([PostId])
+    CONSTRAINT [FK_Post_Post_RootPost] FOREIGN KEY ([RootPostId]) REFERENCES [Post]([PostId]), 
+    CONSTRAINT [FK_Post_Group] FOREIGN KEY ([GroupId]) REFERENCES [Group]([GroupId])
 )
 WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.PostHistory))
