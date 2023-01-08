@@ -32,6 +32,7 @@
                                      class="@ThemeConfiguration.Selects.DefaultCss">
                                 <option value=""></option>
                                 <option value="@SearchType.UserProfiles">@SearchType.UserProfiles.ToString()</option>
+                                <option value="@SearchType.Groups">@SearchType.Groups.ToString()</option>
                             </InputSelect>
                             <ValidationMessage For="@( () => this.searchModel.SearchType)"></ValidationMessage>
                         </div>
