@@ -18,6 +18,7 @@ namespace FairPlaySocial.Common.Interfaces.Services
         Logout,
         StartApp,
         LoadIndexPage,
-        LoadHomeFeedPage
+        LoadHomeFeedPage,
+        LoadGroupFeed
     }
 }

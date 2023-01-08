@@ -9,7 +9,7 @@ namespace FairPlaySocial.Models.Post
     public class CreatePostModel
     {
         private const string PATTERN_JUST_ONE_WORD = @"^\b[a-zA-Z0-9_]+\b$";
-
+        public long? GroupId { get; set; }
         [Required(ErrorMessageResourceName = nameof(CreatePostModelLocalizer.TextRequired),
             ErrorMessageResourceType = typeof(CreatePostModelLocalizer))]
         [StringLength(500,

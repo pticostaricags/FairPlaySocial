@@ -78,6 +78,7 @@ namespace FairPlaySocial.Common.Global
             public static class UserRolePagesRoutes
             {
                 public const string HomeFeed = $"/User/Feeds/{nameof(HomeFeed)}";
+                public const string GroupFeed = $"/User/Feeds/{nameof(GroupFeed)}";
                 public const string UpdateMyUserPreferences = $"/User/{nameof(UpdateMyUserPreferences)}";
                 public const string CreateMyPost = $"/User/Posts/{nameof(CreateMyPost)}";
                 public const string UpdateMyUserProfile = $"/User/UserProfile/{nameof(UpdateMyUserProfile)}";

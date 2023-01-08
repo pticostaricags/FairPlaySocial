@@ -52,4 +52,7 @@ public partial class Group
     [ForeignKey("OwnerApplicationUserId")]
     [InverseProperty("Group")]
     public virtual ApplicationUser OwnerApplicationUser { get; set; }
+
+    [InverseProperty("Group")]
+    public virtual ICollection<Post> Post { get; } = new List<Post>();
 }

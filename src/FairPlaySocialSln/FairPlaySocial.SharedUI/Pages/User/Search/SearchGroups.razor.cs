@@ -24,6 +24,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
 
         [Inject]
         private MyGroupClientService? MyGroupClientService { get; set; }
+        [Inject]
+        private INavigationService? NavigationService { get; set; }
         private bool IsBusy { get; set; }
         private PagedItems<GroupModel>? Groups { get; set; }
 
@@ -84,6 +86,11 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
             {
                 this.IsBusy = false;
             }
+        }
+
+        private void OnViewGroupFeedClicked(long groupId)
+        {
+            this.NavigationService!.NavigateToGroupFeed(groupId: groupId);
         }
     }
 }

@@ -62,6 +62,12 @@ namespace FairPlaySocial.MultiplatformServices
                 $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost}", false);
         }
 
+        public void NavigateToCreateMyPostInGroup(long groupId)
+        {
+            this.NavigateTo(
+                $"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost}/{groupId}", false);
+        }
+
         public void NavigateToHomeFeed()
         {
             this.NavigateTo(
@@ -106,6 +112,12 @@ namespace FairPlaySocial.MultiplatformServices
         {
             this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.SearchGroups}" +
                 $"?searchTerm={searchTerm}", false);
+        }
+
+        public void NavigateToGroupFeed(long groupId)
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.GroupFeed}/{groupId}",
+                false);
         }
     }
 }

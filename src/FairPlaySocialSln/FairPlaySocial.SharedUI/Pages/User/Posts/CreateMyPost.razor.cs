@@ -15,8 +15,11 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
 {
     [Authorize(Roles = $"{Roles.User}")]
     [Route(MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost)]
+    [Route($"{MauiBlazorAppPages.UserRolePagesRoutes.CreateMyPost}/{{groupId:long}}")]
     public partial class CreateMyPost
     {
+        [Parameter]
+        public long? GroupId { get; set; }
         [Inject]
         private MyPostClientService? MyPostClientService { get; set; }
         [Inject]
@@ -27,9 +30,16 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private IGeoLocationService? GeoLocationService { get; set; }
         private CreatePostModel createPostModel = new CreatePostModel()
         {
+
             Photo = new()
         };
         private bool IsBusy { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            this.createPostModel.GroupId = this.GroupId;
+        }
 
         private async Task OnValidSubmitAsync()
         {

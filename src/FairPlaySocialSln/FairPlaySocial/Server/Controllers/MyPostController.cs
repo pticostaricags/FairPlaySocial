@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -24,16 +25,19 @@ namespace FairPlaySocial.Server.Controllers
         private readonly PostService postService;
         private readonly IHubContext<NotificationHub, INotificationHub> hubContext;
         private readonly ApplicationUserService applicationUserService;
+        private readonly GroupMemberService groupMemberService;
         public MyPostController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
             ApplicationUserService applicationUserService,
             PostService postService,
+            GroupMemberService groupMemberService,
             IHubContext<NotificationHub, INotificationHub> hubContext)
         {
             this.mapper = mapper;
             this.currentUserProvider = currentUserProvider;
             this.postService = postService;
+            this.groupMemberService = groupMemberService;
             this.hubContext = hubContext;
             this.applicationUserService = applicationUserService;
         }
@@ -98,7 +102,7 @@ namespace FairPlaySocial.Server.Controllers
             await executionStrategy.ExecuteAsync(async () =>
             {
                 await using var transaction = await fairPlaySocialDatabaseContext.Database
-                .BeginTransactionAsync(cancellationToken:cancellationToken);
+                .BeginTransactionAsync(cancellationToken: cancellationToken);
                 var deletedDislikedPosts =
                 await fairPlaySocialDatabaseContext
                 .DislikedPost
@@ -162,6 +166,15 @@ namespace FairPlaySocial.Server.Controllers
                 {
                     throw new CustomValidationException($"Forbidden url: {createPostModel.Url}");
                 }
+            }
+            if (createPostModel.GroupId != null &&
+                !await this.groupMemberService
+                .GetAllGroupMember(trackEntities: false,
+                cancellationToken: cancellationToken)
+                .Where(p => p.GroupId == createPostModel.GroupId && p.MemberApplicationUserId == this.currentUserProvider.GetApplicationUserId())
+                .AnyAsync(cancellationToken: cancellationToken))
+            {
+                throw new CustomValidationException($"User is not a member of Group with id: {createPostModel.GroupId}");
             }
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
             entity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();

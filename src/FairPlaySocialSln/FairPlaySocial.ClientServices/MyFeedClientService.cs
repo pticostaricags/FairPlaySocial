@@ -53,5 +53,18 @@ namespace FairPlaySocial.ClientServices
             var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>();
             return result;
         }
+
+        public async Task<PagedItems<PostModel>?> GetGroupFeedAsync(
+            PageRequestModel pageRequestModel, long? groupId, CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/MyFeed/GetGroupFeed" +
+                $"?{nameof(pageRequestModel.PageNumber)}={pageRequestModel.PageNumber}" +
+                $"&{nameof(groupId)}={groupId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.GetAsync(requestUrl);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>();
+            return result;
+        }
     }
 }

@@ -21,6 +21,8 @@ public partial class Post
 
     public long? ReplyToPostId { get; set; }
 
+    public long? GroupId { get; set; }
+
     [Required]
     [StringLength(500)]
     public string Text { get; set; }
@@ -56,6 +58,10 @@ public partial class Post
 
     [InverseProperty("Post")]
     public virtual ICollection<DislikedPost> DislikedPost { get; } = new List<DislikedPost>();
+
+    [ForeignKey("GroupId")]
+    [InverseProperty("Post")]
+    public virtual Group Group { get; set; }
 
     [InverseProperty("CreatedFromPost")]
     public virtual ICollection<Post> InverseCreatedFromPost { get; } = new List<Post>();
