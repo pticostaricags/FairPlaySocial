@@ -14,6 +14,8 @@ public partial class GroupMember
     [Key]
     public long GroupMemberId { get; set; }
 
+    public long GroupId { get; set; }
+
     public long MemberApplicationUserId { get; set; }
 
     public DateTimeOffset RowCreationDateTime { get; set; }
@@ -30,6 +32,10 @@ public partial class GroupMember
     [Column("OriginatorIPAddress")]
     [StringLength(100)]
     public string OriginatorIpaddress { get; set; }
+
+    [ForeignKey("GroupId")]
+    [InverseProperty("GroupMember")]
+    public virtual Group Group { get; set; }
 
     [ForeignKey("MemberApplicationUserId")]
     [InverseProperty("GroupMember")]

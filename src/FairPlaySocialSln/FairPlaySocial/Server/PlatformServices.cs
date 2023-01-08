@@ -27,6 +27,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<ClientSideErrorLogService>();
             services.AddTransient<GroupService>();
             services.AddTransient<SearchService>();
+            services.AddTransient<GroupMemberService>();
             services.ConfigureIpDataService(configuration);
             services.ConfigureIpStackService(configuration);
         }
