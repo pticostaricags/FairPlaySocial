@@ -1,0 +1,34 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>Groups</h3>
+
+@if (Groups != null)
+{
+    foreach (var singleGroup in Groups!.Items!)
+    {
+        <Card>
+            <CardHeader>@singleGroup.Name</CardHeader>
+            <CardBody>@singleGroup.Description</CardBody>
+        </Card>
+    }
+}
+
+@if (this.Groups?.PageNumber > 1)
+{
+    <button @onclick="OnPreviousPageButtonCllickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+        Previous Page
+    </button>
+}
+<label class="@ThemeConfiguration.Labels.DefaultCss">Page @this.Groups?.PageNumber of @this.Groups?.TotalPages</label>
+@if (this.Groups?.PageNumber < this.Groups?.TotalPages)
+{
+    <button @onclick="OnNextPageButtonClickedAsync"
+        type="button"
+        class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
+        Next Page
+    </button>
+}
