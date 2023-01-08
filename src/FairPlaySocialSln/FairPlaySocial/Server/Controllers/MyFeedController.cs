@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -70,6 +71,7 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        [EnableRateLimiting(Constants.Policies.RateLimiting.HomeFeed)] //Check https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html#:~:text=Rate%20limiting%20is%20a%20way,prevent%20it%20from%20becoming%20unresponsive.
         public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
             [FromQuery] PageRequestModel pageRequestModel,
             [FromServices] LikedPostService likedPostService,

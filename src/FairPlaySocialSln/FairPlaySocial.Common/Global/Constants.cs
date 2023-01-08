@@ -2,6 +2,13 @@ namespace FairPlaySocial.Common.Global
 {
     public static class Constants
     {
+        public static class Policies
+        {
+            public static class RateLimiting
+            {
+                public const string HomeFeed = nameof(HomeFeed);
+            }
+        }
         public static class GeoCoordinates
         {
             /// <summary>
@@ -89,7 +96,7 @@ namespace FairPlaySocial.Common.Global
                 public const string SearchGroups = $"/User/Search/{nameof(SearchGroups)}]";
             }
 
-            public static  class PublicPagesRoutes
+            public static class PublicPagesRoutes
             {
                 public const string EmbeddedPost = $"/Public/{nameof(EmbeddedPost)}";
                 public const string UserFeed = $"/Public/UserFeed";
