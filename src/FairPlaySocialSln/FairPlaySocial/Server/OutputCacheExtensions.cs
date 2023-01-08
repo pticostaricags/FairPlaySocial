@@ -9,8 +9,7 @@
                 configureOptions.AddPolicy(Common.Global.Constants.Policies.OutputCaching.LocalizationResources,
                     policy =>
                     {
-
-                        policy.SetVaryByHeader("accept-language");
+                        policy.SetVaryByHeader(Microsoft.Net.Http.Headers.HeaderNames.AcceptLanguage);
                         policy.Expire(TimeSpan.FromMinutes(1));
                     });
                 configureOptions.AddPolicy(Common.Global.Constants.Policies.OutputCaching.SupportedCultures,
