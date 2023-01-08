@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FairPlaySocial.Common.Global;
 using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Models.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
@@ -37,6 +39,7 @@ namespace FairPlaySocial.Server.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [OutputCache(PolicyName = Constants.Policies.OutputCaching.LocalizationResources)]
         public async Task<ResourceModel[]> GetAllResourcesAsync(CancellationToken cancellationToken)
         {
             var currentCulture = CultureInfo.CurrentCulture;
@@ -60,6 +63,7 @@ namespace FairPlaySocial.Server.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [OutputCache(PolicyName = Constants.Policies.OutputCaching.SupportedCultures)]
         public async Task<CultureModel[]> GetSupportedCulturesAsync(CancellationToken cancellationToken)
         {
             return await this.fairPlaySocialDatabaseContext.Culture
