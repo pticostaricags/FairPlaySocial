@@ -156,7 +156,10 @@ namespace FairPlaySocial.Server.Controllers
                 !await groupMemberService
                 .GetAllGroupMember(trackEntities: false,
                 cancellationToken: cancellationToken)
-                .Where(p => p.GroupId == groupId && p.MemberApplicationUserId == this.currentUserProvider.GetApplicationUserId())
+                .Include(p => p.Group)
+                .Where(p => p.GroupId == groupId &&
+                (p.MemberApplicationUserId == myApplicationUserId ||
+                p.Group.OwnerApplicationUserId == myApplicationUserId))
                 .AnyAsync(cancellationToken: cancellationToken))
             {
                 throw new CustomValidationException($"User is not a member of Group with id: {groupId}");
