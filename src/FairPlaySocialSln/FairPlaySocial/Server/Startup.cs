@@ -23,6 +23,7 @@ using System.Threading.RateLimiting;
 using System.Net;
 using FairPlaySocial.Models.CustomHttpResponse;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Configuration;
 
 namespace FairPlaySocial.Server
 {
@@ -267,6 +268,7 @@ namespace FairPlaySocial.Server
                     services.AddHostedService<BackgroundTranslationService>();
                 }
             }
+            services.AddAzureAppConfiguration();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -300,6 +302,7 @@ namespace FairPlaySocial.Server
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+            app.UseAzureAppConfiguration();
 
             app.UseRouting();
 
