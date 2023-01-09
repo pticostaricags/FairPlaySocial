@@ -43,7 +43,7 @@ namespace FairPlaySocial.Server
                     options =>
                     {
                         options.AutoReplenishment = true;
-                        options.PermitLimit = 3;
+                        options.PermitLimit = 60;
                         options.QueueLimit = 0;
                         options.Window = TimeSpan.FromMinutes(1);
                     });
