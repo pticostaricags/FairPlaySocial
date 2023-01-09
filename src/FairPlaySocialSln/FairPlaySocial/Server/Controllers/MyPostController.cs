@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using FairPlaySocial.Common.Enums;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -177,6 +178,10 @@ namespace FairPlaySocial.Server.Controllers
                 throw new CustomValidationException($"User is not a member of Group with id: {createPostModel.GroupId}");
             }
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
+            if (createPostModel.GroupId== null)
+            {
+                entity.PostVisibilityId = (short)Common.Enums.PostVisibility.Public;
+            }
             entity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             entity.PostTypeId = (byte)Common.Enums.PostType.Post;
             entity =

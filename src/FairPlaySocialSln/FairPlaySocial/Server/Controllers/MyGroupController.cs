@@ -43,6 +43,10 @@ namespace FairPlaySocial.Server.Controllers
             }
             Group groupEntity = this.mapper.Map<CreateGroupModel, Group>(createGroupModel);
             groupEntity.OwnerApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            groupEntity.GroupMember.Add(new GroupMember()
+            {
+                MemberApplicationUserId = groupEntity.OwnerApplicationUserId
+            });
             groupEntity = await this.groupService.CreateGroupAsync(groupEntity, cancellationToken);
             var result = this.mapper.Map<Group, GroupModel>(groupEntity);
             return result;

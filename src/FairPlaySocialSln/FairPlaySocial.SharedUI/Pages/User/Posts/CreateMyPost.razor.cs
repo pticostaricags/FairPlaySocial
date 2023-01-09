@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.ClientServices;
+using FairPlaySocial.Common.Enums;
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.Post;
@@ -39,6 +40,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         {
             base.OnInitialized();
             this.createPostModel.GroupId = this.GroupId;
+            if (this.GroupId != null)
+                this.createPostModel.PostVisibilityId = (short)PostVisibility.Public;
         }
 
         private async Task OnValidSubmitAsync()
@@ -50,7 +53,10 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
                     .CreateMyPostAsync(this.createPostModel, base.CancellationToken);
                 await this.ToastService!.ShowSuccessMessageAsync(
                     "Post has been created", base.CancellationToken);
-                this.NavigationService!.NavigateToHomeFeed();
+                if (this.GroupId is null)
+                    this.NavigationService!.NavigateToHomeFeed();
+                else
+                    this.NavigationService!.NavigateToGroupFeed(this.GroupId.Value);
             }
             catch (Exception ex)
             {
@@ -76,7 +82,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
                 this.IsBusy = true;
                 var currentGeoLocation = await this.GeoLocationService!
                     .GetCurrentPositionAsync();
-                if (currentGeoLocation != null) 
+                if (currentGeoLocation != null)
                 {
                     this.createPostModel.CreatedAtLatitude = currentGeoLocation.Latitude;
                     this.createPostModel.CreatedAtLongitude = currentGeoLocation.Longitude;
