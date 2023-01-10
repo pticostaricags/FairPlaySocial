@@ -23,6 +23,7 @@ using System.Threading.RateLimiting;
 using System.Net;
 using FairPlaySocial.Models.CustomHttpResponse;
 using Microsoft.AspNetCore.RateLimiting;
+using FairPlaySocial.Server.Services;
 
 namespace FairPlaySocial.Server
 {
@@ -51,6 +52,14 @@ namespace FairPlaySocial.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(1);
+                options.ConnectionString = Configuration.GetConnectionString(
+                    "Default");
+                options.SchemaName = "dbo";
+                options.TableName = nameof(DistributedCache);
+            });
             services.ConfigurePlatformOutputCache();
             services.ConfigurePlatformRateLimiter();
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
@@ -70,6 +79,7 @@ namespace FairPlaySocial.Server
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
+            services.AddTransient<IDistributedCacheService, SqlServerDistributedCacheService>();
 
             services.AddTransient<IEmailService, EmailService>();
             services.AddSignalR(hubOptions =>

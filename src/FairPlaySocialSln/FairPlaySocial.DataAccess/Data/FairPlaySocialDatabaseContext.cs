@@ -28,6 +28,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<DislikedPost> DislikedPost { get; set; }
 
+    public virtual DbSet<DistributedCache> DistributedCache { get; set; }
+
     public virtual DbSet<ErrorLog> ErrorLog { get; set; }
 
     public virtual DbSet<ForbiddenUrl> ForbiddenUrl { get; set; }

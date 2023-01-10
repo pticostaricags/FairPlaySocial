@@ -43,6 +43,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[DistributedCache]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ErrorLog]",
          "ObjectType": 0
       },

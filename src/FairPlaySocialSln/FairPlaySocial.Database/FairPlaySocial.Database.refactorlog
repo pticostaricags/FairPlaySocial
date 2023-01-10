@@ -119,4 +119,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Name" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="164a79a0-a93e-491a-9f48-5efcc110c4c9" ChangeDateTime="01/10/2023 20:31:30">
+    <Property Name="ElementName" Value="[dbo].[DistributedCache].[ExpiredAtTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DistributedCache]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ExpiresAtTime" />
+  </Operation>
 </Operations>
