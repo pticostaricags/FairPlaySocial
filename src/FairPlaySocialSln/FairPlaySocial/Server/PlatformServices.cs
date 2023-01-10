@@ -28,6 +28,8 @@ namespace FairPlaySocial.Server
             services.AddTransient<GroupService>();
             services.AddTransient<SearchService>();
             services.AddTransient<GroupMemberService>();
+            services.AddTransient<ErrorLogService>();
+            services.AddTransient<PostKeyPhraseService>();
             services.ConfigureIpDataService(configuration);
             services.ConfigureIpStackService(configuration);
         }
@@ -50,6 +52,16 @@ namespace FairPlaySocial.Server
                             .Get<IpStackConfiguration>()!;
             services.AddSingleton(ipStackConfiguration);
             services.AddTransient<IpStackService>();
+        }
+
+        public static void ConfigureAzureTextAnalyticsService(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            AzureTextAnalyticsConfiguration azureTextAnalyticsConfiguration =
+                configuration.GetSection(nameof(AzureTextAnalyticsConfiguration))
+                .Get<AzureTextAnalyticsConfiguration>()!;
+            services.AddSingleton(azureTextAnalyticsConfiguration);
+            services.AddTransient<AzureTextAnalyticsService>();
         }
     }
 }

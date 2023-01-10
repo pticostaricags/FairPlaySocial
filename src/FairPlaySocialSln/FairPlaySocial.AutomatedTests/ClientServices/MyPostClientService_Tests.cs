@@ -48,6 +48,11 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                     {
                         await using var transaction = await dbContext.Database
                         .BeginTransactionAsync();
+                        var deletedPostKeyPhrases =
+                        await dbContext
+                        .PostKeyPhrase
+                        .Where(p => p.PostId == singlePostId)
+                        .ExecuteDeleteAsync();
                         var deletedDislikedPosts =
                         await dbContext
                         .DislikedPost
