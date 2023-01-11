@@ -44,6 +44,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<Post> Post { get; set; }
 
+    public virtual DbSet<PostKeyPhrase> PostKeyPhrase { get; set; }
+
     public virtual DbSet<PostReach> PostReach { get; set; }
 
     public virtual DbSet<PostTag> PostTag { get; set; }
@@ -168,6 +170,13 @@ public partial class FairPlaySocialDatabaseContext : DbContext
                 .HasConstraintName("FK_Post_PostVisibility");
 
             entity.HasOne(d => d.RootPost).WithMany(p => p.InverseRootPost).HasConstraintName("FK_Post_Post_RootPost");
+        });
+
+        modelBuilder.Entity<PostKeyPhrase>(entity =>
+        {
+            entity.HasOne(d => d.Post).WithMany(p => p.PostKeyPhrase)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PostKeyPhrase_Post");
         });
 
         modelBuilder.Entity<PostReach>(entity =>

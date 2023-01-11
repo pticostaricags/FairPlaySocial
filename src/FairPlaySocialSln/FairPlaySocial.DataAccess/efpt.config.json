@@ -75,6 +75,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PostKeyPhrase]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PostReach]",
          "ObjectType": 0
       },

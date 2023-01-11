@@ -84,6 +84,9 @@ public partial class Post
     public virtual Photo Photo { get; set; }
 
     [InverseProperty("Post")]
+    public virtual ICollection<PostKeyPhrase> PostKeyPhrase { get; } = new List<PostKeyPhrase>();
+
+    [InverseProperty("Post")]
     public virtual ICollection<PostReach> PostReach { get; } = new List<PostReach>();
 
     [InverseProperty("Post")]

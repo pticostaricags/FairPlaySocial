@@ -88,6 +88,7 @@
     <Build Include="dbo\Tables\GroupMember.sql" />
     <Build Include="dbo\Tables\GroupModerator.sql" />
     <Build Include="dbo\Tables\PostReach.sql" />
+    <Build Include="dbo\Tables\PostKeyPhrase.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

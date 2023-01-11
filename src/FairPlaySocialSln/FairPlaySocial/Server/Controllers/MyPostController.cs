@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using FairPlaySocial.Common.Enums;
+using Polly;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -104,6 +105,11 @@ namespace FairPlaySocial.Server.Controllers
             {
                 await using var transaction = await fairPlaySocialDatabaseContext.Database
                 .BeginTransactionAsync(cancellationToken: cancellationToken);
+                var deletedPostKeyPhrases =
+                await fairPlaySocialDatabaseContext
+                .PostKeyPhrase
+                .Where(p => p.PostId == postId)
+                .ExecuteDeleteAsync();
                 var deletedDislikedPosts =
                 await fairPlaySocialDatabaseContext
                 .DislikedPost
@@ -143,6 +149,9 @@ namespace FairPlaySocial.Server.Controllers
         public async Task<IActionResult> CreateMyPostAsync(
             [FromServices] ForbiddenUrlService forbiddenUrlService,
             [FromServices] HttpClient httpClient,
+            [FromServices] TextAnalyticsService textAnalyticsService,
+            [FromServices] ErrorLogService errorLogService,
+            [FromServices] PostKeyPhraseService postKeyPhraseService,
             CreatePostModel createPostModel,
             CancellationToken cancellationToken)
         {
@@ -178,7 +187,7 @@ namespace FairPlaySocial.Server.Controllers
                 throw new CustomValidationException($"User is not a member of Group with id: {createPostModel.GroupId}");
             }
             var entity = this.mapper.Map<CreatePostModel, Post>(createPostModel);
-            if (createPostModel.GroupId== null)
+            if (createPostModel.GroupId == null)
             {
                 entity.PostVisibilityId = (short)Common.Enums.PostVisibility.Public;
             }
@@ -198,6 +207,27 @@ namespace FairPlaySocial.Server.Controllers
                 Message = entity.Text,
                 Post = post
             });
+            try
+            {
+                var detectedLanguage = await textAnalyticsService
+                    .DetectLanguageAsync(createPostModel!.Text!, cancellationToken);
+                var postKeyPhrases = await textAnalyticsService.GetTopicsAsync(
+                    createPostModel!.Text!, detectedLanguage.iso6391Name, cancellationToken);
+                if (postKeyPhrases?.Count() > 0)
+                {
+                    await postKeyPhraseService.CreatePostKeyPhrasesAsync(
+                        postId: post.PostId!.Value, postKeyPhrases,
+                        cancellationToken: cancellationToken);
+                }
+            }
+            catch (Exception ex0)
+            {
+                try
+                {
+                    await errorLogService.CreateErrorLogAsync(ex0, cancellationToken);
+                }
+                catch (Exception) { }
+            }
             return Ok();
         }
 
