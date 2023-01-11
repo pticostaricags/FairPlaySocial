@@ -23,6 +23,9 @@ The version 1.0 will consist of a simple design and architecture, if project get
 ## How To Contribute
 One way of helping the project is by giving it a Star :star: and sharing it on your social media profiles (Facebook, Twitter, LinkedIn, etc), please use the hashtag #FairPlaySocial
 
+## How to Set Up Your Development Environment
+https://github.com/pticostaricags/FairPlaySocial/wiki/Initial-Setup
+
 If you'd like to do code contribution see [CONTRIBUTING](CONTRIBUTING.md)
 
 ## Code of conduct
