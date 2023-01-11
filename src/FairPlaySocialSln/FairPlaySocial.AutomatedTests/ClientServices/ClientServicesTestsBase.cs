@@ -34,6 +34,15 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
             IConfiguration configuration = configurationBuilder.Build();
             TestAzureAdB2CAuthConfiguration = configuration.GetSection("TestAzureAdB2CAuthConfiguration").Get<TestAzureAdB2CAuthConfiguration>();
             var builder = new WebHostBuilder()
+                .ConfigureAppConfiguration((ctx, b) => 
+                {
+                    var configRoot = b.Build()!;
+                    configuration = b.AddAzureAppConfiguration((options) =>
+                    {
+                        var connectionString = configRoot["AppConfig"];
+                        options.Connect(connectionString);
+                    }).Build();
+                })
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
             ClientServicesTestsBase.Server = new TestServer(builder);
