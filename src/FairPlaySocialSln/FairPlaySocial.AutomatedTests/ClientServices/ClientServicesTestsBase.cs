@@ -37,11 +37,15 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 .ConfigureAppConfiguration((ctx, b) => 
                 {
                     var configRoot = b.Build()!;
-                    configuration = b.AddAzureAppConfiguration((options) =>
+                    configuration = b
+                    .AddAzureAppConfiguration((options) =>
                     {
                         var connectionString = configRoot["AppConfig"];
                         options.Connect(connectionString);
-                    }).Build();
+                    })
+                    .AddUserSecrets<ClientServicesTestsBase>()
+                    .AddEnvironmentVariables()
+                    .Build();
                 })
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
