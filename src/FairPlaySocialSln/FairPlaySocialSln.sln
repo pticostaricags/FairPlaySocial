@@ -49,6 +49,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.CustomValida
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.AutomatedPostDeploymentTests", "FairPlaySocial.AutomatedPostDeploymentTests\FairPlaySocial.AutomatedPostDeploymentTests.csproj", "{75D6270F-127A-48FF-B7F9-C82396CAFA27}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingsPlaceholders", "SettingsPlaceholders", "{3B03D7C6-59B0-42FB-BE1E-85BF567DD687}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{8934482C-0DD8-4095-B484-47DE2298AE9D}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceholders\Server\appsettings.json = SettingsPlaceholders\Server\appsettings.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MauiBlazor", "MauiBlazor", "{AE4718A7-8059-42DA-BC8B-2E531E32FE16}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceholders\MauiBlazor\appsettings.json = SettingsPlaceholders\MauiBlazor\appsettings.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutomatedTests", "AutomatedTests", "{A4E168BE-1F09-4B17-8A1B-460D4350DEF4}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceholders\AutomatedTests\appsettings.json = SettingsPlaceholders\AutomatedTests\appsettings.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +163,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B03D7C6-59B0-42FB-BE1E-85BF567DD687} = {1591A730-1691-49ED-AF80-8CFD8033A95B}
+		{8934482C-0DD8-4095-B484-47DE2298AE9D} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
+		{AE4718A7-8059-42DA-BC8B-2E531E32FE16} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
+		{A4E168BE-1F09-4B17-8A1B-460D4350DEF4} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
