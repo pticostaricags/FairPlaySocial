@@ -66,6 +66,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutomatedTests", "Automated
 		SettingsPlaceholders\AutomatedTests\appsettings.json = SettingsPlaceholders\AutomatedTests\appsettings.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutomatedPostDeploymentTests", "AutomatedPostDeploymentTests", "{2B39EB48-3AA0-44C9-BE10-56C661FCB8F6}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceholders\AutomatedPostDeploymentTests\appsettings.json = SettingsPlaceholders\AutomatedPostDeploymentTests\appsettings.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +174,7 @@ Global
 		{8934482C-0DD8-4095-B484-47DE2298AE9D} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
 		{AE4718A7-8059-42DA-BC8B-2E531E32FE16} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
 		{A4E168BE-1F09-4B17-8A1B-460D4350DEF4} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
+		{2B39EB48-3AA0-44C9-BE10-56C661FCB8F6} = {3B03D7C6-59B0-42FB-BE1E-85BF567DD687}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
