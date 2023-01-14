@@ -26,6 +26,9 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace FairPlaySocial.Server
 {
+    /// <summary>
+    /// Initializes and run the server.
+    /// </summary>
     public class Startup
     {
         /// <summary>

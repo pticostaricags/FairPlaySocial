@@ -1,7 +1,15 @@
 ﻿namespace FairPlaySocial.Server
 {
+    /// <summary>
+    /// Output cache extensions.
+    /// </summary>
     public static class OutputCacheExtensions
     {
+        /// <summary>
+        /// Configures output cache.
+        /// </summary>
+        /// <param name="services">Services to configure.</param>
+        /// <returns><see cref="IServiceCollection"/> instance.</returns>
         public static IServiceCollection ConfigurePlatformOutputCache(this IServiceCollection services)
         {
             services.AddOutputCache(configureOptions =>

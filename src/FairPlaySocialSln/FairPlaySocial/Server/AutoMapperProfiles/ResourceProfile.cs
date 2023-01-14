@@ -4,8 +4,14 @@ using FairPlaySocial.Models.Localization;
 
 namespace FairPlaySocial.Server.AutoMapperProfiles
 {
+    /// <summary>
+    /// Resource mapping profile.
+    /// </summary>
     public class ResourceProfile : Profile
     {
+        /// <summary>
+        /// <see cref="ResourceProfile"/> constructor.
+        /// </summary>
         public ResourceProfile() 
         {
             this.CreateMap<Resource, ResourceModel>().AfterMap((source, dest) =>

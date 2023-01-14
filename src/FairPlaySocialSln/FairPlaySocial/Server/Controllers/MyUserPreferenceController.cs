@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles user's preferences.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -22,6 +25,13 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ApplicationUserService _applicationUserService;
         private readonly UserPreferenceService _userPreferenceService;
 
+        /// <summary>
+        /// <see cref="MyUserPreferenceController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="applicationUserService"><see cref="ApplicationUserService"/> instance.</param>
+        /// <param name="userPreferenceService"><see cref="UserPreferenceService"/> instance.</param>
         public MyUserPreferenceController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
@@ -34,6 +44,11 @@ namespace FairPlaySocial.Server.Controllers
             this._userPreferenceService = userPreferenceService;
         }
 
+        /// <summary>
+        /// Gets current user's preferences.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns><see cref="UserPreferenceModel"/> instance representing user's preferences.</returns>
         [HttpGet("[action]")]
         public async Task<UserPreferenceModel> GetMyUserPreferencesAsync(CancellationToken cancellationToken)
         {
@@ -54,6 +69,12 @@ namespace FairPlaySocial.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates current user's preferences.
+        /// </summary>
+        /// <param name="createUserPreferenceModel"><see cref="UserPreferenceModel"/> instance representing user preferences.</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns><see cref="UserPreferenceModel"/> instance representing updated preferences.</returns>
         [HttpPut("[action]")]
         public async Task<UserPreferenceModel> UpdateMyUserPreferencesAsync(
             UserPreferenceModel createUserPreferenceModel,

@@ -7,8 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FairPlaySocial.Server.AutoMapperProfiles
 {
+    /// <summary>
+    /// <see cref="Post"/> mapping proifle.
+    /// </summary>
     public class PostProfile : Profile
     {
+        /// <summary>
+        /// <see cref="PostProfile"/> constructor.
+        /// </summary>
         public PostProfile()
         {
             CreateMap<Post, PostModel>()

@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles search operations.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -21,12 +24,24 @@ namespace FairPlaySocial.Server.Controllers
         private readonly IMapper mapper;
         private readonly SearchService searchService;
 
+        /// <summary>
+        /// <see cref="SearchController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="searchService"><see cref="SearchService"/> instance.</param>
         public SearchController(IMapper mapper, SearchService searchService)
         {
             this.mapper = mapper;
             this.searchService = searchService;
         }
 
+        /// <summary>
+        /// Searches user profile by page info and search criteria.
+        /// </summary>
+        /// <param name="pageRequestModel"><see cref="PageRequestModel"/> instance, page info.</param>
+        /// <param name="searchTerm">Serialized search criteria.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Paged <see cref="UserProfileModel">user profiles</see>.</returns>
         [HttpPost("[action]")]
         public async Task<PagedItems<UserProfileModel>> SearchUserProfilesAsync(
             [FromQuery] PageRequestModel pageRequestModel,
@@ -48,6 +63,13 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Searches posts by page info and search criteria.
+        /// </summary>
+        /// <param name="pageRequestModel"><see cref="PageRequestModel"/> instance, page info.</param>
+        /// <param name="searchTerm">Serialized search criteria.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Paged <see cref="UserProfileModel">posts</see>.</returns>
         [HttpPost("[action]")]
         public async Task<PagedItems<PostModel>> SearchPostsAsync(
             [FromQuery] PageRequestModel pageRequestModel,
@@ -68,6 +90,13 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Searches groups by page info and search criteria.
+        /// </summary>
+        /// <param name="pageRequestModel"><see cref="PageRequestModel"/> instance, page info.</param>
+        /// <param name="searchTerm">Serialized search criteria.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Paged <see cref="GroupModel">groups</see>.</returns>
         [HttpPost("[action]")]
         public async Task<PagedItems<GroupModel>> SearchGroupsAsync(
             [FromQuery] PageRequestModel pageRequestModel,

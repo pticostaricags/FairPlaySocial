@@ -6,8 +6,15 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace FairPlaySocial.Server
 {
+    /// <summary>
+    /// Exceptions helper.
+    /// </summary>
     public static class ExceptionsHelper
     {
+        /// <summary>
+        /// Adds the exception logging to the application.
+        /// </summary>
+        /// <param name="app"></param>
         public static void HandleExceptions(IApplicationBuilder app)
         {
             app.UseExceptionHandler(cfg =>
@@ -24,6 +31,13 @@ namespace FairPlaySocial.Server
                 });
             });
         }
+
+        /// <summary>
+        /// Logs an exception.
+        /// </summary>
+        /// <param name="context">Current http context.</param>
+        /// <param name="error">Exception to log.</param>
+        /// <returns></returns>
         public static async Task LogExceptionAsync(HttpContext context, Exception error)
         {
             long? errorId;

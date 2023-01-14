@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles the authentication and authorization related actions.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class AuthController : ControllerBase
     {
         /// <summary>
-        /// Gets the name of the role assigned to the Logged In User
+        /// Gets the name of the role assigned to the Logged In User.
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]

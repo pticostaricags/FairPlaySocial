@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Hanled following operations.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -20,6 +23,12 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly ApplicationUserFollowService applicationUserFollowService;
 
+        /// <summary>
+        /// <see cref="MyFollowController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="applicationUserFollowService"><see cref="ApplicationUserFollowService"/> instance.</param>
         public MyFollowController(IMapper mapper, ICurrentUserProvider currentUserProvider,
             ApplicationUserFollowService applicationUserFollowService)
         {
@@ -28,6 +37,12 @@ namespace FairPlaySocial.Server.Controllers
             this.applicationUserFollowService = applicationUserFollowService;
         }
 
+        /// <summary>
+        /// Start following user.
+        /// </summary>
+        /// <param name="userToFollowApplicationUserId">User id to follow.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> FollowUserAsync(long userToFollowApplicationUserId, CancellationToken cancellationToken)
         {
@@ -41,6 +56,12 @@ namespace FairPlaySocial.Server.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Stop following user.
+        /// </summary>
+        /// <param name="userToUnFollowApplicationUserId">User id to stop following.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> UnFollowUserAsync(long userToUnFollowApplicationUserId, CancellationToken cancellationToken)
         {
@@ -63,6 +84,12 @@ namespace FairPlaySocial.Server.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Gets user following status.
+        /// </summary>
+        /// <param name="userToCheckApplicationUserId">User id to check.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="ApplicationUserFollowStatusModel"/> instance representing followint status information.</returns>
         [HttpGet("[action]")]
         public async Task<ApplicationUserFollowStatusModel> GetMyFollowedStatusAsync(
             long userToCheckApplicationUserId, CancellationToken cancellationToken)

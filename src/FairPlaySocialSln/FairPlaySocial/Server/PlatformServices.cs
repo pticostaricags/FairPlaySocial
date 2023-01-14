@@ -7,8 +7,16 @@ using PTI.Microservices.Library.Services;
 
 namespace FairPlaySocial.Server
 {
+    /// <summary>
+    /// Configures platform services.
+    /// </summary>
     public static class PlatformServices
     {
+        /// <summary>
+        /// Adds platform services to the services.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
+        /// <param name="configuration"><see cref="IConfiguration"/> instance.</param>
         internal static void AddPlatformServices(this IServiceCollection services,
             IConfiguration configuration)
         {
@@ -54,6 +62,11 @@ namespace FairPlaySocial.Server
             services.AddTransient<IpStackService>();
         }
 
+        /// <summary>
+        /// COnfigures Azure text analytics services.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
+        /// <param name="configuration"><see cref="IConfiguration"/> instance.</param>
         public static void ConfigureAzureTextAnalyticsService(this IServiceCollection services,
             IConfiguration configuration)
         {

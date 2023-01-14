@@ -16,6 +16,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles user's likes.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -28,6 +31,15 @@ namespace FairPlaySocial.Server.Controllers
         private readonly DislikedPostService dislikedPostService;
         private readonly PostService postService;
 
+        /// <summary>
+        /// <see cref="MyLikedPostsController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="hubContext"><see cref="IHubContext"/> instance.</param>
+        /// <param name="likedPostService"><see cref="LikedPostService"/> instance.</param>
+        /// <param name="dislikedPostService"><see cref="DislikedPostService"/> instance.</param>
+        /// <param name="postService"><see cref="PostService"/> instance.</param>
         public MyLikedPostsController(IMapper mapper,
             ICurrentUserProvider currentUserProvider,
             IHubContext<NotificationHub, INotificationHub> hubContext,
@@ -43,6 +55,12 @@ namespace FairPlaySocial.Server.Controllers
             this.postService = postService;
         }
 
+        /// <summary>
+        /// Like post.
+        /// </summary>
+        /// <param name="createLikedPostModel"><see cref="CreateLikedPostModel"/> instance representing post to like.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="LikedPostModel"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<LikedPostModel?> LikePostAsync(CreateLikedPostModel createLikedPostModel,
             CancellationToken cancellationToken)
@@ -70,6 +88,12 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Removes like from post.
+        /// </summary>
+        /// <param name="postId">Post id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> RemoveLikeFromPostAsync(
             [FromQuery] long postId,
@@ -103,6 +127,12 @@ namespace FairPlaySocial.Server.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Removes dislike from post.
+        /// </summary>
+        /// <param name="postId">Post id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> RemoveDislikeFromPostAsync(
             [FromQuery] long postId,
@@ -136,6 +166,12 @@ namespace FairPlaySocial.Server.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Dislike post.
+        /// </summary>
+        /// <param name="createDislikedPostModel"><see cref="CreateDislikedPostModel"/> instance representing post to dislike.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="DislikedPostModel"/> instance.</returns>
         [HttpPost("[action]")]
         public async Task<DislikedPostModel?> DislikePostAsync(CreateDislikedPostModel createDislikedPostModel,
             CancellationToken cancellationToken)

@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles feed operations.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -27,6 +30,14 @@ namespace FairPlaySocial.Server.Controllers
         private readonly PostService postService;
         private readonly GroupMemberService groupMemberService;
 
+        /// <summary>
+        /// <see cref="MyFeedController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="httpContextAccessor"><see cref="IHttpContextAccessor"/> instance.</param>
+        /// <param name="postService"><see cref="PostService"/> instance.</param>
+        /// <param name="groupMemberService"><see cref="GroupMemberService"/> instance.</param>
         public MyFeedController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
@@ -41,6 +52,13 @@ namespace FairPlaySocial.Server.Controllers
             this.groupMemberService = groupMemberService;
         }
 
+        /// <summary>
+        /// Gets post by the id.
+        /// </summary>
+        /// <param name="postId">Post identifier.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="PostModel"/> instance.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpGet("[action]")]
         public async Task<PostModel?> GetPostByPostIdAsync(long postId, CancellationToken cancellationToken)
         {
@@ -70,6 +88,14 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets current user's home feed.
+        /// </summary>
+        /// <param name="pageRequestModel"></param>
+        /// <param name="likedPostService"></param>
+        /// <param name="dislikedPostService"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [EnableRateLimiting(Constants.Policies.RateLimiting.HomeFeed)] //Check https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html#:~:text=Rate%20limiting%20is%20a%20way,prevent%20it%20from%20becoming%20unresponsive.
         public async Task<PagedItems<PostModel>> GetMyHomeFeedAsync(
@@ -143,6 +169,16 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets <see cref="PostModel"/> feed posts by group id.
+        /// </summary>
+        /// <param name="pageRequestModel">Page information.</param>
+        /// <param name="groupId">Group id.</param>
+        /// <param name="likedPostService"><see cref="LikedPostService"></see> instance.</param>
+        /// <param name="dislikedPostService"><see cref="DislikedPostService"></see> instance.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Paged <see cref="PostModel"/></returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpGet("[action]")]
         public async Task<PagedItems<PostModel>> GetGroupFeedAsync(
             [FromQuery] PageRequestModel pageRequestModel,
@@ -228,6 +264,12 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets post hystory by post id.
+        /// </summary>
+        /// <param name="postId">Post id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Array of <see cref="PostModel"/></returns>
         [HttpGet("[action]")]
         public async Task<PostModel[]?> GetPostHistoryByPostIdAsync(long postId, CancellationToken cancellationToken)
         {
