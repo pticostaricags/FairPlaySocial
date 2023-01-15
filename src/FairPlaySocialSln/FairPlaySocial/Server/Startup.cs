@@ -23,6 +23,7 @@ using System.Threading.RateLimiting;
 using System.Net;
 using FairPlaySocial.Models.CustomHttpResponse;
 using Microsoft.AspNetCore.RateLimiting;
+using System.Reflection;
 
 namespace FairPlaySocial.Server
 {
@@ -65,7 +66,29 @@ namespace FairPlaySocial.Server
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+
+                var basePath = AppContext.BaseDirectory;
+                var mainAppXmlFilename = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                var mainAppXmlPath = Path.Combine(basePath, mainAppXmlFilename);
+                if (File.Exists(mainAppXmlPath))
+                {
+                    c.IncludeXmlComments(mainAppXmlPath, includeControllerXmlComments: true);
+                }
+
+                var modelsFileName = typeof(FairPlaySocial.Models.ApplicationUser.ApplicationUserModel).Assembly.GetName().Name + ".xml";
+                var modelsXmlPath = Path.Combine(basePath, modelsFileName);
+                if (File.Exists(modelsXmlPath))
+                {
+                    c.IncludeXmlComments(modelsXmlPath);
+                }
+
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = $"{Common.Global.Constants.Assemblies.MainAppAssemblyName} API"
+                });
+            });
             services.AddAutoMapper(configAction =>
             {
                 configAction.AddMaps(new[] { typeof(Program).Assembly });
