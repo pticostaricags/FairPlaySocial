@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles post's comments.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -20,6 +23,12 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
 
+        /// <summary>
+        /// <see cref="PostCommentController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="postService"><see cref="PostService"/> instance.</param>
         public PostCommentController(IMapper mapper, ICurrentUserProvider currentUserProvider, PostService postService)
         {
             this.mapper = mapper;
@@ -27,6 +36,13 @@ namespace FairPlaySocial.Server.Controllers
             this.postService = postService;
         }
 
+        /// <summary>
+        /// Creates comment for the post.
+        /// </summary>
+        /// <param name="createPostCommentModel"><see cref="CreatePostCommentModel"/> instance representing comment to create.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="PostModel"/> representing newly created post.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpPost("[action]")]
         public async Task<PostModel?> CreatePostCommentAsync(CreatePostCommentModel createPostCommentModel,
             CancellationToken cancellationToken)

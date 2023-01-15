@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles user's public profile.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -20,12 +23,23 @@ namespace FairPlaySocial.Server.Controllers
         private readonly IMapper mapper;
         private readonly UserProfileService userProfileService;
 
+        /// <summary>
+        /// <see cref="PublicUserProfileController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="userProfileService"><see cref="UserProfileService"/> instance.</param>
         public PublicUserProfileController(IMapper mapper, UserProfileService userProfileService)
         {
             this.mapper = mapper;
             this.userProfileService = userProfileService;
         }
 
+        /// <summary>
+        /// Gets user's public profile by user id.
+        /// </summary>
+        /// <param name="applicationUserId">Application user id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="UserProfileModel"/> representing user's profile.</returns>
         [Authorize(Roles = Constants.Roles.User)]
         [HttpGet("[action]")]
         public async Task<UserProfileModel>

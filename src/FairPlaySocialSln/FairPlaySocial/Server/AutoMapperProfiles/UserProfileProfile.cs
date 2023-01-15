@@ -5,8 +5,14 @@ using FairPlaySocial.Models.UserProfile;
 
 namespace FairPlaySocial.Server.AutoMapperProfiles
 {
+    /// <summary>
+    /// <see cref="UserProfile"/> mapping profile.
+    /// </summary>
     public class UserProfileProfile : Profile
     {
+        /// <summary>
+        /// <see cref="UserProfileProfile"/> constructor.
+        /// </summary>
         public UserProfileProfile() 
         {
             CreateMap<UserProfile, UserProfileModel>()

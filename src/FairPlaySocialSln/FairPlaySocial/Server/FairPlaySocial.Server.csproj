@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>be240d42-2326-4694-8e39-4d223966b366</UserSecretsId>
 	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

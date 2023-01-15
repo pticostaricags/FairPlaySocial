@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles user's profile.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -20,6 +23,12 @@ namespace FairPlaySocial.Server.Controllers
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly UserProfileService userProfileService;
 
+        /// <summary>
+        /// <see cref="MyUserProfileController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="userProfileService"><see cref="UserProfileService"/> instance.</param>
         public MyUserProfileController(IMapper mapper, ICurrentUserProvider currentUserProvider, UserProfileService userProfileService)
         {
             this.mapper = mapper;
@@ -27,6 +36,11 @@ namespace FairPlaySocial.Server.Controllers
             this.userProfileService = userProfileService;
         }
 
+        /// <summary>
+        /// Gets current user's profile.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="UserProfileModel"/> instance representing user's profile.</returns>
         [HttpGet("[action]")]
         public async Task<UserProfileModel> GetMyUserProfileAsync(CancellationToken cancellationToken)
         {
@@ -47,6 +61,12 @@ namespace FairPlaySocial.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates current user's profile.
+        /// </summary>
+        /// <param name="createUserProfileModel"><see cref="CreateUserProfileModel"/> instance representing profile to update.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="UserProfileModel"/> instance representing updated profile.</returns>
         [HttpPost("[action]")]
         public async Task<UserProfileModel?> UpdateMyUserProfileAsync(
             CreateUserProfileModel createUserProfileModel, CancellationToken cancellationToken)

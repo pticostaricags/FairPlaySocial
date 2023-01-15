@@ -35,7 +35,7 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets all the resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]

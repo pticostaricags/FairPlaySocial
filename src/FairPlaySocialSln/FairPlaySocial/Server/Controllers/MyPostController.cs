@@ -17,6 +17,9 @@ using Polly;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles user's posts.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.User)]
@@ -28,6 +31,15 @@ namespace FairPlaySocial.Server.Controllers
         private readonly IHubContext<NotificationHub, INotificationHub> hubContext;
         private readonly ApplicationUserService applicationUserService;
         private readonly GroupMemberService groupMemberService;
+        /// <summary>
+        /// <see cref="MyPostController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="applicationUserService"><see cref="ApplicationUserService"/> instance.</param>
+        /// <param name="postService"><see cref="PostService"/> instance.</param>
+        /// <param name="groupMemberService"><see cref="GroupMemberService"/> instance.</param>
+        /// <param name="hubContext"><see cref="IHubContext"/> instance.</param>
         public MyPostController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
@@ -44,6 +56,13 @@ namespace FairPlaySocial.Server.Controllers
             this.applicationUserService = applicationUserService;
         }
 
+        /// <summary>
+        /// Creates shared post.
+        /// </summary>
+        /// <param name="createSharedPostModel"><see cref="CreateSharedPostModel"/> instance representing shared post to create.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateSharedPostAsync(
             CreateSharedPostModel createSharedPostModel,
@@ -83,6 +102,14 @@ namespace FairPlaySocial.Server.Controllers
 
         }
 
+        /// <summary>
+        /// Deletes post.
+        /// </summary>
+        /// <param name="postId">post id to delete.</param>
+        /// <param name="fairPlaySocialDatabaseContext"><see cref="FairPlaySocialDatabaseContext"/> instance.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpDelete("[action]")]
         public async Task<IActionResult> DeleteMyPostAsync(
             long postId,
@@ -145,6 +172,18 @@ namespace FairPlaySocial.Server.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Creates a post.
+        /// </summary>
+        /// <param name="forbiddenUrlService"><see cref="ForbiddenUrlService"/> instance.</param>
+        /// <param name="httpClient"><see cref="HttpClient"/> instance.</param>
+        /// <param name="textAnalyticsService"><see cref="TextAnalyticsService"/> instance.</param>
+        /// <param name="errorLogService"><see cref="ErrorLogService"/> instance.</param>
+        /// <param name="postKeyPhraseService"><see cref="PostKeyPhraseService"/> instance.</param>
+        /// <param name="createPostModel"><see cref="CreatePostModel"/> instance representing post to create.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="IActionResult"/> instance.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateMyPostAsync(
             [FromServices] ForbiddenUrlService forbiddenUrlService,
@@ -231,6 +270,15 @@ namespace FairPlaySocial.Server.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Updates post's text.
+        /// </summary>
+        /// <param name="postModel"><see cref="PostModel"/> instance representing the post to update.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="likedPostService"><see cref="LikedPostService"/> instance.</param>
+        /// <param name="dislikedPostService"><see cref="DislikedPostService"/> instance.</param>
+        /// <returns></returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpPut("[action]")]
         public async Task<PostModel> UpdateMyPostTextAsync(PostModel postModel,
             CancellationToken cancellationToken,

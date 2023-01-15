@@ -86,6 +86,7 @@ namespace FairPlaySocial.Server.Generators
                             var primaryKeyTypeValue = primartyKeyPredefinedTypeSyntax!.Keyword.ValueText;
 
                             StringBuilder stringBuilder = new();
+                            stringBuilder.AppendLine("#pragma warning disable 1591");
                             stringBuilder.AppendLine("using System.Threading.Tasks;");
                             stringBuilder.AppendLine("using Microsoft.AspNetCore.Mvc;");
                             stringBuilder.AppendLine($"using {assemblyNameFirstPart}.Services;");
@@ -146,6 +147,7 @@ namespace FairPlaySocial.Server.Generators
                             stringBuilder.AppendLine("}");
                             stringBuilder.AppendLine("}");
                             stringBuilder.AppendLine("}");
+                            stringBuilder.AppendLine("#pragma warning restore 1591");
                             context.AddSource($"{controllerName}.g.cs",
                         SourceText.From(stringBuilder.ToString(), Encoding.UTF8));
                         }

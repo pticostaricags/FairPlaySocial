@@ -5,8 +5,16 @@ using System.Threading.RateLimiting;
 
 namespace FairPlaySocial.Server
 {
+    /// <summary>
+    /// Rate limiter extensions.
+    /// </summary>
     public static class RateLimiterExtensions
     {
+        /// <summary>
+        /// Configures rate limiter.
+        /// </summary>
+        /// <param name="services">Services to configure.</param>
+        /// <returns><see cref="IServiceCollection"/> instance.</returns>
         public static IServiceCollection ConfigurePlatformRateLimiter(this IServiceCollection services)
         {
             services.AddRateLimiter(options =>

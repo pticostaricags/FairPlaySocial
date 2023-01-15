@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Handles public feed.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
@@ -22,6 +25,13 @@ namespace FairPlaySocial.Server.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly PostService postService;
 
+        /// <summary>
+        /// <see cref="PublicFeedController"/> constructor.
+        /// </summary>
+        /// <param name="mapper"><see cref="IMapper"/> instance.</param>
+        /// <param name="currentUserProvider"><see cref="ICurrentUserProvider"/> instance.</param>
+        /// <param name="httpContextAccessor"><see cref="IHttpContextAccessor"/> instance.</param>
+        /// <param name="postService"><see cref="PostService"/> instance.</param>
         public PublicFeedController(
             IMapper mapper,
             ICurrentUserProvider currentUserProvider,
@@ -34,6 +44,15 @@ namespace FairPlaySocial.Server.Controllers
             this.postService = postService;
         }
 
+        /// <summary>
+        /// Gets user's feed.
+        /// </summary>
+        /// <param name="applicationUserId">User id.</param>
+        /// <param name="pageRequestModel"><see cref="PageRequestModel"/> instance representing page information</param>
+        /// <param name="likedPostService"><see cref="LikedPostService"/> instance.</param>
+        /// <param name="dislikedPostService"><see cref="DislikedPostService"/> instance.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         public async Task<PagedItems<PostModel>> GetUserFeedAsync(
             [FromQuery] long applicationUserId,
@@ -79,6 +98,13 @@ namespace FairPlaySocial.Server.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets post by its id.
+        /// </summary>
+        /// <param name="postId">Post id.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns><see cref="PostModel"/> instance representing the post.</returns>
+        /// <exception cref="CustomValidationException"></exception>
         [HttpGet("[action]")]
         public async Task<PostModel> GetPostByPostIdAsync(long postId, CancellationToken cancellationToken)
         {

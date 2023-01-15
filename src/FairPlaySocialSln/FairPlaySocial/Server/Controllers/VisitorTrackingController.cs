@@ -35,6 +35,7 @@ namespace FairPlaySocial.Server.Controllers
         /// Persists the visitors information and visited page
         /// </summary>
         /// <param name="visitorTrackingModel"></param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
         [HttpPost("[action]")]
         public async Task<VisitorTrackingModel?> TrackAnonymousClientInformationAsync(
@@ -55,6 +56,7 @@ namespace FairPlaySocial.Server.Controllers
         /// </summary>
         /// <param name="visitorTrackingModel"></param>
         /// <param name="currentUserProvider"></param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize]
@@ -76,9 +78,9 @@ namespace FairPlaySocial.Server.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates visit time.
         /// </summary>
-        /// <returns></returns>
+        /// <returns><see cref="VisitorTrackingModel"/> instance.</returns>
         [HttpPut("[action]")]
         public async Task<VisitorTrackingModel?> UpdateVisitTimeElapsedAsync(long visitorTrackingId, CancellationToken cancellationToken)
         {

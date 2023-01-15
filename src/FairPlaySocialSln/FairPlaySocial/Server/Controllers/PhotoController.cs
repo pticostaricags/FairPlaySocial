@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FairPlaySocial.Server.Controllers
 {
+    /// <summary>
+    /// Photos management.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Constants.Roles.Admin)]
