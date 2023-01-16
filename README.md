@@ -1,6 +1,6 @@
 # FairPlaySocial
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Build Status
@@ -91,9 +91,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://allmylinks.com/efonsecabcr"><img src="https://avatars.githubusercontent.com/u/3481899?v=4?s=100" width="100px;" alt="Eduardo Fonseca"/><br /><sub><b>Eduardo Fonseca</b></sub></a><br /><a href="https://github.com/pticostaricags/FairPlaySocial/commits?author=efonsecab" title="Code">💻</a></td>
-      <td align="center"><a href="https://hachyderm.io/@martinwoodward"><img src="https://avatars.githubusercontent.com/u/856858?v=4?s=100" width="100px;" alt="Martin Woodward"/><br /><sub><b>Martin Woodward</b></sub></a><br /><a href="#example-martinwoodward" title="Examples">💡</a></td>
-      <td align="center"><a href="https://github.com/tarunsamanta2k20"><img src="https://avatars.githubusercontent.com/u/55488549?v=4?s=100" width="100px;" alt="Tarun Samanta"/><br /><sub><b>Tarun Samanta</b></sub></a><br /><a href="https://github.com/pticostaricags/FairPlaySocial/commits?author=tarunsamanta2k20" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://allmylinks.com/efonsecabcr"><img src="https://avatars.githubusercontent.com/u/3481899?v=4?s=100" width="100px;" alt="Eduardo Fonseca"/><br /><sub><b>Eduardo Fonseca</b></sub></a><br /><a href="https://github.com/pticostaricags/FairPlaySocial/commits?author=efonsecab" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://hachyderm.io/@martinwoodward"><img src="https://avatars.githubusercontent.com/u/856858?v=4?s=100" width="100px;" alt="Martin Woodward"/><br /><sub><b>Martin Woodward</b></sub></a><br /><a href="#example-martinwoodward" title="Examples">💡</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tarunsamanta2k20"><img src="https://avatars.githubusercontent.com/u/55488549?v=4?s=100" width="100px;" alt="Tarun Samanta"/><br /><sub><b>Tarun Samanta</b></sub></a><br /><a href="https://github.com/pticostaricags/FairPlaySocial/commits?author=tarunsamanta2k20" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dsm637"><img src="https://avatars.githubusercontent.com/u/3065200?v=4?s=100" width="100px;" alt="Denis Mitropolsky"/><br /><sub><b>Denis Mitropolsky</b></sub></a><br /><a href="https://github.com/pticostaricags/FairPlaySocial/commits?author=dsm637" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
