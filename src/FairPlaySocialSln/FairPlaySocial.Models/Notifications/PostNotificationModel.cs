@@ -6,7 +6,7 @@ namespace FairPlaySocial.Models.Notifications
     /// <summary>
     /// Rpresents a Notification used in the SignalR communication
     /// </summary>
-    public class NotificationModel
+    public class PostNotificationModel
     {
         [Required]
         public PostAction? PostAction { get; set; }

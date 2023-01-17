@@ -28,7 +28,7 @@ namespace FairPlaySocial.Server.Controllers
         private IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
-        private readonly IHubContext<NotificationHub, INotificationHub> hubContext;
+        private readonly IHubContext<NotificationHub, IPostNotificationHub> hubContext;
         private readonly ApplicationUserService applicationUserService;
         private readonly GroupMemberService groupMemberService;
         /// <summary>
@@ -46,7 +46,7 @@ namespace FairPlaySocial.Server.Controllers
             ApplicationUserService applicationUserService,
             PostService postService,
             GroupMemberService groupMemberService,
-            IHubContext<NotificationHub, INotificationHub> hubContext)
+            IHubContext<NotificationHub, IPostNotificationHub> hubContext)
         {
             this.mapper = mapper;
             this.currentUserProvider = currentUserProvider;
@@ -90,7 +90,7 @@ namespace FairPlaySocial.Server.Controllers
             //TODO: Consider using groups to send only to users in the "Home Feed" page
             var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
             post.OwnerApplicationUserFullName = userEntity.FullName;
-            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
             {
                 PostAction = Models.Notifications.PostAction.PostCreated,
                 From = userEntity.FullName,
@@ -238,7 +238,7 @@ namespace FairPlaySocial.Server.Controllers
             //TODO: Consider using groups to send only to users in the "Home Feed" page
             var userEntity = await applicationUserService.GetApplicationUserByIdAsync(this.currentUserProvider.GetApplicationUserId(), trackEntities: false, cancellationToken: cancellationToken);
             post.OwnerApplicationUserFullName = userEntity.FullName;
-            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
             {
                 PostAction = Models.Notifications.PostAction.PostCreated,
                 From = userEntity.FullName,
@@ -316,7 +316,7 @@ namespace FairPlaySocial.Server.Controllers
             }
             postEntity.Text = postModel.Text;
             await this.postService.UpdatePostAsync(postEntity, cancellationToken: cancellationToken);
-            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
             {
                 PostAction = Models.Notifications.PostAction.PostTextUpdate,
                 From = postEntity.OwnerApplicationUser.FullName,

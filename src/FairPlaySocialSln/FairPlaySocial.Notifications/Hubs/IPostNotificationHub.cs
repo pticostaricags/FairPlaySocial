@@ -2,8 +2,8 @@ using FairPlaySocial.Models.Notifications;
 
 namespace FairPlaySocial.Notifications.Hubs
 {
-    public interface INotificationHub
+    public interface IPostNotificationHub
     {
-        Task ReceiveMessage(NotificationModel model);
+        Task ReceiveMessage(PostNotificationModel model);
     }
 }

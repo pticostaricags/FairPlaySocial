@@ -26,7 +26,7 @@ namespace FairPlaySocial.Server.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
-        private readonly IHubContext<NotificationHub, INotificationHub> hubContext;
+        private readonly IHubContext<NotificationHub, IPostNotificationHub> hubContext;
         private readonly LikedPostService likedPostService;
         private readonly DislikedPostService dislikedPostService;
         private readonly PostService postService;
@@ -42,7 +42,7 @@ namespace FairPlaySocial.Server.Controllers
         /// <param name="postService"><see cref="PostService"/> instance.</param>
         public MyLikedPostsController(IMapper mapper,
             ICurrentUserProvider currentUserProvider,
-            IHubContext<NotificationHub, INotificationHub> hubContext,
+            IHubContext<NotificationHub, IPostNotificationHub> hubContext,
             LikedPostService likedPostService,
             DislikedPostService dislikedPostService,
             PostService postService)
@@ -76,7 +76,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Where(p => p.PostId == createLikedPostModel.PostId)
                 .First();
-            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
             {
                 PostAction = Models.Notifications.PostAction.LikeAdded,
                 From = postUpdatedEntity.OwnerApplicationUser.FullName,
@@ -115,7 +115,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Where(p => p.PostId == postId)
                 .First();
-                await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+                await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
                 {
                     PostAction = Models.Notifications.PostAction.LikeRemoved,
                     From = postUpdatedEntity.OwnerApplicationUser.FullName,
@@ -154,7 +154,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Where(p => p.PostId == postId)
                 .First();
-                await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+                await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
                 {
                     PostAction = Models.Notifications.PostAction.DislikeRemoved,
                     From = postUpdatedEntity.OwnerApplicationUser.FullName,
@@ -187,7 +187,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.DislikedPost)
                 .Where(p => p.PostId == createDislikedPostModel.PostId)
                 .First();
-            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.NotificationModel()
+            await hubContext.Clients.All.ReceiveMessage(new Models.Notifications.PostNotificationModel()
             {
                 PostAction = Models.Notifications.PostAction.DislikeAdded,
                 From = postUpdatedEntity.OwnerApplicationUser.FullName,

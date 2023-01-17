@@ -34,7 +34,7 @@ namespace FairPlaySocial.SharedUI.Components
         private HubConnection? HubConnection { get; set; }
         public ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; private set; }
         private bool IsBusy { get; set; }
-        private Queue<NotificationModel> NotificationsQueue { get; set; } = new();
+        private Queue<PostNotificationModel> NotificationsQueue { get; set; } = new();
         protected override async Task OnInitializedAsync()
         {
             try
@@ -51,7 +51,7 @@ namespace FairPlaySocial.SharedUI.Components
                     })
                     .Build();
 
-                this.HubConnection.On(Constants.Hubs.ReceiveMessage, (Action<NotificationModel>)((model) =>
+                this.HubConnection.On(Constants.Hubs.ReceiveMessage, (Action<PostNotificationModel>)((model) =>
                 {
                     this.NotificationsQueue.Enqueue(model);
                     if (this.NotificationsQueue.Count == 1)
@@ -82,7 +82,7 @@ namespace FairPlaySocial.SharedUI.Components
             }
         }
 
-        private void ProcessNotification(NotificationModel model)
+        private void ProcessNotification(PostNotificationModel model)
         {
             switch (model.PostAction)
             {

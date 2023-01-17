@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace FairPlaySocial.Notifications.Hubs
 {
-    public class NotificationHub : Hub<INotificationHub>
+    public class NotificationHub : Hub<IPostNotificationHub>
     {
-        public async Task SendMessage(NotificationModel model)
+        public async Task SendMessage(PostNotificationModel model)
         {
             await this.Clients.Group(model.GroupName).ReceiveMessage(model);
         }
 
-        public Task SendMessageToCaller(NotificationModel model)
+        public Task SendMessageToCaller(PostNotificationModel model)
         {
             return Clients.Caller.ReceiveMessage(model);
         }
