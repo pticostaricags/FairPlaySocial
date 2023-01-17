@@ -5,7 +5,7 @@ using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Models.DislikedPost;
 using FairPlaySocial.Models.LikedPost;
 using FairPlaySocial.Models.Post;
-using FairPlaySocial.Notifications.Hubs;
+using FairPlaySocial.Notifications.Hubs.Post;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +26,7 @@ namespace FairPlaySocial.Server.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
-        private readonly IHubContext<NotificationHub, IPostNotificationHub> hubContext;
+        private readonly IHubContext<PostNotificationHub, IPostNotificationHub> hubContext;
         private readonly LikedPostService likedPostService;
         private readonly DislikedPostService dislikedPostService;
         private readonly PostService postService;
@@ -42,7 +42,7 @@ namespace FairPlaySocial.Server.Controllers
         /// <param name="postService"><see cref="PostService"/> instance.</param>
         public MyLikedPostsController(IMapper mapper,
             ICurrentUserProvider currentUserProvider,
-            IHubContext<NotificationHub, IPostNotificationHub> hubContext,
+            IHubContext<PostNotificationHub, IPostNotificationHub> hubContext,
             LikedPostService likedPostService,
             DislikedPostService dislikedPostService,
             PostService postService)

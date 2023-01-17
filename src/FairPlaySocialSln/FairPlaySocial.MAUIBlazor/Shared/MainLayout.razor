@@ -13,6 +13,7 @@
                 <FairPlaySocial.SharedUI.Components.SearchModal></FairPlaySocial.SharedUI.Components.SearchModal>
                 @if (!UserState.UserContext.IsLoggedOn)
                 {
+                    <FairPlaySocial.SharedUI.Components.UserMessage></FairPlaySocial.SharedUI.Components.UserMessage>
                     <AudibleButton CssClass="@ThemeConfiguration.Buttons.PrimaryButtonCss"
                                ItemText="Log In" DisplayText="true"
                                OnClick="@( async () => await OnLoginClickedAsync())"></AudibleButton>

@@ -5,7 +5,6 @@ using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
 using FairPlaySocial.Common.CustomExceptions;
 using FairPlaySocial.Models.Post;
-using FairPlaySocial.Notifications.Hubs;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using FairPlaySocial.Common.Enums;
 using Polly;
+using FairPlaySocial.Notifications.Hubs.Post;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -28,7 +28,7 @@ namespace FairPlaySocial.Server.Controllers
         private IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
-        private readonly IHubContext<NotificationHub, IPostNotificationHub> hubContext;
+        private readonly IHubContext<PostNotificationHub, IPostNotificationHub> hubContext;
         private readonly ApplicationUserService applicationUserService;
         private readonly GroupMemberService groupMemberService;
         /// <summary>
@@ -46,7 +46,7 @@ namespace FairPlaySocial.Server.Controllers
             ApplicationUserService applicationUserService,
             PostService postService,
             GroupMemberService groupMemberService,
-            IHubContext<NotificationHub, IPostNotificationHub> hubContext)
+            IHubContext<PostNotificationHub, IPostNotificationHub> hubContext)
         {
             this.mapper = mapper;
             this.currentUserProvider = currentUserProvider;

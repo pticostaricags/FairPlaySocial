@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using FairPlaySocial.Notifications.Hubs;
 using Microsoft.Identity.Web;
 using System.Security.Claims;
 using Microsoft.Extensions.Localization;
@@ -24,6 +23,8 @@ using System.Net;
 using FairPlaySocial.Models.CustomHttpResponse;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Reflection;
+using FairPlaySocial.Notifications.Hubs.Post;
+using FairPlaySocial.Notifications.Hubs.UserMessage;
 
 namespace FairPlaySocial.Server
 {
@@ -185,7 +186,12 @@ namespace FairPlaySocial.Server
                     // If the request is for our hub...
                     var path = context.HttpContext.Request.Path;
                     if (!string.IsNullOrEmpty(accessToken) &&
-                        path.StartsWithSegments(FairPlaySocial.Common.Global.Constants.Hubs.HomeFeedHub))
+                    (    
+                    path.StartsWithSegments(FairPlaySocial.Common.Global.Constants.Hubs.HomeFeedHub)
+                    ||
+                    path.StartsWithSegments(FairPlaySocial.Common.Global.Constants.Hubs.UserMessageHub)
+                    )
+                    )
                     {
                         // Read the token out of the query string
                         context.Token = accessToken;
@@ -342,7 +348,8 @@ namespace FairPlaySocial.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<NotificationHub>(FairPlaySocial.Common.Global.Constants.Hubs.HomeFeedHub);
+                endpoints.MapHub<PostNotificationHub>(FairPlaySocial.Common.Global.Constants.Hubs.HomeFeedHub);
+                endpoints.MapHub<UserMessageNotificationHub>(FairPlaySocial.Common.Global.Constants.Hubs.UserMessageHub);
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapFallbackToFile("index.html");
             });

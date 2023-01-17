@@ -13,6 +13,7 @@
                 <FairPlaySocial.SharedUI.Components.SearchModal></FairPlaySocial.SharedUI.Components.SearchModal>
                 <AuthorizeView>
                     <Authorized>
+                        <FairPlaySocial.SharedUI.Components.UserMessage></FairPlaySocial.SharedUI.Components.UserMessage>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>
                         <p>@UserState.UserContext.FullName</p>
                     </Authorized>
