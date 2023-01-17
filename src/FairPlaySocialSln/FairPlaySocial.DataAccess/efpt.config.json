@@ -103,6 +103,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserMessage]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserPreference]",
          "ObjectType": 0
       },

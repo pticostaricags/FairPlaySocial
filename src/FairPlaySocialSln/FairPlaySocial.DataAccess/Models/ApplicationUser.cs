@@ -73,6 +73,12 @@ public partial class ApplicationUser
     [InverseProperty("ReachedByApplicationUser")]
     public virtual ICollection<PostReach> PostReach { get; } = new List<PostReach>();
 
+    [InverseProperty("FromApplicationUser")]
+    public virtual ICollection<UserMessage> UserMessageFromApplicationUser { get; } = new List<UserMessage>();
+
+    [InverseProperty("ToApplicationUser")]
+    public virtual ICollection<UserMessage> UserMessageToApplicationUser { get; } = new List<UserMessage>();
+
     [InverseProperty("ApplicationUser")]
     public virtual UserPreference UserPreference { get; set; }
 
