@@ -58,6 +58,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<Resource> Resource { get; set; }
 
+    public virtual DbSet<UserMessage> UserMessage { get; set; }
+
     public virtual DbSet<UserPreference> UserPreference { get; set; }
 
     public virtual DbSet<UserProfile> UserProfile { get; set; }
@@ -214,6 +216,17 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.Culture).WithMany(p => p.Resource)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Resource_Culture");
+        });
+
+        modelBuilder.Entity<UserMessage>(entity =>
+        {
+            entity.HasOne(d => d.FromApplicationUser).WithMany(p => p.UserMessageFromApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FromApplicationUserId_ApplicationUser");
+
+            entity.HasOne(d => d.ToApplicationUser).WithMany(p => p.UserMessageToApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ToApplicationUserId_ApplicationUser");
         });
 
         modelBuilder.Entity<UserPreference>(entity =>

@@ -38,6 +38,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<GroupMemberService>();
             services.AddTransient<ErrorLogService>();
             services.AddTransient<PostKeyPhraseService>();
+            services.AddTransient<UserMessageService>();
             services.ConfigureIpDataService(configuration);
             services.ConfigureIpStackService(configuration);
         }
