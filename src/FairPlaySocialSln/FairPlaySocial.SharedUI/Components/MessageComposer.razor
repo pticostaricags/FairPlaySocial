@@ -1,0 +1,21 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@IsBusy"></LoadingIndicator>
+
+<EditForm Model="this.createUserMessageModel" OnValidSubmit="OnValidSubmitAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Compose your message"></AudibleLabel>
+        <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
+                       @bind-Value="@this.createUserMessageModel.Message"></InputTextArea>
+        <ValidationMessage For="@( () => this.createUserMessageModel.Message)"></ValidationMessage>
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss"
+                type="submit">
+            Send
+        </button>
+    </div>
+</EditForm>

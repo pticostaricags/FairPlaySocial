@@ -28,6 +28,7 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<ClientSideErrorLogClientService>();
             services.AddTransient<MyGroupClientService>();
             services.AddTransient<SearchClientService>();
+            services.AddTransient<UserMessageClientService>();
             #endregion END OF TRANSIENT SERVICES
 
             #region START OF SINGLETON SERVICES

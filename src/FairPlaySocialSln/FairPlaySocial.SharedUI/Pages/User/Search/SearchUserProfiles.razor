@@ -11,6 +11,12 @@
         <Card>
             <CardHeader>@singleUserProfile.FullName</CardHeader>
             <CardBody>@singleUserProfile.Bio</CardBody>
+            <CardFooter>
+                <button class="btn"
+                @onclick="@( () => ShowComposeMessage(singleUserProfile))">
+                    <i class="bi bi-envelope-plus-fill"></i>
+                </button>
+            </CardFooter>
         </Card>
     }
 }
@@ -31,4 +37,17 @@
         class="@ThemeConfiguration.Buttons.SecondaryButtonCss">
         Next Page
     </button>
+}
+@if (this.ShowComposeMessageModal && this.SelectedUserProfileModel != null)
+{
+    <CustomModal OnCloseButtonClicked="HideComposeMessage"
+             ShowFooter="false">
+        <Title>
+            Compose Message
+        </Title>
+        <Content>
+            <MessageComposer ToApplicationUserId="@this.SelectedUserProfileModel.ApplicationUserId"
+                         OnMessageSent="OnMessageSentAsync"></MessageComposer>
+        </Content>
+    </CustomModal>
 }

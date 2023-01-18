@@ -26,6 +26,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         {
             PageNumber = 1
         };
+        private UserProfileModel? SelectedUserProfileModel { get; set; }
+        private bool ShowComposeMessageModal { get; set; }
 
         protected async override Task OnParametersSetAsync()
         {
@@ -60,6 +62,25 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         {
             this.PageRequestModel.PageNumber++;
             await LoadDataAsync();
+        }
+
+        private void ShowComposeMessage(UserProfileModel userProfileModel)
+        {
+            this.SelectedUserProfileModel = userProfileModel;
+            this.ShowComposeMessageModal = true;
+        }
+
+        private void HideComposeMessage()
+        {
+            this.ShowComposeMessageModal = false;
+            this.SelectedUserProfileModel = null;
+        }
+
+        private async Task OnMessageSentAsync()
+        {
+            await this.ToastService!
+                .ShowSuccessMessageAsync("Message has been sent", base.CancellationToken);
+            this.HideComposeMessage();
         }
     }
 }
