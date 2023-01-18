@@ -1,4 +1,5 @@
 ﻿using FairPlaySocial.ClientServices;
+using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.UserMessage;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -19,6 +20,8 @@ namespace FairPlaySocial.SharedUI.Components
         public EventCallback OnMessageSent { get; set; }
         [Inject]
         private UserMessageClientService? UserMessageClientService { get; set; }
+        [Inject]
+        private IToastService? ToastService { get; set; }
         private bool IsBusy { get; set; }
         private CreateUserMessageModel createUserMessageModel = new();
 
@@ -29,9 +32,22 @@ namespace FairPlaySocial.SharedUI.Components
 
         private async Task OnValidSubmitAsync()
         {
-            await UserMessageClientService!.CreateUserMessageAsync(this.createUserMessageModel,
-                base.CancellationToken);
-            await this.OnMessageSent.InvokeAsync();
+            try
+            {
+                this.IsBusy = true;
+                await UserMessageClientService!.CreateUserMessageAsync(this.createUserMessageModel,
+                    base.CancellationToken);
+                await this.OnMessageSent.InvokeAsync();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
     }
 }

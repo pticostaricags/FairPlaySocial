@@ -7,6 +7,7 @@ namespace FairPlaySocial.Common.Global
             public static class RateLimiting
             {
                 public const string HomeFeed = nameof(HomeFeed);
+                public const string SendMessages = nameof(SendMessages);
             }
             public static class OutputCaching
             {

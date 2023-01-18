@@ -10,6 +10,7 @@ using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SignalR;
 using static FairPlaySocial.Common.Global.Constants;
 
@@ -55,6 +56,7 @@ namespace FairPlaySocial.Server.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
+        [EnableRateLimiting(Constants.Policies.RateLimiting.SendMessages)] //Check https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html#:~:text=Rate%20limiting%20is%20a%20way,prevent%20it%20from%20becoming%20unresponsive.
         public async Task<UserMessageModel> CreateUserMessageAsync(
             [FromServices] ApplicationUserService applicationUserService,
             CreateUserMessageModel createUserMessageModel,

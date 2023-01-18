@@ -55,6 +55,14 @@ namespace FairPlaySocial.Server
                         options.QueueLimit = 0;
                         options.Window = TimeSpan.FromMinutes(1);
                     });
+                options.AddFixedWindowLimiter(policyName: Common.Global.Constants.Policies.RateLimiting.SendMessages,
+                    options =>
+                    {
+                        options.AutoReplenishment = true;
+                        options.PermitLimit = 10;
+                        options.QueueLimit = 0;
+                        options.Window = TimeSpan.FromHours(1);
+                    });
             });
             return services;
         }
