@@ -18,7 +18,7 @@ namespace FairPlaySocial.Server.Controllers
     [ApiController]
     public class LocalizationController : ControllerBase
     {
-        private FairPlaySocialDatabaseContext fairPlaySocialDatabaseContext { get; }
+        private FairPlaySocialDatabaseContext FairPlaySocialDatabaseContext { get; }
 
         private IMapper Mapper { get; }
 
@@ -30,7 +30,7 @@ namespace FairPlaySocial.Server.Controllers
         public LocalizationController(FairPlaySocialDatabaseContext fairPlaySocialDatabaseContext,
             IMapper mapper)
         {
-            this.fairPlaySocialDatabaseContext = fairPlaySocialDatabaseContext;
+            this.FairPlaySocialDatabaseContext = fairPlaySocialDatabaseContext;
             this.Mapper = mapper;
         }
 
@@ -43,17 +43,17 @@ namespace FairPlaySocial.Server.Controllers
         public async Task<ResourceModel[]> GetAllResourcesAsync(CancellationToken cancellationToken)
         {
             var currentCulture = CultureInfo.CurrentCulture;
-            var result = await this.fairPlaySocialDatabaseContext.Resource
+            var result = await this.FairPlaySocialDatabaseContext.Resource
                 .Include(p => p.Culture)
                 .Where(p => p.Culture.Name == currentCulture.Name)
                 .Select(p => this.Mapper.Map<Resource, ResourceModel>(p))
-                .ToArrayAsync();
+                .ToArrayAsync(cancellationToken);
             if (result.Length == 0)
-                result = await this.fairPlaySocialDatabaseContext.Resource
+                result = await this.FairPlaySocialDatabaseContext.Resource
                 .Include(p => p.Culture)
                 .Where(p => p.Culture.Name == "en-US")
                 .Select(p => this.Mapper.Map<Resource, ResourceModel>(p))
-                .ToArrayAsync();
+                .ToArrayAsync(cancellationToken);
             return result;
         }
 
@@ -66,7 +66,7 @@ namespace FairPlaySocial.Server.Controllers
         [OutputCache(PolicyName = Constants.Policies.OutputCaching.SupportedCultures)]
         public async Task<CultureModel[]> GetSupportedCulturesAsync(CancellationToken cancellationToken)
         {
-            return await this.fairPlaySocialDatabaseContext.Culture
+            return await this.FairPlaySocialDatabaseContext.Culture
                 .Select(p => new CultureModel()
                 {
                     Name = p.Name,

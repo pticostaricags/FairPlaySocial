@@ -24,7 +24,7 @@ namespace FairPlaySocial.Server.Controllers
             [FromServices] FairPlaySocialDatabaseContext fairplaysocialDatabaseContext,
             CancellationToken cancellationToken)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             var userAdB2CObjectId = currentUserProvider.GetObjectId();
             var rolesArray = await fairplaysocialDatabaseContext.ApplicationUserRole
                 .Include(p => p.ApplicationUser)

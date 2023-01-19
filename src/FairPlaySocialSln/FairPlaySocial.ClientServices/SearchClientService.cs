@@ -34,7 +34,7 @@ namespace FairPlaySocial.ClientServices
                 .PostAsJsonAsync(requestUrl, pageRequestModel, 
                 cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PagedItems<UserProfileModel>>();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<UserProfileModel>>(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -51,7 +51,7 @@ namespace FairPlaySocial.ClientServices
                 .PostAsJsonAsync(requestUrl, pageRequestModel,
                 cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -68,7 +68,7 @@ namespace FairPlaySocial.ClientServices
                 .PostAsJsonAsync(requestUrl, pageRequestModel,
                 cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PagedItems<GroupModel>>();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<GroupModel>>(cancellationToken: cancellationToken);
             return result;
         }
     }

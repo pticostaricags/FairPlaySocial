@@ -29,7 +29,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         private bool IsBusy { get; set; }
         private PagedItems<GroupModel>? Groups { get; set; }
 
-        private PageRequestModel PageRequestModel = new PageRequestModel()
+        private readonly PageRequestModel PageRequestModel = new()
         {
             PageNumber = 1
         };

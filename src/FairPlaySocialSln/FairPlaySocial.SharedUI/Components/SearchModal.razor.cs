@@ -13,7 +13,7 @@ namespace FairPlaySocial.SharedUI.Components
     {
         [Inject]
         private INavigationService? NavigationService { get; set; }
-        private SearchModel searchModel = new();
+        private readonly SearchModel searchModel = new();
         private bool ShowSearchModal { get; set; } = false;
 
         private void OpenSearchModal()

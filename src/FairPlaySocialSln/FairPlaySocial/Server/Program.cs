@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using System.Security.Claims;
 
+namespace FairPlaySocial.Server;
+
 /// <summary>
 /// Application Entryy class
 /// </summary>

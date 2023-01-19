@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 namespace FairPlaySocial.CustomValidation.CustomValidationAttributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class ProhibitHashTagsAttribute : ValidationAttribute
+    public partial class ProhibitHashTagsAttribute : ValidationAttribute
     {
-        private const string HashTagsPattern = @"\#\w+";
         public override bool IsValid(object? value)
         {
             if (value != null)
             {
-                var hashTags = Regex.Match(value!.ToString()!, HashTagsPattern);
+                var hashTags = HashTagsRegex().Match(value!.ToString());
                 if (hashTags.Captures?.Count > 0)
                     return false;
             }
             return true;
         }
+
+        [GeneratedRegex("\\#\\w+")]
+        private static partial Regex HashTagsRegex();
     }
 }

@@ -122,10 +122,12 @@ namespace FairPlaySocial.Server.Controllers
                 p.PostTypeId == (byte)Common.Enums.PostType.Post &&
                 p.GroupId == null
                 );
-            PagedItems<PostModel> result = new PagedItems<PostModel>();
-            result.PageSize = Constants.Pagination.DefaultPageSize;
-            result.PageNumber = pageRequestModel.PageNumber;
-            result.TotalItems = await query.CountAsync(cancellationToken);
+            PagedItems<PostModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
             result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
             result.Items = await query.OrderByDescending(p => p.PostId)
                 .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
@@ -217,10 +219,12 @@ namespace FairPlaySocial.Server.Controllers
                 p.PostTypeId == (byte)Common.Enums.PostType.Post
                 && p.GroupId == groupId
                 );
-            PagedItems<PostModel> result = new PagedItems<PostModel>();
-            result.PageSize = Constants.Pagination.DefaultPageSize;
-            result.PageNumber = pageRequestModel.PageNumber;
-            result.TotalItems = await query.CountAsync(cancellationToken);
+            PagedItems<PostModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
             result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
             result.Items = await query.OrderByDescending(p => p.PostId)
                 .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)

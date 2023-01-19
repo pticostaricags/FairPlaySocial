@@ -58,7 +58,7 @@ namespace FairPlaySocial.Server.Controllers
                 .Include(p => p.ApplicationUser)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() ==
                 userObjectId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (entity is null)
             {
                 return new UserPreferenceModel();
@@ -90,13 +90,15 @@ namespace FairPlaySocial.Server.Controllers
                     trackEntities: false, cancellationToken: cancellationToken)
                 .Include(p => p.ApplicationUser)
                 .Where(p => p.ApplicationUser.ApplicationUserId ==
-                userEntity.ApplicationUserId).SingleOrDefaultAsync();
+                userEntity.ApplicationUserId).SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (userPreferencesEntity is null)
             {
-                userPreferencesEntity = new();
-                userPreferencesEntity.ApplicationUserId = userEntity.ApplicationUserId;
-                userPreferencesEntity.EnableAudibleCuesInMobile = createUserPreferenceModel.EnableAudibleCuesInMobile;
-                userPreferencesEntity.EnableAudibleCuesInWeb = createUserPreferenceModel.EnableAudibleCuesInWeb;
+                userPreferencesEntity = new()
+                {
+                    ApplicationUserId = userEntity.ApplicationUserId,
+                    EnableAudibleCuesInMobile = createUserPreferenceModel.EnableAudibleCuesInMobile,
+                    EnableAudibleCuesInWeb = createUserPreferenceModel.EnableAudibleCuesInWeb
+                };
                 userPreferencesEntity = await this._userPreferenceService.CreateUserPreferenceAsync(userPreferencesEntity, cancellationToken);
             }
             else

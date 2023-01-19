@@ -27,7 +27,7 @@ namespace FairPlaySocial.Server
                     context.HttpContext.Response.StatusCode = statusCode;
                     if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                     {
-                        ProblemHttpResponse problemHttpResponse = new ProblemHttpResponse()
+                        ProblemHttpResponse problemHttpResponse = new()
                         {
                             Detail = $"Too many requests. Please try again after {retryAfter.TotalMinutes} minute(s). ",
                             Status = statusCode,
@@ -38,7 +38,7 @@ namespace FairPlaySocial.Server
                     }
                     else
                     {
-                        ProblemHttpResponse problemHttpResponse = new ProblemHttpResponse()
+                        ProblemHttpResponse problemHttpResponse = new()
                         {
                             Detail = "Too many requests. Please try again later. ",
                             Status = statusCode,

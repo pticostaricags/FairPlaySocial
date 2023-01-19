@@ -253,7 +253,7 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
              ShowFooter="false">
         <Title>ReShare Post</Title>
         <Content>
-            <EditForm Model="@this.createSharedPostModel" OnValidSubmit="OnValidSubmitForReSharePostAsync">
+            <EditForm Model="@this.CreateSharedPostModel" OnValidSubmit="OnValidSubmitForReSharePostAsync">
                 <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
@@ -262,8 +262,8 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
                     <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
-                               @bind-Value="@this.createSharedPostModel!.Text"></InputTextArea>
-                    <ValidationMessage For="@( () => this.createSharedPostModel!.Text)"></ValidationMessage>
+                               @bind-Value="@this.CreateSharedPostModel!.Text"></InputTextArea>
+                    <ValidationMessage For="@( () => this.CreateSharedPostModel!.Text)"></ValidationMessage>
                 </div>
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <button type="submit"
@@ -282,7 +282,7 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
              ShowFooter="false">
         <Title>Comments</Title>
         <Content>
-            <EditForm Model="@this.createPostCommentModel" OnValidSubmit="OnValidSubmitForAddCommentToPostAsync">
+            <EditForm Model="@this.CreatePostCommentModel" OnValidSubmit="OnValidSubmitForAddCommentToPostAsync">
                 <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
@@ -291,8 +291,8 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <AudibleLabel ItemText="Type your desired text"></AudibleLabel>
                     <InputTextArea class="@ThemeConfiguration.GenericControls.DefaultCss"
-                               @bind-Value="@this.createPostCommentModel!.Text"></InputTextArea>
-                    <ValidationMessage For="@( () => this.createPostCommentModel!.Text)"></ValidationMessage>
+                               @bind-Value="@this.CreatePostCommentModel!.Text"></InputTextArea>
+                    <ValidationMessage For="@( () => this.CreatePostCommentModel!.Text)"></ValidationMessage>
                 </div>
                 <div class="@ThemeConfiguration.Divisions.DefaultCss">
                     <button type="submit"

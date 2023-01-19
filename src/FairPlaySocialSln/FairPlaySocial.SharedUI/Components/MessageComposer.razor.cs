@@ -23,7 +23,7 @@ namespace FairPlaySocial.SharedUI.Components
         [Inject]
         private IToastService? ToastService { get; set; }
         private bool IsBusy { get; set; }
-        private CreateUserMessageModel createUserMessageModel = new();
+        private readonly CreateUserMessageModel createUserMessageModel = new();
 
         protected override void OnInitialized()
         {

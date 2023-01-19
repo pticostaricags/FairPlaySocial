@@ -27,7 +27,7 @@ namespace FairPlaySocial.Client.Shared
         [Inject]
         private IToastService? ToastService { get; set; }
         private bool ShowCultureSelector { get; set; }
-        private CancellationTokenSource CancellationTokenSource = new();
+        private readonly CancellationTokenSource CancellationTokenSource = new();
         private System.Timers.Timer? VisitsTimer { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -112,7 +112,7 @@ namespace FairPlaySocial.Client.Shared
         private void OnLoginClicked()
         {
             InteractiveRequestOptions interactiveRequestOptions =
-                new InteractiveRequestOptions()
+                new()
                 {
                     Interaction = InteractionType.SignIn,
                     ReturnUrl = this.NavigationManager!.Uri

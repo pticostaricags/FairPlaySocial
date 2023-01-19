@@ -19,7 +19,7 @@ namespace FairPlaySocial.Services
 
         public async Task <ErrorLog> CreateErrorLogAsync(Exception exception, CancellationToken cancellationToken)
         {
-            ErrorLog errorLog = new ErrorLog()
+            ErrorLog errorLog = new()
             {
                 FullException = exception.ToString(),
                 Message = exception.ToString(),

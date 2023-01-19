@@ -79,12 +79,14 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                     break;
             }
             HttpClient httpClient = new();
-            List<KeyValuePair<string?, string?>> formData = new();
-            formData.Add(new KeyValuePair<string?, string?>("username",
-                role == Role.User ? TestAzureAdB2CAuthConfiguration!.UserRoleUsername : TestAzureAdB2CAuthConfiguration!.AdminRoleUsername));
-            formData.Add(new KeyValuePair<string?, string?>("password",
-                role == Role.User ? TestAzureAdB2CAuthConfiguration.UserRolePassword : TestAzureAdB2CAuthConfiguration.AdminRolePassword));
-            formData.Add(new KeyValuePair<string?, string?>("grant_type", "password"));
+            List<KeyValuePair<string?, string?>> formData = new()
+            {
+                new KeyValuePair<string?, string?>("username",
+                role == Role.User ? TestAzureAdB2CAuthConfiguration!.UserRoleUsername : TestAzureAdB2CAuthConfiguration!.AdminRoleUsername),
+                new KeyValuePair<string?, string?>("password",
+                role == Role.User ? TestAzureAdB2CAuthConfiguration.UserRolePassword : TestAzureAdB2CAuthConfiguration.AdminRolePassword),
+                new KeyValuePair<string?, string?>("grant_type", "password")
+            };
             string? applicationId = TestAzureAdB2CAuthConfiguration.ApplicationId;
             formData.Add(new KeyValuePair<string?, string?>("scope", $"openid {applicationId} offline_access"));
             formData.Add(new KeyValuePair<string?, string?>("client_id", applicationId));

@@ -25,7 +25,7 @@ namespace FairPlaySocial.Server.Controllers
     [Authorize(Roles = Constants.Roles.User)]
     public class MyPostController : ControllerBase
     {
-        private IMapper mapper;
+        private readonly IMapper mapper;
         private readonly ICurrentUserProvider currentUserProvider;
         private readonly PostService postService;
         private readonly IHubContext<PostNotificationHub, IPostNotificationHub> hubContext;
@@ -197,7 +197,7 @@ namespace FairPlaySocial.Server.Controllers
             if (!String.IsNullOrWhiteSpace(createPostModel.Url))
             {
                 //Check https://stackoverflow.com/questions/2569851/how-to-expand-urls-in-c
-                var response = await httpClient.GetAsync(createPostModel.Url);
+                var response = await httpClient.GetAsync(createPostModel.Url, cancellationToken);
                 string redirectUrl = String.Empty;
                 if (
                     (response.StatusCode == System.Net.HttpStatusCode.Redirect ||
@@ -281,9 +281,9 @@ namespace FairPlaySocial.Server.Controllers
         /// <exception cref="CustomValidationException"></exception>
         [HttpPut("[action]")]
         public async Task<PostModel> UpdateMyPostTextAsync(PostModel postModel,
-            CancellationToken cancellationToken,
             [FromServices] LikedPostService likedPostService,
-            [FromServices] DislikedPostService dislikedPostService)
+            [FromServices] DislikedPostService dislikedPostService,
+            CancellationToken cancellationToken)
         {
             var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
             var postEntity = await this.postService

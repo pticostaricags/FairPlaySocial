@@ -23,7 +23,7 @@ namespace FairPlaySocial.SharedUI.Pages.Admin.Users
         private IEnumerable<string>? PropertyNames { get; set; }
         public ApplicationUserModel[]? FilteredApplicationUsers { get; private set; }
 
-        private FilteringSortingModel filteringSortingModel = new()
+        private readonly FilteringSortingModel filteringSortingModel = new()
         {
             Filtering = new()
             {

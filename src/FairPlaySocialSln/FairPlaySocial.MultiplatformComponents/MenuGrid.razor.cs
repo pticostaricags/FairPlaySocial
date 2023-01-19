@@ -24,7 +24,7 @@ namespace FairPlaySocial.MultiplatformComponents
             public CancellationTokenSource? CancellationTokenSource = null;
         }
 
-        private void OnMouseOut(MenuGridItem menuGridItem)
+        private static void OnMouseOut(MenuGridItem menuGridItem)
         {
             menuGridItem.CancellationTokenSource!.Cancel();
         }

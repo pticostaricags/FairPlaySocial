@@ -55,7 +55,6 @@ namespace FairPlaySocial.ClientServices.CustomLocalization.Api
             if (String.IsNullOrWhiteSpace(result))
             {
                 var singleTypeToCheck = typeof(T);
-                string typeFullName = singleTypeToCheck.FullName!;
                 var fields = singleTypeToCheck.GetFields(
                     BindingFlags.Public |
                     BindingFlags.Static |

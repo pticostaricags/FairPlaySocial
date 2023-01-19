@@ -27,7 +27,7 @@ namespace FairPlaySocial.ClientServices
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsJsonAsync(requestUrl, createLikedPostModel, cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<LikedPostModel>();
+            var result = await response.Content.ReadFromJsonAsync<LikedPostModel>(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -39,7 +39,7 @@ namespace FairPlaySocial.ClientServices
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsJsonAsync(requestUrl, createDislikedPostModel, cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<DislikedPostModel>();
+            var result = await response.Content.ReadFromJsonAsync<DislikedPostModel>(cancellationToken: cancellationToken);
             return result;
         }
 

@@ -17,7 +17,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Groups
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
-        private CreateGroupModel createGroupModel = new();
+        private readonly CreateGroupModel createGroupModel = new();
         private bool IsBusy { get; set; }
 
         private async Task OnValidSubmitAsync()
