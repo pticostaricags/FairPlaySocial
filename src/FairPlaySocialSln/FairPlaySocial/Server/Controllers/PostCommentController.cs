@@ -58,7 +58,7 @@ namespace FairPlaySocial.Server.Controllers
             {
                 throw new CustomValidationException("Ths platform does not allow to create replies to owned posts or comments");
             }
-            Post postCommentEntity = new Post()
+            Post postCommentEntity = new()
             {
                 PostTypeId = (byte)Common.Enums.PostType.Comment,
                 ReplyToPostId = postEntity.PostId,

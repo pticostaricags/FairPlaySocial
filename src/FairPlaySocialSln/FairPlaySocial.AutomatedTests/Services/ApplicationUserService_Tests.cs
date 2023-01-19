@@ -19,14 +19,14 @@ namespace FairPlaySocial.AutomatedTests.Services
         {
             var dbContext = base.BuildFairPlaySocialDatabaseContext();
             dbContext.ApplicationUser.RemoveRange();
-            await dbContext.SaveChangesAsync(base._cancellationToken);
+            await dbContext.SaveChangesAsync(base.CancellationToken);
             var loggerFactory = 
             LoggerFactory.Create(configure => 
             {
             });
             var logger = loggerFactory.CreateLogger<ApplicationUserService>();
             ApplicationUserService applicationUserService = new(dbContext, logger);
-            DataAccess.Models.ApplicationUser testUser = new DataAccess.Models.ApplicationUser()
+            DataAccess.Models.ApplicationUser testUser = new()
             {
                 AzureAdB2cobjectId = Guid.NewGuid(),
                 EmailAddress = "tests@test.test",
@@ -34,7 +34,7 @@ namespace FairPlaySocial.AutomatedTests.Services
                 LastLogIn = DateTimeOffset.UtcNow
             };
             await applicationUserService.CreateApplicationUserAsync(
-                testUser, base._cancellationToken);
+                testUser, base.CancellationToken);
             var createdUser = await dbContext.ApplicationUser
                 .SingleOrDefaultAsync(p => p.EmailAddress == testUser.EmailAddress);
             Assert.IsNotNull(createdUser);

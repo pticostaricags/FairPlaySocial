@@ -9,31 +9,19 @@ namespace FairPlaySocial.Services.Utils
     /// </summary>
     public static partial class ExpressionUtils
     {
-        private static string ConvertComparisonOperatorToString(ComparisonOperator comparison)
+        private static string ConvertComparisonOperatorToString(ComparisonOperator comparison) => comparison switch
         {
-            switch (comparison)
-            {
-                case ComparisonOperator.Equals:
-                    return "==";
-                case ComparisonOperator.NotEquals:
-                    return "!=";
-                case ComparisonOperator.GreaterThan:
-                    return ">";
-                case ComparisonOperator.LessThan:
-                    return "<";
-                case ComparisonOperator.LessThanOrEqual:
-                    return "<=";
-                case ComparisonOperator.GreaterThanOrEqual:
-                    return ">=";
-                case ComparisonOperator.Contains:
-                    return "Contains";
-                case ComparisonOperator.StartsWith:
-                    return "StartsWith";
-                case ComparisonOperator.EndsWith:
-                    return "EndsWith";
-            }
-            throw new CustomValidationException($"Invalid comparison operator: {comparison}");
-        }
+            ComparisonOperator.Equals => "==",
+            ComparisonOperator.NotEquals => "!=",
+            ComparisonOperator.GreaterThan => ">",
+            ComparisonOperator.LessThan => "<",
+            ComparisonOperator.LessThanOrEqual => "<=",
+            ComparisonOperator.GreaterThanOrEqual => ">=",
+            ComparisonOperator.Contains => "Contains",
+            ComparisonOperator.StartsWith => "StartsWith",
+            ComparisonOperator.EndsWith => "EndsWith",
+            _ => throw new CustomValidationException($"Invalid comparison operator: {comparison}"),
+        };
         public static Expression<Func<T, bool>> BuildPredicate<T>(string propertyName,
             ComparisonOperator comparison, string value)
         {
@@ -43,30 +31,17 @@ namespace FairPlaySocial.Services.Utils
             return Expression.Lambda<Func<T, bool>>(body, parameter);
         }
 
-        private static Expression MakeComparison(Expression left, string comparison, string value)
+        private static Expression MakeComparison(Expression left, string comparison, string value) => comparison switch
         {
-            switch (comparison)
-            {
-                case "==":
-                    return MakeBinary(ExpressionType.Equal, left, value);
-                case "!=":
-                    return MakeBinary(ExpressionType.NotEqual, left, value);
-                case ">":
-                    return MakeBinary(ExpressionType.GreaterThan, left, value);
-                case ">=":
-                    return MakeBinary(ExpressionType.GreaterThanOrEqual, left, value);
-                case "<":
-                    return MakeBinary(ExpressionType.LessThan, left, value);
-                case "<=":
-                    return MakeBinary(ExpressionType.LessThanOrEqual, left, value);
-                case "Contains":
-                case "StartsWith":
-                case "EndsWith":
-                    return Expression.Call(MakeString(left), comparison, Type.EmptyTypes, Expression.Constant(value, typeof(string)));
-                default:
-                    throw new NotSupportedException($"Invalid comparison operator '{comparison}'.");
-            }
-        }
+            "==" => MakeBinary(ExpressionType.Equal, left, value),
+            "!=" => MakeBinary(ExpressionType.NotEqual, left, value),
+            ">" => MakeBinary(ExpressionType.GreaterThan, left, value),
+            ">=" => MakeBinary(ExpressionType.GreaterThanOrEqual, left, value),
+            "<" => MakeBinary(ExpressionType.LessThan, left, value),
+            "<=" => MakeBinary(ExpressionType.LessThanOrEqual, left, value),
+            "Contains" or "StartsWith" or "EndsWith" => Expression.Call(MakeString(left), comparison, Type.EmptyTypes, Expression.Constant(value, typeof(string))),
+            _ => throw new NotSupportedException($"Invalid comparison operator '{comparison}'."),
+        };
 
         private static Expression MakeString(Expression source)
         {

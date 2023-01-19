@@ -17,7 +17,7 @@ namespace FairPlaySocial.Services
     public class VisitorTrackingService
     {
         private IHttpContextAccessor HttpContextAccessor { get; }
-        private FairPlaySocialDatabaseContext fairPlaySocialDatabaseContext { get; }
+        private FairPlaySocialDatabaseContext FairPlaySocialDatabaseContext { get; }
         private IpStackService IpStackService { get; }
         private IpDataService IpDataService { get; }
 
@@ -26,7 +26,7 @@ namespace FairPlaySocial.Services
             IpStackService ipStackService, IpDataService ipDataService)
         {
             this.HttpContextAccessor = httpContextAccessor;
-            this.fairPlaySocialDatabaseContext = fairPlaySocialDatabaseContext;
+            this.FairPlaySocialDatabaseContext = fairPlaySocialDatabaseContext;
             this.IpStackService = ipStackService;
             this.IpDataService = ipDataService;
         }
@@ -48,20 +48,20 @@ namespace FairPlaySocial.Services
                 string country = string.Empty;
                 try
                 {
-                    var ipGeoLocationInfo = await IpDataService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
+                    var ipGeoLocationInfo = await IpDataService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress, cancellationToken);
                     //var ipGeoLocationInfo = await IpStackService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
                     country = ipGeoLocationInfo.country_name;
                 }
                 catch (Exception ex) 
                 {
-                    string message = $"IpDataService.GetIpGeoLocationInfoAsync failed for Ip: {parsedIpAddress}. Error: {ex.ToString()}";
+                    string message = $"IpDataService.GetIpGeoLocationInfoAsync failed for Ip: {parsedIpAddress}. Error: {ex}";
                     throw new Exception(message, ex);
                 }
                 var host = httpContext.Request.Host.Value;
                 var userAgent = httpContext.Request.Headers["User-Agent"].First();
                 ApplicationUser? userEntity = null;
                 if (!String.IsNullOrWhiteSpace(visitorTrackingModel.UserAzureAdB2cObjectId))
-                    userEntity = await this.fairPlaySocialDatabaseContext
+                    userEntity = await this.FairPlaySocialDatabaseContext
                         .ApplicationUser
                         .SingleOrDefaultAsync(p => 
                         p.AzureAdB2cobjectId.ToString() == 
@@ -78,9 +78,9 @@ namespace FairPlaySocial.Services
                     VisitedUrl = visitorTrackingModel.VisitedUrl,
                     SessionId = visitorTrackingModel.SessionId
                 };
-                await this.fairPlaySocialDatabaseContext.VisitorTracking
+                await this.FairPlaySocialDatabaseContext.VisitorTracking
                     .AddAsync(visitedPage, cancellationToken:cancellationToken);
-                await this.fairPlaySocialDatabaseContext
+                await this.FairPlaySocialDatabaseContext
                     .SaveChangesAsync(cancellationToken:cancellationToken);
                 return visitedPage;
             }
@@ -88,13 +88,13 @@ namespace FairPlaySocial.Services
             {
                 try
                 {
-                    await this.fairPlaySocialDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                    await this.FairPlaySocialDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
                     {
                         FullException = ex.ToString(),
                         Message = ex.Message,
                         StackTrace = ex.StackTrace
                     }, cancellationToken: cancellationToken);
-                    await this.fairPlaySocialDatabaseContext
+                    await this.FairPlaySocialDatabaseContext
                         .SaveChangesAsync(cancellationToken:cancellationToken);
                 }
                 catch (Exception)
@@ -107,12 +107,12 @@ namespace FairPlaySocial.Services
 
         public async Task<VisitorTracking?> UpdateVisitTimeElapsedAsync(long visitorTrackingId, CancellationToken cancellationToken)
         {
-            var entity = await this.fairPlaySocialDatabaseContext.VisitorTracking
+            var entity = await this.FairPlaySocialDatabaseContext.VisitorTracking
                 .SingleOrDefaultAsync(p => p.VisitorTrackingId == visitorTrackingId, cancellationToken);
             if (entity != null)
             {
                 entity.LastTrackedDateTime = DateTimeOffset.UtcNow;
-                await fairPlaySocialDatabaseContext.SaveChangesAsync(cancellationToken);
+                await FairPlaySocialDatabaseContext.SaveChangesAsync(cancellationToken);
             }
             return entity;
         }

@@ -41,7 +41,7 @@ namespace FairPlaySocial.ClientServices
                 }
                 catch (Exception)
                 {
-                    string errorText = await response.Content.ReadAsStringAsync();
+                    string errorText = await response.Content.ReadAsStringAsync(cancellationToken);
                     string reasonPhrase = response.ReasonPhrase!;
                     throw new CustomValidationException($"{reasonPhrase} - {errorText}");
                 }

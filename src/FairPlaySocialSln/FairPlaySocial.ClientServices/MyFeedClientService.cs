@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FairPlaySocial.ClientServices
@@ -48,9 +49,9 @@ namespace FairPlaySocial.ClientServices
             var requestUrl = $"api/MyFeed/GetMyHomeFeed" +
                 $"?{nameof(pageRequestModel.PageNumber)}={pageRequestModel.PageNumber}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
-            var response = await authorizedHttpClient.GetAsync(requestUrl);
+            var response = await authorizedHttpClient.GetAsync(requestUrl, cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -61,9 +62,9 @@ namespace FairPlaySocial.ClientServices
                 $"?{nameof(pageRequestModel.PageNumber)}={pageRequestModel.PageNumber}" +
                 $"&{nameof(groupId)}={groupId}";
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
-            var response = await authorizedHttpClient.GetAsync(requestUrl);
+            var response = await authorizedHttpClient.GetAsync(requestUrl, cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>();
+            var result = await response.Content.ReadFromJsonAsync<PagedItems<PostModel>>(cancellationToken: cancellationToken);
             return result;
         }
     }

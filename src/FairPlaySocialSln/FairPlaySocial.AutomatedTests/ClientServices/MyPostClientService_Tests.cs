@@ -213,14 +213,14 @@ namespace FairPlaySocial.AutomatedTests.ClientServices
                 PageNumber = 1
             }, CancellationToken.None);
             Assert.IsNotNull(myHomeFeed);
-            Assert.IsNotNull(myHomeFeed.Items!.Where(p => p.Text == postText).Count() > 0);
+            Assert.IsNotNull(myHomeFeed.Items!.Where(p => p.Text == postText).Any());
         }
 
         private static async Task<byte[]> GetTestImageBytes()
         {
             var imageStreamFullName = "FairPlaySocial.AutomatedTests.Resources.Images.TestImage1.jpg";
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(imageStreamFullName);
-            MemoryStream memoryStream = new MemoryStream();
+            MemoryStream memoryStream = new();
             await stream!.CopyToAsync(memoryStream);
             var bytes = memoryStream.ToArray();
             return bytes;

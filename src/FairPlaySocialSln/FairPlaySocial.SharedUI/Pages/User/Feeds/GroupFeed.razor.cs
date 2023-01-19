@@ -15,8 +15,6 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
         [Parameter]
         public long? GroupId { get; set; }
         [Inject]
-        private HttpClientService? HttpClientService { get; set; }
-        [Inject]
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }

@@ -17,8 +17,6 @@ namespace FairPlaySocial.SharedUI.Pages.User.Feeds
     public partial class HomeFeed
     {
         [Inject]
-        private HttpClientService? HttpClientService { get; set; }
-        [Inject]
         private MyFeedClientService? MyFeedClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }

@@ -94,7 +94,7 @@ namespace FairPlaySocial.Server.Controllers
             {
                 throw new CustomValidationException($"User is already a member of Group with id: {groupId}");
             }
-            GroupMember groupMemberEntity = new GroupMember()
+            GroupMember groupMemberEntity = new()
             {
                 GroupId = groupId,
                 MemberApplicationUserId = this.currentUserProvider.GetApplicationUserId()

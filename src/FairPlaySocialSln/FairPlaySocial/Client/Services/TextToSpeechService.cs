@@ -8,24 +8,24 @@ namespace FairPlaySocial.Client.Services
     public class TextToSpeechService : ITextToSpeechService
     {
         [Inject]
-        private IJSRuntime? _jsRuntime { get; set; }
+        private IJSRuntime? JsRuntime { get; set; }
         public string? Locale { get; set; } = Constants.Locales.DefaultLocale;
 
         public TextToSpeechService(IJSRuntime? jsRuntime)
         {
-            this._jsRuntime = jsRuntime;
+            this.JsRuntime = jsRuntime;
         }
         public async Task SpeakToDefaultSpeakersAsync(string text, CancellationToken cancellationToken)
         {
-            this.Locale =await this._jsRuntime!.InvokeAsync<string>("blazorCulture.get");
+            this.Locale =await this.JsRuntime!.InvokeAsync<string>("blazorCulture.get");
             if (Locale == "undefined")
                 this.Locale = Constants.Locales.DefaultLocale;
-            await this._jsRuntime!.InvokeVoidAsync("speakToDefaultSpeakersAsync", text, this.Locale);
+            await this.JsRuntime!.InvokeVoidAsync("speakToDefaultSpeakersAsync", text, this.Locale);
         }
 
         public async Task CancelRunningAudioAsync()
         {
-            await this._jsRuntime!.InvokeVoidAsync("cancelRunningAudio");
+            await this.JsRuntime!.InvokeVoidAsync("cancelRunningAudio");
         }
     }
 }

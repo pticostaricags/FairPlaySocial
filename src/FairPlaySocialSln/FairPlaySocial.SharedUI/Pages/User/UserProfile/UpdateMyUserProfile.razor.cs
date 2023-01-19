@@ -18,7 +18,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserProfile
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
-        private CreateUserProfileModel createUserProfileModel = new();
+        private readonly CreateUserProfileModel createUserProfileModel = new();
         private bool IsBusy { get; set; }
 
         protected override async Task OnInitializedAsync()

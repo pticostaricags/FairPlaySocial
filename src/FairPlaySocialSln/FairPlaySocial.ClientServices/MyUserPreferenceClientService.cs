@@ -25,7 +25,7 @@ namespace FairPlaySocial.ClientServices
             var authorizedHttpClient = this._httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PutAsJsonAsync(requestUrl, createUserPreferenceModel, cancellationToken);
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadFromJsonAsync<UserPreferenceModel>();
+            var result = await response.Content.ReadFromJsonAsync<UserPreferenceModel>(cancellationToken: cancellationToken);
             return result;
         }
 

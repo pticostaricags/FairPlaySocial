@@ -13,11 +13,11 @@ namespace FairPlaySocial.AutomatedTests.Services
     public class ServicesTestsBase
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new();
-        protected CancellationToken _cancellationToken => _cancellationTokenSource.Token;
+        protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
         protected FairPlaySocialDatabaseContext BuildFairPlaySocialDatabaseContext()
         {
             DbContextOptionsBuilder<FairPlaySocialDatabaseContext>
-                optionsBuilder = new DbContextOptionsBuilder<FairPlaySocialDatabaseContext>();
+                optionsBuilder = new();
             optionsBuilder.UseInMemoryDatabase(Constants.Assemblies.MainAppAssemblyName);
             return new FairPlaySocialDatabaseContext(optionsBuilder.Options, new TestsCurrentUserProvider());
         }

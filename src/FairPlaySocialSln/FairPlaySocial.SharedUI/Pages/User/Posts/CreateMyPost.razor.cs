@@ -29,7 +29,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private IGeoLocationService? GeoLocationService { get; set; }
-        private CreatePostModel createPostModel = new CreatePostModel()
+        private readonly CreatePostModel createPostModel = new()
         {
 
             Photo = new()

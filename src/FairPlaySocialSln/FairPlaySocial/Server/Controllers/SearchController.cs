@@ -50,10 +50,12 @@ namespace FairPlaySocial.Server.Controllers
         {
             var query = this.searchService.SearchUserProfiles(searchTerm, trackEntities: false)
                 .Include(p=>p.ApplicationUser);
-            PagedItems<UserProfileModel> result = new PagedItems<UserProfileModel>();
-            result.PageSize = Constants.Pagination.DefaultPageSize;
-            result.PageNumber = pageRequestModel.PageNumber;
-            result.TotalItems = await query.CountAsync(cancellationToken);
+            PagedItems<UserProfileModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
             result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
             result.Items = await query.OrderByDescending(p => p.ApplicationUser.FullName)
                 .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
@@ -77,10 +79,12 @@ namespace FairPlaySocial.Server.Controllers
             CancellationToken cancellationToken)
         {
             var query = this.searchService.SearchPosts(searchTerm, trackEntities: false);
-            PagedItems<PostModel> result = new PagedItems<PostModel>();
-            result.PageSize = Constants.Pagination.DefaultPageSize;
-            result.PageNumber = pageRequestModel.PageNumber;
-            result.TotalItems = await query.CountAsync(cancellationToken);
+            PagedItems<PostModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
             result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
             result.Items = await query.OrderByDescending(p => p.PostId)
                 .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
@@ -104,10 +108,12 @@ namespace FairPlaySocial.Server.Controllers
             CancellationToken cancellationToken)
         {
             var query = this.searchService.SearchGroups(searchTerm, trackEntities: false);
-            PagedItems<GroupModel> result = new PagedItems<GroupModel>();
-            result.PageSize = Constants.Pagination.DefaultPageSize;
-            result.PageNumber = pageRequestModel.PageNumber;
-            result.TotalItems = await query.CountAsync(cancellationToken);
+            PagedItems<GroupModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
             result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
             result.Items = await query.OrderByDescending(p => p.GroupId)
                 .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)

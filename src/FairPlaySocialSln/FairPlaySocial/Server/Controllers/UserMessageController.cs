@@ -24,7 +24,7 @@ namespace FairPlaySocial.Server.Controllers
     [Authorize(Roles = Constants.Roles.User)]
     public class UserMessageController : ControllerBase
     {
-        private ICurrentUserProvider currentUserProvider;
+        private readonly ICurrentUserProvider currentUserProvider;
         private readonly IMapper mapper;
         private readonly IHubContext<UserMessageNotificationHub, IUserMessageNotificationHub> hubContext;
         private readonly UserMessageService userMessageService;

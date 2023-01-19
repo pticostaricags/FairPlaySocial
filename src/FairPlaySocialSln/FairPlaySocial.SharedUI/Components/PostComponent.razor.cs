@@ -50,8 +50,8 @@ namespace FairPlaySocial.SharedUI.Components
         private bool ShowPostDeleteModal { get; set; } = false;
         private bool ShowReShareModal { get; set; } = false;
         private bool ShowPostCommentsModal { get; set; } = false;
-        private CreateSharedPostModel? createSharedPostModel { get; set; } = null;
-        private CreatePostCommentModel? createPostCommentModel { get; set; } = null;
+        private CreateSharedPostModel? CreateSharedPostModel { get; set; } = null;
+        private CreatePostCommentModel? CreatePostCommentModel { get; set; } = null;
         private bool ShowShareModal { get; set; }
         private async Task OnPostAuthorSelectedAsync()
         {
@@ -243,7 +243,7 @@ namespace FairPlaySocial.SharedUI.Components
 
         private void ReSharePost()
         {
-            this.createSharedPostModel = new CreateSharedPostModel()
+            this.CreateSharedPostModel = new CreateSharedPostModel()
             {
                 CreatedFromPostId = this.PostModel!.PostId,
                 GroupId = this.PostModel!.GroupId
@@ -253,7 +253,7 @@ namespace FairPlaySocial.SharedUI.Components
 
         private void AddCommentToPost(PostModel? postModel)
         {
-            this.createPostCommentModel = new()
+            this.CreatePostCommentModel = new()
             {
                 PostId = postModel!.PostId
             };
@@ -306,7 +306,7 @@ namespace FairPlaySocial.SharedUI.Components
         private void HidePostReShareModal()
         {
             this.ShowReShareModal = false;
-            this.createSharedPostModel = null;
+            this.CreateSharedPostModel = null;
         }
 
         private void HidePostShareModal()
@@ -320,7 +320,7 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.MyPostClientService!
-                    .CreateSharedPostAsync(this.createSharedPostModel!, base.CancellationToken);
+                    .CreateSharedPostAsync(this.CreateSharedPostModel!, base.CancellationToken);
                 await ToastService!
                     .ShowSuccessMessageAsync("Post has been Re-Shared", base.CancellationToken);
                 this.HidePostReShareModal();
@@ -342,7 +342,7 @@ namespace FairPlaySocial.SharedUI.Components
             {
                 this.IsBusy = true;
                 await this.PostCommentClientService!
-                    .CreatePostCommentAsync(this.createPostCommentModel!, base.CancellationToken);
+                    .CreatePostCommentAsync(this.CreatePostCommentModel!, base.CancellationToken);
                 await ToastService!
                     .ShowSuccessMessageAsync("Comment has been added", base.CancellationToken);
                 this.HidePostReShareModal();

@@ -16,7 +16,6 @@ namespace FairPlaySocial.Client.Services
         {
             var window = await JSRuntime.Window();
             var navigator = await window.Navigator();
-            var geoLocation = navigator.Geolocation;
             var currentPosition = await navigator.Geolocation.GetCurrentPosition();
             if (currentPosition.Error != null)
             {

@@ -26,7 +26,8 @@ namespace FairPlaySocial.Services
                             text=text,
                         }
                     }
-                });
+                },
+                cancellationToken);
             return result.documents.First().detectedLanguage;
         }
 
@@ -45,7 +46,8 @@ namespace FairPlaySocial.Services
                         text = text
                     }
                 }
-            });
+            },
+            cancellationToken: cancellationToken);
             var result = response.documents?.SelectMany(p => p.keyPhrases);
             return result;
         }

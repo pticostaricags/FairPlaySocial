@@ -12,7 +12,7 @@ namespace FairPlaySocial.ClientServices
 {
     public class MyPostClientService
     {
-        private HttpClientService httpClientService;
+        private readonly HttpClientService httpClientService;
 
         public MyPostClientService(HttpClientService httpClientService)
         {
@@ -53,7 +53,7 @@ namespace FairPlaySocial.ClientServices
             var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PutAsJsonAsync(requestUrl, postModel, cancellationToken: cancellationToken);
             await response.CustomEnsureSuccessStatusCodeAsync();
-            var result = await response.Content.ReadFromJsonAsync<PostModel>();
+            var result = await response.Content.ReadFromJsonAsync<PostModel>(cancellationToken: cancellationToken);
             return result;
         }
     }

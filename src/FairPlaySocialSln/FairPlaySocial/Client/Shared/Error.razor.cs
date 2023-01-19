@@ -9,7 +9,7 @@ namespace FairPlaySocial.Client.Shared
         public RenderFragment? ChildContent { get; set; }
         [Inject]
         private ClientSideErrorLogClientService? ClientSideErrorLogClientService { get; set; }
-        private static List<Exception> ExceptionsList = new();
+        private static readonly List<Exception> ExceptionsList = new();
 
         public async Task ProcessErrorAsync(Exception ex, 
             CancellationToken cancellationToken)
@@ -36,6 +36,6 @@ namespace FairPlaySocial.Client.Shared
             }
         }
 
-        public List<Exception> GetExceptionsList() => ExceptionsList;
+        public static List<Exception> GetExceptionsList() => ExceptionsList;
     }
 }
