@@ -3,7 +3,7 @@
 
 <LoadingIndicator IsLoading="true"></LoadingIndicator>
 
-<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" OnLogOutSucceeded="OnLogOutSucceeded">
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded">
     <CompletingLoggingIn>
         <h1>Completing Logging In</h1>
     </CompletingLoggingIn>
@@ -37,10 +37,5 @@
     {
         var state = await AuthenticationStateTask!;
         var claims = state.User.Claims.ToList();;
-    }
-
-    private void OnLogOutSucceeded(RemoteAuthenticationState remoteAuthenticationState)
-    {
-        remoteAuthenticationState.ReturnUrl = "/";
     }
 }
