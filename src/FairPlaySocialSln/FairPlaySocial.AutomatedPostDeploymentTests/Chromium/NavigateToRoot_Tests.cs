@@ -32,8 +32,8 @@ namespace FairPlaySocial.AutomatedPostDeploymentTests.Chromium
 
             await page.GetByRole(AriaRole.Button, new() { NameString = "Sign in" }).ClickAsync();
             await page.GetByRole(AriaRole.Button, new() { Name = "Log Out"}).ClickAsync();
-            var loggedoutIndicatorLocator = page.GetByRole(AriaRole.Heading, new() { NameString = "Log Out Succeeded" });;
-            await Assertions.Expect(loggedoutIndicatorLocator).ToHaveTextAsync("Log Out Succeeded");
+            var loggedoutIndicatorLocator = page.GetByRole(AriaRole.Button, new() { NameString = "Log In" });;
+            await Assertions.Expect(loggedoutIndicatorLocator).ToHaveTextAsync("Log In");
         }
 
         [TestMethod]
