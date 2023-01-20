@@ -11,6 +11,7 @@
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="css/loading-indicator.css" rel="stylesheet" />
     <link href="FairPlaySocial.Client.styles.css" rel="stylesheet" />
     <link id="selectedThemeLink" href="_content/FairPlaySocial.SharedUI/themes/theme1/theme.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -21,7 +22,13 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="overlay"></div>
+        <div class="spanner">
+            <div class="loader"></div>
+            <p>Initializing Web App</p>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
