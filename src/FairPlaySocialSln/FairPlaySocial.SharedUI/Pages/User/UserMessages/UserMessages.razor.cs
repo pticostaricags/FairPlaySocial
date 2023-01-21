@@ -23,6 +23,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
         [Inject]
         private SearchClientService? SearchClientService { get; set; }
         [Inject]
+        private UserMessageClientService? UserMessageClientService { get; set; }
+        [Inject]
         private IToastService? ToastService { get; set; }
         private bool IsBusy { get; set; } = false;
         private UserMessageModel[]? UserMessageModels { get; set; }
@@ -62,10 +64,12 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
         private async Task OnSelectedUserProfileChangedAsync(long? selectedApplicationUserId)
         {
             await Task.Yield();
-
             this.SelectedUserProfile!.ApplicationUserId = null;
+            this.UserMessageModels = null;
             StateHasChanged();
             this.SelectedUserProfile!.ApplicationUserId = selectedApplicationUserId;
+            this.UserMessageModels = await this.UserMessageClientService!
+                .GetMyMessagesWithUserAsync(selectedApplicationUserId!.Value, base.CancellationToken);
             StateHasChanged();
         }
 

@@ -14,7 +14,18 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
         /// </summary>
         public UserMessageProfile()
         {
-            CreateMap<UserMessage, UserMessageModel>();
+            CreateMap<UserMessage, UserMessageModel>()
+                .AfterMap((source, dest) => 
+                {
+                    if (source.FromApplicationUser != null)
+                    {
+                        dest.FromApplicationUserFullName = source.FromApplicationUser.FullName;
+                    }
+                    if (source.ToApplicationUser != null)
+                    {
+                        dest.ToApplicationUserFullName = source.ToApplicationUser.FullName;
+                    }
+                });
             CreateMap<UserMessageModel, UserMessage>();
             CreateMap<CreateUserMessageModel, UserMessage>();
         }
