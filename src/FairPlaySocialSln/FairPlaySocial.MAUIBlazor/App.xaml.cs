@@ -21,13 +21,14 @@ public partial class App : Application
         //Check https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-xamarin-ios-considerations#enable-keychain-access
         b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
                         b2CConstants.ClientId)
-            .WithIosKeychainSecurityGroup("com.microsoft.adalcache")
+                        .WithIosKeychainSecurityGroup("com.microsoft.adalcache")
                         .WithB2CAuthority(b2CConstants.Authority)
                         .WithRedirectUri(b2CConstants.RedirectUri)
                         .Build();
-#else
+#elif MACCATALYST
         b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
                 b2CConstants.ClientId)
+                .WithIosKeychainSecurityGroup("com.microsoft.adalcache")
                 .WithB2CAuthority(b2CConstants.Authority)
                 .WithRedirectUri(b2CConstants.RedirectUri)
                 .Build();
