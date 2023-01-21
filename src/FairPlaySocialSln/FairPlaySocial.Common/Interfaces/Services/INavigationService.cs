@@ -18,5 +18,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToSearchPosts(string searchTerm);
         void NavigateToSearchGroups(string searchTerm);
         void NavigateToGroupFeed(long groupId);
+        void NavigateToUserMessages();
     }
 }

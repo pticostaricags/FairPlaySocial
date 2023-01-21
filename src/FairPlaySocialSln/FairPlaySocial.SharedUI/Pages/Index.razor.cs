@@ -106,6 +106,15 @@ namespace FairPlaySocial.SharedUI.Pages
                                     .NavigateToCreateMyGroup()),
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![CreateMyGroupTextKey]
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-folder-plus",
+                                    OnClick= new EventCallback(this, ()=>
+                                    this.NavigationService!
+                                    .NavigateToUserMessages()),
+                                    ShowTitleBelowIcon=true,
+                                    Title=Localizer![UserMessagesTextKey]
                                 }
                             };
                         }
@@ -139,6 +148,8 @@ namespace FairPlaySocial.SharedUI.Pages
         public const string HomeFeedTextKey = "HomeFeedText";
         [ResourceKey(defaultValue: "Create My Group")]
         public const string CreateMyGroupTextKey = "CreateMyGroupText";
+        [ResourceKey(defaultValue: "User Messages")]
+        public const string UserMessagesTextKey = "UserMessagesText";
         #endregion Resource Keys
     }
 }
