@@ -17,12 +17,20 @@ public partial class App : Application
                         .WithB2CAuthority(b2CConstants.Authority)
                         .WithParentActivityOrWindow(() => ParentWindow)
                         .Build();
-#else
+#elif IOS
+        //Check https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-xamarin-ios-considerations#enable-keychain-access
         b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
                         b2CConstants.ClientId)
+            .WithIosKeychainSecurityGroup("com.microsoft.adalcache")
                         .WithB2CAuthority(b2CConstants.Authority)
                         .WithRedirectUri(b2CConstants.RedirectUri)
                         .Build();
+#else
+        b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
+                b2CConstants.ClientId)
+                .WithB2CAuthority(b2CConstants.Authority)
+                .WithRedirectUri(b2CConstants.RedirectUri)
+                .Build();
 #endif
 
         AppCenter.Start("9fd5a524-b775-4dba-8f37-9328f0c2f130", typeof(Analytics), typeof(Crashes));
