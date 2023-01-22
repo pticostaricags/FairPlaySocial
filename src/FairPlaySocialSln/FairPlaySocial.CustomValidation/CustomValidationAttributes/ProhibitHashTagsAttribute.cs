@@ -15,7 +15,7 @@ namespace FairPlaySocial.CustomValidation.CustomValidationAttributes
         {
             if (value != null)
             {
-                var hashTags = HashTagsRegex().Match(value!.ToString());
+                var hashTags = HashTagsRegex().Match(value!.ToString()!);
                 if (hashTags.Captures?.Count > 0)
                     return false;
             }

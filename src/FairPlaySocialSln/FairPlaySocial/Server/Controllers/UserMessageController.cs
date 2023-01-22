@@ -108,7 +108,7 @@ namespace FairPlaySocial.Server.Controllers
                         p.ToApplicationUserId == myApplicationUserId
                     )
                 )
-                .OrderByDescending(p => p.RowCreationDateTime)
+                .OrderBy(p => p.RowCreationDateTime)
                 .Select(p => this.mapper.Map<UserMessage, UserMessageModel>(p))
                 .ToArrayAsync(cancellationToken: cancellationToken);
             return result;

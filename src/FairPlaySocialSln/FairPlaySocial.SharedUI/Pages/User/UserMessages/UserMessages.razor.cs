@@ -66,8 +66,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
                 this.UserMessageModels = null;
                 StateHasChanged();
                 this.SelectedUserProfile!.ApplicationUserId = selectedApplicationUserId;
-                this.UserMessageModels = await this.UserMessageClientService!
-                    .GetMyMessagesWithUserAsync(selectedApplicationUserId!.Value, base.CancellationToken);
+                await LoadMessagesWithUserAsync();
                 StateHasChanged();
             }
             catch (Exception ex)
@@ -81,6 +80,14 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
             }
         }
 
+        private async Task LoadMessagesWithUserAsync()
+        {
+            this.UserMessageModels =
+                await this.UserMessageClientService!
+                .GetMyMessagesWithUserAsync(this.SelectedUserProfile!.ApplicationUserId!.Value,
+                base.CancellationToken);
+        }
+
         private async Task OnMessageSentAsync()
         {
             try
@@ -88,6 +95,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
                 this.IsBusy = true;
                 await this.ToastService!
                     .ShowSuccessMessageAsync("Message has been sent", base.CancellationToken);
+                await LoadMessagesWithUserAsync();
             }
             catch (Exception ex)
             {

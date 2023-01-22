@@ -36,7 +36,7 @@
         {
             <Card>
                 <CardHeader>
-                    <AudibleLabel MakeTextBold="true" ItemText="@singleMessage.FromApplicationUserFullName"></AudibleLabel>
+                    <AudibleLabel MakeTextBold="true" ItemText="@($"{singleMessage.FromApplicationUserFullName} -> {singleMessage.ToApplicationUserFullName}")"></AudibleLabel>
                 </CardHeader>
                 <CardBody>
                     <AudibleLabel ItemText="@singleMessage.Message"></AudibleLabel>
@@ -47,6 +47,6 @@
 }
 @if (this.SelectedUserProfile!.ApplicationUserId != null)
 {
-    <MessageComposer ToApplicationUserId="@this.SelectedUserProfile.ApplicationUserId"
+<MessageComposer ToApplicationUserId="@this.SelectedUserProfile!.ApplicationUserId"
                  OnMessageSent="OnMessageSentAsync"></MessageComposer>
 }
