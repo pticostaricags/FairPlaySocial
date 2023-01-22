@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using static FairPlaySocial.Common.Global.Constants;
 
 namespace FairPlaySocial.Server.Controllers
@@ -77,6 +78,39 @@ namespace FairPlaySocial.Server.Controllers
                     Message = createUserMessageModel.Message
                 });
             var result = this.mapper.Map<UserMessage, UserMessageModel>(entity);
+            return result;
+        }
+
+        /// <summary>
+        /// Get message between the logged in user and the user with the specified id
+        /// </summary>
+        /// <param name="applicationUserId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public async Task<UserMessageModel[]?> GetMyMessagesWithUserAsync(
+            long applicationUserId, CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var result = await
+            this.userMessageService.GetAllUserMessage(trackEntities: false, cancellationToken: cancellationToken)
+            .Include(p=>p.ToApplicationUser)
+            .Include(p=>p.FromApplicationUser)
+                .Where
+                (p =>
+                    (
+                        p.FromApplicationUserId == myApplicationUserId &&
+                        p.ToApplicationUserId == applicationUserId
+                    )
+                    ||
+                    (
+                        p.FromApplicationUserId == applicationUserId &&
+                        p.ToApplicationUserId == myApplicationUserId
+                    )
+                )
+                .OrderBy(p => p.RowCreationDateTime)
+                .Select(p => this.mapper.Map<UserMessage, UserMessageModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
     }

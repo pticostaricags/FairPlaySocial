@@ -37,6 +37,7 @@ namespace FairPlaySocial.SharedUI.Components
                 this.IsBusy = true;
                 await UserMessageClientService!.CreateUserMessageAsync(this.createUserMessageModel,
                     base.CancellationToken);
+                this.createUserMessageModel.Message = string.Empty;
                 await this.OnMessageSent.InvokeAsync();
             }
             catch (Exception ex)

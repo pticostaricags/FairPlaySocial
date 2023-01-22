@@ -15,6 +15,8 @@ namespace FairPlaySocial.MultiplatformComponents
         [Parameter]
         [EditorRequired]
         public string? ItemText { get; set; }
+        [Parameter]
+        public bool MakeTextBold { get; set; } = false;
         [Inject]
         private ITextToSpeechService? TextToSpeechService { get; set; }
         [Inject]

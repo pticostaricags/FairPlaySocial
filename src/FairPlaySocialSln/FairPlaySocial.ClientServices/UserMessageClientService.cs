@@ -30,5 +30,17 @@ namespace FairPlaySocial.ClientServices
             var result = await response.Content.ReadFromJsonAsync<UserMessageModel>(cancellationToken: cancellationToken);
             return result;
         }
+
+        public async Task<UserMessageModel[]?> GetMyMessagesWithUserAsync(
+            long applicationUserId, CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/UserMessage/GetMyMessagesWithUser" +
+                $"?{nameof(applicationUserId)}={applicationUserId}";
+            var authorizedHttpClient = this.httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.GetAsync(requestUrl, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<UserMessageModel[]>(cancellationToken: cancellationToken);
+            return result;
+        }
     }
 }

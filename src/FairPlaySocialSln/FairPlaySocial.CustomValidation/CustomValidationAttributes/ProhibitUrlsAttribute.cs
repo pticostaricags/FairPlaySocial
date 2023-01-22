@@ -15,7 +15,7 @@ namespace FairPlaySocial.CustomValidation.CustomValidationAttributes
         {
             if (value != null)
             {
-                var urls = UrlsPatternRegex().Match(value!.ToString());
+                var urls = UrlsPatternRegex().Match(value!.ToString()!);
                 if (urls.Captures?.Count > 0)
                     return false;
             }

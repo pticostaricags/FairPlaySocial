@@ -1,0 +1,52 @@
+﻿@using FairPlaySocial.Models.UserProfile;
+@inherits CustomBaseComponent
+
+<h1>Messages</h1>
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<EditForm Model="this.searchModel" OnValidSubmit="SearchUserAsync">
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <AudibleLabel ItemText="Search User"></AudibleLabel>
+        <InputText class="@ThemeConfiguration.GenericControls.DefaultCss"
+                   @bind-Value="@this.searchModel.SearchTerm"></InputText>
+        <ValidationMessage For="@( () => this.searchModel.SearchTerm)"></ValidationMessage>
+        <button type="submit" class="@ThemeConfiguration.Buttons.SecondaryButtonCss">Search User</button>
+    </div>
+</EditForm>
+
+@if (this.FilteredUserProfiles != null)
+{
+    <InputSelect class="@ThemeConfiguration.Selects.DefaultCss"
+             Value="@this.SelectedUserProfile!.ApplicationUserId"
+             ValueExpression="@( () => this.SelectedUserProfile!.ApplicationUserId)"
+             ValueChanged="@( async (long? selectedApplicationUserId) => await OnSelectedUserProfileChangedAsync(selectedApplicationUserId))">
+        <option value="">Select an User</option>
+        @foreach (var singleUserProfile in this.FilteredUserProfiles!.Items!)
+        {
+            <option value="@singleUserProfile.ApplicationUserId">@singleUserProfile.FullName</option>
+        }
+    </InputSelect>
+}
+
+@if (this.UserMessageModels != null)
+{
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        @foreach (var singleMessage in this.UserMessageModels)
+        {
+            <Card>
+                <CardHeader>
+                    <AudibleLabel MakeTextBold="true" ItemText="@($"{singleMessage.FromApplicationUserFullName} -> {singleMessage.ToApplicationUserFullName}")"></AudibleLabel>
+                </CardHeader>
+                <CardBody>
+                    <AudibleLabel ItemText="@singleMessage.Message"></AudibleLabel>
+                </CardBody>
+            </Card>
+        }
+    </div>
+}
+@if (this.SelectedUserProfile!.ApplicationUserId != null)
+{
+<MessageComposer ToApplicationUserId="@this.SelectedUserProfile!.ApplicationUserId"
+                 OnMessageSent="OnMessageSentAsync"></MessageComposer>
+}
