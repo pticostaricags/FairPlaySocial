@@ -70,6 +70,10 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
+      <CodesignKey>Apple Development: Created via API (BP3X66B6C8)</CodesignKey>
+      <CodesignProvision>VS: com.companyname.fairplaysocial Development</CodesignProvision>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -115,10 +119,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
-    </ItemGroup>
-    <ItemGroup>
-      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
+      <Folder Include="Resources\Images\" />
     </ItemGroup>
     <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
 
