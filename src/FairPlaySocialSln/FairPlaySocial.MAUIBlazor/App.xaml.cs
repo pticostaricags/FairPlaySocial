@@ -41,7 +41,7 @@ public partial class App : Application
     {
         AppCenter.Start("" +
             "ios=b1c8996d-c1e5-4ad7-ab93-b5dfb82e21c5;" +
-            "android-=9fd5a524-b775-4dba-8f37-9328f0c2f130;",
+            "android=9fd5a524-b775-4dba-8f37-9328f0c2f130;",
             typeof(Analytics), typeof(Crashes));
         AppCenter.LogLevel = Microsoft.AppCenter.LogLevel.Verbose;
     }
