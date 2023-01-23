@@ -19,6 +19,14 @@ namespace FairPlaySocial.Common.Interfaces.Services
         StartApp,
         LoadIndexPage,
         LoadHomeFeedPage,
-        LoadGroupFeed
+        LoadGroupFeed,
+        LoadCreateGroupPage,
+        LoadCreatePostPage,
+        LoadSinglePostPage,
+        LoadSearchGroupsPage,
+        LoadSearchUserProfilesPage,
+        LoadUserMessagesPage,
+        LoadUpdateUserPreferencesPage,
+        LoadUpdateUserProfilePage
     }
 }

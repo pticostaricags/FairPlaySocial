@@ -26,6 +26,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         private MyGroupClientService? MyGroupClientService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private bool IsBusy { get; set; }
         private PagedItems<GroupModel>? Groups { get; set; }
 
@@ -33,6 +35,12 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         {
             PageNumber = 1
         };
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            AnalyticsService!.LogEvent(EventType.LoadSearchGroupsPage);
+        }
 
         protected async override Task OnParametersSetAsync()
         {

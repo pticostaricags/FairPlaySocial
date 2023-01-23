@@ -20,6 +20,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
         private UserMessageClientService? UserMessageClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private bool IsBusy { get; set; } = false;
         private UserMessageModel[]? UserMessageModels { get; set; }
         private PagedItems<UserProfileModel>? FilteredUserProfiles { get; set; }
@@ -29,6 +31,12 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserMessages
         {
             SearchType = SearchType.UserProfiles
         };
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            AnalyticsService!.LogEvent(EventType.LoadUserMessagesPage);
+        }
 
         private async Task SearchUserAsync()
         {

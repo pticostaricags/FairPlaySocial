@@ -17,15 +17,18 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserPreferences
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
-        private bool IsLoading { get; set; }
         [Inject]
         private UserPreferenceModel? MyUserPreferences { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
+        private bool IsLoading { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 IsLoading = true;
+                this.AnalyticsService!.LogEvent(EventType.LoadUpdateUserPreferencesPage);
                 var tmpUserPreferences = await this.MyUserPreferenceClientService!
                     .GetMyUserPreferencesAsync(base.CancellationToken);
                 this.MyUserPreferences!.EnableAudibleCuesInMobile = tmpUserPreferences!.EnableAudibleCuesInMobile;

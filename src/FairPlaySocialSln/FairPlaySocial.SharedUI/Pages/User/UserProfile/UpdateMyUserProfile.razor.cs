@@ -18,6 +18,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserProfile
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private readonly CreateUserProfileModel createUserProfileModel = new();
         private bool IsBusy { get; set; }
 
@@ -26,6 +28,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserProfile
             try
             {
                 this.IsBusy = true;
+                this.AnalyticsService!.LogEvent(EventType.LoadUpdateUserProfilePage);
                 var existenUserProfile = await this.MyUserProfileClientService!
                     .GetMyUserProfileAsync(base.CancellationToken);
                 this.createUserProfileModel.Bio = existenUserProfile.Bio;

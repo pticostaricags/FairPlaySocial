@@ -29,6 +29,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private INavigationService? NavigationService { get; set; }
         [Inject]
         private IGeoLocationService? GeoLocationService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private readonly CreatePostModel createPostModel = new()
         {
 
@@ -39,6 +41,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            AnalyticsService!.LogEvent(EventType.LoadCreatePostPage);
             this.createPostModel.GroupId = this.GroupId;
             if (this.GroupId != null)
                 this.createPostModel.PostVisibilityId = (short)PostVisibility.Public;

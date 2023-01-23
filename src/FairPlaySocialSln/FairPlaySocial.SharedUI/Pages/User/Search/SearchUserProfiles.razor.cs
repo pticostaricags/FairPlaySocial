@@ -19,6 +19,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         private SearchClientService? SearchClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private bool IsBusy { get; set; }
         private PagedItems<UserProfileModel>? UserProfiles { get; set; }
 
@@ -28,6 +30,12 @@ namespace FairPlaySocial.SharedUI.Pages.User.Search
         };
         private UserProfileModel? SelectedUserProfileModel { get; set; }
         private bool ShowComposeMessageModal { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            AnalyticsService!.LogEvent(EventType.LoadSearchUserProfilesPage);
+        }
 
         protected async override Task OnParametersSetAsync()
         {

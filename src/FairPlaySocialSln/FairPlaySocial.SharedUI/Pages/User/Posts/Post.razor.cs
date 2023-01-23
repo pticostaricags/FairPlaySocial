@@ -24,6 +24,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
+        [Inject]
+        private IAnalyticsService? AnalyticsService { get; set; }
         private bool IsBusy { get; set; } = false;
         private PostModel? PostModel { get; set; }
 
@@ -32,6 +34,7 @@ namespace FairPlaySocial.SharedUI.Pages.User.Posts
             try
             {
                 this.IsBusy = true;
+                this.AnalyticsService!.LogEvent(EventType.LoadSinglePostPage);
                 this.PostModel = await this.MyFeedClientService!
                     .GetPostByPostIdAsync(this.PostId!.Value, base.CancellationToken);
             }
