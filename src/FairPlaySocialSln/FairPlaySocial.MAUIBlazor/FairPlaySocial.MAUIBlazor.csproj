@@ -66,9 +66,11 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
+      <BuildIpa>True</BuildIpa>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
+      <BuildIpa>True</BuildIpa>
     </PropertyGroup>
     <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
       <CodesignKey>Apple Development: Created via API (BP3X66B6C8)</CodesignKey>

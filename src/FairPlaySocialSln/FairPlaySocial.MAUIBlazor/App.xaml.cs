@@ -17,8 +17,6 @@ public partial class App : Application
                         .WithB2CAuthority(b2CConstants.Authority)
                         .WithParentActivityOrWindow(() => ParentWindow)
                         .Build();
-        AppCenter.Start("9fd5a524-b775-4dba-8f37-9328f0c2f130", typeof(Analytics), typeof(Crashes));
-        AppCenter.LogLevel= Microsoft.AppCenter.LogLevel.Verbose;
 #elif IOS
         //Check https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-xamarin-ios-considerations#enable-keychain-access
         b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
@@ -37,6 +35,15 @@ public partial class App : Application
 #endif
 
         MainPage = new MainPage();
+    }
+
+    protected override void OnStart()
+    {
+        AppCenter.Start("" +
+            "ios=b1c8996d-c1e5-4ad7-ab93-b5dfb82e21c5;" +
+            "android-=9fd5a524-b775-4dba-8f37-9328f0c2f130;",
+            typeof(Analytics), typeof(Crashes));
+        AppCenter.LogLevel = Microsoft.AppCenter.LogLevel.Verbose;
     }
 
 #if ANDROID
