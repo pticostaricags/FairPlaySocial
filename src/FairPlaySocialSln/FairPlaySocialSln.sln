@@ -8,8 +8,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Server", "Fa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Client", "FairPlaySocial\Client\FairPlaySocial.Client.csproj", "{52878E63-39E1-4B22-8890-A384496F08C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.Shared", "FairPlaySocial\Shared\FairPlaySocial.Shared.csproj", "{572BCC67-34F8-4F52-A199-3625AB6E7FDA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.ClientServices", "FairPlaySocial.ClientServices\FairPlaySocial.ClientServices.csproj", "{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlaySocial.ClientsConfiguration", "FairPlaySocial.ClientsConfiguration\FairPlaySocial.ClientsConfiguration.csproj", "{F3CC6C48-190D-473F-9D87-990A85210A4B}"
@@ -91,10 +89,6 @@ Global
 		{52878E63-39E1-4B22-8890-A384496F08C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52878E63-39E1-4B22-8890-A384496F08C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52878E63-39E1-4B22-8890-A384496F08C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{572BCC67-34F8-4F52-A199-3625AB6E7FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB38DD60-AC05-47B7-87AB-F7873EE1E7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
