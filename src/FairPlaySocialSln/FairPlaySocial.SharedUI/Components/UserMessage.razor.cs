@@ -42,9 +42,12 @@ namespace FairPlaySocial.SharedUI.Components
                 this.HubConnection.On(Constants.Hubs.ReceiveMessage, 
                     (Action<UserMessageNotificationModel>)(async (model) =>
                 {
-                    await ToastService!
-                    .ShowSuccessMessageAsync($"You have received a new message: {model.Message}", base.CancellationToken);
-                    StateHasChanged();
+                    await InvokeAsync(async () =>
+                    {
+                        await ToastService!
+                        .ShowSuccessMessageAsync($"You have received a new message: {model.Message}", base.CancellationToken);
+                        StateHasChanged();
+                    });
                 }));
 #pragma warning restore VSTHRD101 // Avoid unsupported async delegates
                 await this.HubConnection.StartAsync();

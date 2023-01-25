@@ -50,16 +50,20 @@ namespace FairPlaySocial.SharedUI.Components
                         options.AccessTokenProvider = () => Task.FromResult(accessToken);
                     })
                     .Build();
-
-                this.HubConnection.On(Constants.Hubs.ReceiveMessage, (Action<PostNotificationModel>)((model) =>
+#pragma warning disable VSTHRD101 // Avoid unsupported async delegates
+                this.HubConnection.On(Constants.Hubs.ReceiveMessage,
+                    (Action<PostNotificationModel>)(async (model) =>
                 {
-                    this.NotificationsQueue.Enqueue(model);
-                    if (this.NotificationsQueue.Count == 1)
-                        this.ToastService!
-                        .ShowSuccessMessageAsync(PendingNotificationsMessage, base.CancellationToken)
-                        .Wait();
-                    StateHasChanged();
+                    await InvokeAsync(async () =>
+                    {
+                        this.NotificationsQueue.Enqueue(model);
+                        if (this.NotificationsQueue.Count == 1)
+                            await this.ToastService!
+                            .ShowSuccessMessageAsync(PendingNotificationsMessage, base.CancellationToken);
+                        StateHasChanged();
+                    });
                 }));
+#pragma warning restore VSTHRD101 // Avoid unsupported async delegates
                 await this.HubConnection.StartAsync();
             }
             catch (Exception ex)
