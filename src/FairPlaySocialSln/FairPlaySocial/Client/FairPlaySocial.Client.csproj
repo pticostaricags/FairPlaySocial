@@ -22,6 +22,7 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'FairPlaySocial' " />
   <ItemGroup>
     <PackageReference Include="Blazored.Toast" Version="4.0.0" />
     <PackageReference Include="BrowserInterop" Version="1.1.2" />

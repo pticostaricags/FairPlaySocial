@@ -64,18 +64,21 @@
       <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     </PropertyGroup>
 
+    <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
-      <BuildIpa>False</BuildIpa>
+      <MtouchLink>SdkOnly</MtouchLink>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
-      <BuildIpa>False</BuildIpa>
+      <CodesignKey>iPhone Developer</CodesignKey>
+      <CodesignProvision>Automatic</CodesignProvision>
+      <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
-      <CodesignKey>Apple Development: Created via API (BP3X66B6C8)</CodesignKey>
-      <CodesignProvision>VS: com.companyname.fairplaysocial Development</CodesignProvision>
-    </PropertyGroup>
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
