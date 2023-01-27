@@ -4,7 +4,7 @@ using FairPlaySocial.Common.Interfaces.Services;
 
 namespace FairPlaySocial.MAUIBlazor.MultiPlatformServices
 {
-    public class ToastService : IToastService
+    public class MauiToastService : IToastService
     {
         public async Task ShowErrorMessageAsync(string message, CancellationToken cancellationToken)
         {
