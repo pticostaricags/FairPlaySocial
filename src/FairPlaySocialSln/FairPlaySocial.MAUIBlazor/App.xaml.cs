@@ -11,7 +11,13 @@ public partial class App : Application
     public App(B2CConstants b2CConstants)
     {
         InitializeComponent();
-#if ANDROID
+#if WINDOWS
+        b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
+                        b2CConstants.ClientId)
+                        .WithB2CAuthority(b2CConstants.Authority)
+                        .WithRedirectUri(b2CConstants.RedirectUri)
+                        .Build();
+#elif ANDROID
         b2CConstants.PublicClientApp = PublicClientApplicationBuilder.Create(
                         b2CConstants.ClientId)
                         .WithB2CAuthority(b2CConstants.Authority)

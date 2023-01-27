@@ -104,6 +104,7 @@
     </ItemGroup>
 
     <ItemGroup>
+		<PackageReference Include="Blazored.Toast" Version="4.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />

@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using CommunityToolkit.Maui;
 using FairPlaySocial.ClientsConfiguration;
 using FairPlaySocial.ClientServices.CustomLocalization.Api;
@@ -94,8 +95,8 @@ public static class MauiProgram
         builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
             .CreateClient($"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous"));
 
-
-        builder.Services.AddTransient<IToastService, ToastService>();
+        builder.Services.AddBlazoredToast();
+        builder.Services.AddTransient<IToastService, BlazorToastService>();
         builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
         builder.Services.AddTransient<ICultureSelectionService, MauiCultureSelectionService>();
         builder.Services.AddTransient<IAnalyticsService, MauiAnalyticsService>();
