@@ -4,6 +4,13 @@
 <Error>
     <CascadingAuthenticationState>
         <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="AdditionalAssemblies">
+            <Navigating>
+                <div class="overlay"></div>
+                <div class="spanner">
+                    <div class="loader"></div>
+                    <p>Initializing Web App</p>
+                </div>
+            </Navigating>
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                     <NotAuthorized>
