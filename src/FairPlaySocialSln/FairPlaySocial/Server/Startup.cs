@@ -31,6 +31,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using FairPlaySocial.ClientsConfiguration;
 using Blazored.Toast;
 using FairPlaySocial.Client.Services;
+using FairPlaySocial.Common.Handlers;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace FairPlaySocial.Server
 {
@@ -62,6 +64,40 @@ namespace FairPlaySocial.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
+            services.AddScoped<LocalizationMessageHandler>();
+
+            var faifairplaysocialApiAddress = "https://localhost:7115";
+            services.AddHttpClient(
+                        $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
+                        client =>
+                        {
+                            client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+                            client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                            client.DefaultRequestVersion = HttpVersion.Version30;
+                        })
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
+                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(PollyHelper.GetRetryPolicy());
+
+            services.AddHttpClient(
+                $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous",
+                client =>
+                {
+                    client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+                    client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                    client.DefaultRequestVersion = HttpVersion.Version30;
+                })
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(PollyHelper.GetRetryPolicy());
+            services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient(
+                $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI"));
+
+            services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient($"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous"));
+
             services.ConfigurePlatformOutputCache();
             services.ConfigurePlatformRateLimiter();
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
@@ -76,6 +112,7 @@ namespace FairPlaySocial.Server
             services.AddTransient<ITextToSpeechService, TextToSpeechService>();
             services.AddTransient<IGeoLocationService, BlazorGeoLocationService>();
             services.AddTransient<ICultureSelectionService, BlazorCultureSelectionService>();
+            services.AddTransient<IAnalyticsService, BlazorAnalyticsService>();
             services.AddMultiPlatformServices();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

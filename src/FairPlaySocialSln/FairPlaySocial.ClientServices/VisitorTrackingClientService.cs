@@ -48,6 +48,7 @@ namespace FairPlaySocial.ClientServices
             }
             else
             {
+                var jsonData = await response.Content.ReadAsStringAsync();
                 visitorTrackingModel = (await response.Content
                     .ReadFromJsonAsync<VisitorTrackingModel>(cancellationToken: cancellationToken))!;
                 this.VisitorTrackingId = visitorTrackingModel.VisitorTrackingId;

@@ -50,6 +50,36 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/blazor-culture.js"></script>
+    <script src="_content/BrowserInterop/scripts.js"></script>
+    <script>
+        window.clipboardCopy = {
+            copyText: function (text) {
+                navigator.clipboard.writeText(text).then(function () {
+                    alert("Copied to clipboard!");
+                })
+                    .catch(function (error) {
+                        alert(error);
+                    });
+            }
+        };
+
+        function speakToDefaultSpeakersAsync(text, locale) {
+            if (speechSynthesis) {
+                const utterThis = new SpeechSynthesisUtterance(text);
+                utterThis.lang = locale;
+                //utterThis.locale = locale;
+                speechSynthesis.speak(utterThis);
+            }
+        }
+
+        function cancelRunningAudio() {
+            if (speechSynthesis) {
+                speechSynthesis.cancel();
+            }
+        }
+    </script>
 </body>
 </html>
