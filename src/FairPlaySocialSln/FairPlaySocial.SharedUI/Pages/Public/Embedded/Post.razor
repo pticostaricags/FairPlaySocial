@@ -1,6 +1,10 @@
 ﻿@inherits CustomBaseComponent
 @layout EmbeddedPostLayout
 
+<HeadContent>
+    <meta property="og:image" content="@this.OgImageUrl" />
+</HeadContent>
+
 <LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
 
 @if (this.PostModel != null)

@@ -1,16 +1,20 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@using FairPlaySocial.Client
+@namespace FairPlaySocial.Server.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta http-equiv="expires" content="0">
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>FairPlaySocial - The Next Generation Of Social Networks</title>
-    <meta name="description" content="The Open Source Multiplaform Social Network " />
-    <meta name="keywords" content="money, monetization, creator, video, content creator, YouTube, portal" />
-    <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="FairPlaySocial.Client.styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
     <link href="css/loading-indicator.css" rel="stylesheet" />
     <link href="FairPlaySocial.Client.styles.css" rel="stylesheet" />
     <link id="selectedThemeLink" href="_content/FairPlaySocial.SharedUI/themes/theme1/theme.css" rel="stylesheet" />
@@ -19,22 +23,33 @@
     <!--Buy me a coffe-->
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="efonsecab" data-description="Support me on Buy me a coffee!" data-message="Thanks for visiting.Please feel free to support the project." data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
     <!--Buy me a coffe-->
+    <component type="typeof(HeadOutlet)" render-mode="WebAssemblyPrerendered" />
 </head>
-
 <body>
     <div id="app">
-        <div class="overlay"></div>
-        <div class="spanner">
-            <div class="loader"></div>
-            <p>Initializing Web App</p>
-        </div>
+        @if (HttpContext.Request.Path.StartsWithSegments("/authentication"))
+        {
+            <component type="typeof(FairPlaySocial.Client.App)"
+                   render-mode="WebAssembly" />
+        }
+        else
+        {
+            <component type="typeof(FairPlaySocial.Client.App)"
+                   render-mode="WebAssemblyPrerendered" />
+        }
     </div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/blazor-culture.js"></script>
@@ -66,8 +81,5 @@
             }
         }
     </script>
-
-    <persist-component-state />
 </body>
-
 </html>

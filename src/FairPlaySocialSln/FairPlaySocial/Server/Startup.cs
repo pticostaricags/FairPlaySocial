@@ -25,6 +25,14 @@ using Microsoft.AspNetCore.RateLimiting;
 using System.Reflection;
 using FairPlaySocial.Notifications.Hubs.Post;
 using FairPlaySocial.Notifications.Hubs.UserMessage;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using FairPlaySocial.ClientsConfiguration;
+using Blazored.Toast;
+using FairPlaySocial.Client.Services;
+using FairPlaySocial.Common.Handlers;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace FairPlaySocial.Server
 {
@@ -56,6 +64,40 @@ namespace FairPlaySocial.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
+            services.AddScoped<LocalizationMessageHandler>();
+
+            var faifairplaysocialApiAddress = "https://localhost:7115";
+            services.AddHttpClient(
+                        $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
+                        client =>
+                        {
+                            client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+                            client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                            client.DefaultRequestVersion = HttpVersion.Version30;
+                        })
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
+                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(PollyHelper.GetRetryPolicy());
+
+            services.AddHttpClient(
+                $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous",
+                client =>
+                {
+                    client.BaseAddress = new Uri(faifairplaysocialApiAddress);
+                    client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                    client.DefaultRequestVersion = HttpVersion.Version30;
+                })
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(PollyHelper.GetRetryPolicy());
+            services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient(
+                $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI"));
+
+            services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient($"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI.Anonymous"));
+
             services.ConfigurePlatformOutputCache();
             services.ConfigurePlatformRateLimiter();
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
@@ -64,6 +106,14 @@ namespace FairPlaySocial.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.TryAddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            services.AddBlazoredToast();
+            services.AddTransient<IToastService, ToastService>();
+            services.AddTransient<ITextToSpeechService, TextToSpeechService>();
+            services.AddTransient<IGeoLocationService, BlazorGeoLocationService>();
+            services.AddTransient<ICultureSelectionService, BlazorCultureSelectionService>();
+            services.AddTransient<IAnalyticsService, BlazorAnalyticsService>();
+            services.AddMultiPlatformServices();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
@@ -296,7 +346,7 @@ namespace FairPlaySocial.Server
                     services.AddTransient<TranslationService>();
                     services.AddSingleton(azureTranslatorConfiguration);
                     services.AddTransient<AzureTranslatorService>();
-                    services.AddHostedService<BackgroundTranslationService>();
+                    //services.AddHostedService<BackgroundTranslationService>();
                 }
 
                 services.ConfigureAzureTextAnalyticsService(this.Configuration);
@@ -351,7 +401,7 @@ namespace FairPlaySocial.Server
                 endpoints.MapHub<PostNotificationHub>(FairPlaySocial.Common.Global.Constants.Hubs.HomeFeedHub);
                 endpoints.MapHub<UserMessageNotificationHub>(FairPlaySocial.Common.Global.Constants.Hubs.UserMessageHub);
                 endpoints.MapHealthChecks("/health");
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
 

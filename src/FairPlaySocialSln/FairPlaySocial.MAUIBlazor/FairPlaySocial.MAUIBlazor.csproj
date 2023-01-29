@@ -78,6 +78,10 @@
       <CodesignProvision>Automatic</CodesignProvision>
       <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
+      <CodesignKey>Apple Development: Created via API (AKGQYB386J)</CodesignKey>
+      <CodesignProvision>VS: com.companyname.fairplaysocial Development</CodesignProvision>
+    </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->

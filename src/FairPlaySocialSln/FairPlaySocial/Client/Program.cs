@@ -15,10 +15,6 @@ using System.Net;
 using System.Net.Http.Headers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
-
-builder.Services.AddBlazoredToast();
 builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
 builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
 builder.Services.AddLocalization();

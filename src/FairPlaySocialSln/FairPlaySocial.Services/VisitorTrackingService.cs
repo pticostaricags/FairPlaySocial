@@ -58,7 +58,16 @@ namespace FairPlaySocial.Services
                     throw new Exception(message, ex);
                 }
                 var host = httpContext.Request.Host.Value;
-                var userAgent = httpContext.Request.Headers["User-Agent"].First();
+                string userAgent = string.Empty;
+                if (httpContext.Request.Headers.ContainsKey("User-Agent"))
+                {
+                    userAgent = httpContext.Request!.Headers["User-Agent"]!.First()!;
+                }
+                else
+                {
+                    userAgent = "Unknown";
+                }
+                
                 ApplicationUser? userEntity = null;
                 if (!String.IsNullOrWhiteSpace(visitorTrackingModel.UserAzureAdB2cObjectId))
                     userEntity = await this.FairPlaySocialDatabaseContext

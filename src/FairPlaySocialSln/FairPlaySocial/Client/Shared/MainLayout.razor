@@ -6,10 +6,15 @@
     <div class="main-page-header">
         <div class="nav-bar-section">
             <div class="nav-bar-icon">
-                <a class="btn btn-outline-primary" style="margin:0;"
-                   @onclick="OnShowCultureSelectorClicked">
-                    <i class="bi bi-globe"></i>
-                </a>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <!--Due to issues with Pre-Rendering, we will allow selection change only when user is not logged in-->
+                        <a class="btn btn-outline-primary" style="margin:0;"
+                           @onclick="OnShowCultureSelectorClicked">
+                            <i class="bi bi-globe"></i>
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
                 <FairPlaySocial.SharedUI.Components.SearchModal></FairPlaySocial.SharedUI.Components.SearchModal>
                 <AuthorizeView>
                     <Authorized>
