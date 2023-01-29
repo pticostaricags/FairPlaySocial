@@ -66,7 +66,7 @@ namespace FairPlaySocial.Server
             // Add services to the container.
             services.AddScoped<LocalizationMessageHandler>();
 
-            var faifairplaysocialApiAddress = "https://localhost:7115";
+            var faifairplaysocialApiAddress = Configuration["ApiBaseUrl"]!;
             services.AddHttpClient(
                         $"{FairPlaySocial.Common.Global.Constants.Assemblies.MainAppAssemblyName}.ServerAPI",
                         client =>
