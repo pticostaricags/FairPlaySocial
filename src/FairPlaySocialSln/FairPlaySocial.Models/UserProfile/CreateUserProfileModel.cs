@@ -28,6 +28,8 @@ namespace FairPlaySocial.Models.UserProfile
 
         [StringLength(50)]
         public string? InstagramNickname { get; set; }
+        [StringLength(50)]
+        public string? BuyMeACoffeeNickname { get; set; }
 
         [StringLength(50)]
         public string? YouTubeNickname { get; set; }
