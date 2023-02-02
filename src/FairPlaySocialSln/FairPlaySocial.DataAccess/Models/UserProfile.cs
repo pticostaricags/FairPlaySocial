@@ -35,6 +35,10 @@ public partial class UserProfile
     [StringLength(50)]
     public string YouTubeNickname { get; set; }
 
+    [Column("BuyMeACoffeeNickname")]
+    [StringLength(50)]
+    public string BuyMeAcoffeeNickname { get; set; }
+
     [ForeignKey("ApplicationUserId")]
     [InverseProperty("UserProfile")]
     public virtual ApplicationUser ApplicationUser { get; set; }

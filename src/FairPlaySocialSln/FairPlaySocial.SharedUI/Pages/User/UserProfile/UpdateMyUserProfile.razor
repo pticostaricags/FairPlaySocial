@@ -56,6 +56,20 @@
         <ValidationMessage For="@( () => this.createUserProfileModel.TwitterNickname)"></ValidationMessage>
     </div>
     <div class="@ThemeConfiguration.Divisions.DefaultCss">
+        <label class="@ThemeConfiguration.Labels.DefaultCss">Buy me a coffee Nickname:</label>
+        <input type="text" class="@ThemeConfiguration.GenericControls.DefaultCss"
+               @bind="@this.createUserProfileModel.BuyMeACoffeeNickname"
+               @bind:event="oninput" />
+        <ValidationMessage For="@( () => this.createUserProfileModel.BuyMeACoffeeNickname)"></ValidationMessage>
+        @if (!String.IsNullOrWhiteSpace(this.createUserProfileModel.BuyMeACoffeeNickname))
+        {
+            <a target="_blank"
+           href="https://www.buymeacoffee.com/@this.createUserProfileModel.BuyMeACoffeeNickname">
+                <img src="https://img.buymeacoffee.com/button-api/?text=Buy @this.createUserProfileModel.BuyMeACoffeeNickname a pizza&emoji=🍕&slug=@this.createUserProfileModel.BuyMeACoffeeNickname&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
+            </a>
+        }
+    </div>
+    <div class="@ThemeConfiguration.Divisions.DefaultCss">
         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss">Update Profile</button>
     </div>
 </EditForm>
