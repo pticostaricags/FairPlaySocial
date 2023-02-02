@@ -39,6 +39,9 @@ public partial class UserProfile
     [StringLength(50)]
     public string BuyMeAcoffeeNickname { get; set; }
 
+    [StringLength(50)]
+    public string GithubSponsorsNickname { get; set; }
+
     [ForeignKey("ApplicationUserId")]
     [InverseProperty("UserProfile")]
     public virtual ApplicationUser ApplicationUser { get; set; }

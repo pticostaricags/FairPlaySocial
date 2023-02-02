@@ -1,8 +1,18 @@
 @inject NavigationManager Navigation
 
+<LoadingIndicator IsLoading="true"></LoadingIndicator>
+
 @code {
+
     protected override void OnInitialized()
     {
-        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        try
+        {
+            Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        }
+        catch (NavigationException)
+        {
+            //Navigation expection when in debug is a by-design feature of Blazor Per-Rendering when in authentication
+        }
     }
 }

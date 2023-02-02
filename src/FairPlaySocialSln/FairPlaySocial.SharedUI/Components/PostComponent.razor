@@ -178,6 +178,15 @@ this.PostModel != null && this.MySelectedAuthorUserProfile != null)
                     </a>
                 </p>
             }
+            @if (!String.IsNullOrWhiteSpace(this.MySelectedAuthorUserProfile.GithubSponsorsNickname))
+            {
+                <p>
+                    Fund Author on Github Sponsors!:
+                </p>
+                <p>
+                    <iframe src="@($"https://github.com/sponsors/{this.MySelectedAuthorUserProfile.GithubSponsorsNickname}/button")" title="@($"Sponsor {this.MySelectedAuthorUserProfile.GithubSponsorsNickname}")" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+                </p>
+            }
             @if (!this.MySelectedAuthorFollowStatus!.IsFollowed)
             {
                 <button type="button"

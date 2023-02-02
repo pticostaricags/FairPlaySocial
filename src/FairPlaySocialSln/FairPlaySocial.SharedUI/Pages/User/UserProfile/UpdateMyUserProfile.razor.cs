@@ -37,6 +37,8 @@ namespace FairPlaySocial.SharedUI.Pages.User.UserProfile
                 this.createUserProfileModel.LinkedInNickname = existenUserProfile.LinkedInNickname;
                 this.createUserProfileModel.InstagramNickname = existenUserProfile.InstagramNickname;
                 this.createUserProfileModel.TwitterNickname = existenUserProfile.TwitterNickname;
+                this.createUserProfileModel.BuyMeACoffeeNickname = createUserProfileModel.BuyMeACoffeeNickname;
+                this.createUserProfileModel.GithubSponsorsNickname = createUserProfileModel.GithubSponsorsNickname;
             }
             catch (Exception ex)
             {

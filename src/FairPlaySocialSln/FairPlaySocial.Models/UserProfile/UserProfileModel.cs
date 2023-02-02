@@ -32,6 +32,8 @@ namespace FairPlaySocial.Models.UserProfile
 
         [StringLength(50)]
         public string? YouTubeNickname { get; set; }
+        [StringLength(50)]
+        public string? GithubSponsorsNickname { get; set; }
         public string? FullName { get; set; }
         [StringLength(50)]
         public string? BuyMeACoffeeNickname { get; set; }
