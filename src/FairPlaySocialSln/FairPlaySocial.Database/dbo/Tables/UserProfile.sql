@@ -9,6 +9,7 @@
     [InstagramNickname] NVARCHAR(50) NULL, 
     [YouTubeNickname] NVARCHAR(50) NULL, 
     [BuyMeACoffeeNickname] NVARCHAR(50) NULL, 
+    [GithubSponsorsNickname] NVARCHAR(50) NULL, 
     CONSTRAINT [FK_UserProfile_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId])
 )
 

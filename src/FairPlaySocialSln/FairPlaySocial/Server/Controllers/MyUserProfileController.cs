@@ -84,6 +84,7 @@ namespace FairPlaySocial.Server.Controllers
                 entity.InstagramNickname = createUserProfileModel.InstagramNickname;
                 entity.Bio = createUserProfileModel.Bio;
                 entity.BuyMeAcoffeeNickname = createUserProfileModel.BuyMeACoffeeNickname;
+                entity.GithubSponsorsNickname = createUserProfileModel.GithubSponsorsNickname;
                 entity = await this.userProfileService.UpdateUserProfileAsync(entity, cancellationToken: cancellationToken);
             }
             else
