@@ -28,26 +28,36 @@ namespace FairPlaySocial.SharedUI.Pages
         private bool IsLoading { get; set; } = false;
         private string? WelcomeMessage;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            try
+            base.OnInitialized();
+            this.IsLoading = true;
+        }
+
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
             {
-                this.AppCenterService?.LogEvent(EventType.LoadIndexPage);
-                IsLoading = true;
-                await base.OnInitializedAsync();
-                await this.LocalizationClientService!.LoadDataAsync();
-                this.WelcomeMessage = String.Format(
-                    Localizer![WelcomeMessageTextKey],
-                    base.WhiteLabelingService!.WhiteLabelingData!.ApplicationName);
-                if (UserState.UserContext?.IsLoggedOn == true)
+                try
                 {
-                    var state = await this.AuthenticationStateProvider!.GetAuthenticationStateAsync();
-                    if (state != null)
+                    this.AppCenterService?.LogEvent(EventType.LoadIndexPage);
+                    IsLoading = true;
+                    await base.OnInitializedAsync();
+                    await this.LocalizationClientService!.LoadDataAsync();
+                    this.WelcomeMessage = String.Format(
+                        Localizer![WelcomeMessageTextKey],
+                        base.WhiteLabelingService!.WhiteLabelingData!.ApplicationName);
+                    if (UserState.UserContext?.IsLoggedOn == true)
                     {
-                        if (state.User.IsInRole(Constants.Roles.Admin))
+                        var state = await this.AuthenticationStateProvider!.GetAuthenticationStateAsync();
+                        if (state != null)
                         {
-                            this.MainMenuItems = new MenuGrid.MenuGridItem[]
+                            if (state.User.IsInRole(Constants.Roles.Admin))
                             {
+                                this.MainMenuItems = new MenuGrid.MenuGridItem[]
+                                {
                                 new MenuGrid.MenuGridItem()
                                 {
                                     CssClass="bi bi-people-fill",
@@ -56,12 +66,12 @@ namespace FairPlaySocial.SharedUI.Pages
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![UserListTextKey]
                                 }
-                            };
-                        }
-                        else if (state.User.IsInRole(Constants.Roles.User))
-                        {
-                            this.MainMenuItems = new MenuGrid.MenuGridItem[]
+                                };
+                            }
+                            else if (state.User.IsInRole(Constants.Roles.User))
                             {
+                                this.MainMenuItems = new MenuGrid.MenuGridItem[]
+                                {
                                 new MenuGrid.MenuGridItem()
                                 {
                                     CssClass="bi bi-gear-fill",
@@ -116,20 +126,21 @@ namespace FairPlaySocial.SharedUI.Pages
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![UserMessagesTextKey]
                                 }
-                            };
+                                };
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                await ToastService!.ShowErrorMessageAsync(ex.Message, base.CancellationToken);
-                this.AppCenterService?.LogException(ex);
-            }
-            finally
-            {
-                IsLoading = false;
-                StateHasChanged();
+                catch (Exception ex)
+                {
+                    await ToastService!.ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+                    this.AppCenterService?.LogException(ex);
+                }
+                finally
+                {
+                    IsLoading = false;
+                    StateHasChanged();
+                }
             }
         }
 
