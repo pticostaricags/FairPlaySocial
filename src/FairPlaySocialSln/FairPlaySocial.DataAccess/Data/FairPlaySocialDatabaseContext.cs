@@ -56,6 +56,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<PostVisibility> PostVisibility { get; set; }
 
+    public virtual DbSet<ProfileVisitor> ProfileVisitor { get; set; }
+
     public virtual DbSet<Resource> Resource { get; set; }
 
     public virtual DbSet<UserMessage> UserMessage { get; set; }
@@ -209,6 +211,17 @@ public partial class FairPlaySocialDatabaseContext : DbContext
             entity.HasOne(d => d.Post).WithMany(p => p.PostUrl)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PostUrl_Post");
+        });
+
+        modelBuilder.Entity<ProfileVisitor>(entity =>
+        {
+            entity.HasOne(d => d.VisitedApplicationUser).WithMany(p => p.ProfileVisitorVisitedApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProfileVisitor_Visited_ApplicationUser");
+
+            entity.HasOne(d => d.VisitorApplicationUser).WithMany(p => p.ProfileVisitorVisitorApplicationUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProfileVisitor_Visitor_ApplicationUser");
         });
 
         modelBuilder.Entity<Resource>(entity =>

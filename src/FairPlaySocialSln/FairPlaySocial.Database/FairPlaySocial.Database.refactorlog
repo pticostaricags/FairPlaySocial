@@ -126,4 +126,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PostKeyPhraseId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="24f0816a-65dd-4ad3-af17-0dc607f15e40" ChangeDateTime="02/17/2023 13:54:52">
+    <Property Name="ElementName" Value="[dbo].[ProfileVisitor].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProfileVisitor]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProfileVisitorId" />
+  </Operation>
 </Operations>
