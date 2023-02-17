@@ -2,12 +2,15 @@
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.Common.Interfaces;
 using FairPlaySocial.DataAccess.Models;
+using FairPlaySocial.Models.Pagination;
+using FairPlaySocial.Models.Post;
 using FairPlaySocial.Models.ProfileVisitor;
 using FairPlaySocial.Server.AutoMapperProfiles;
 using FairPlaySocial.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FairPlaySocial.Server.Controllers
 {
@@ -52,6 +55,38 @@ namespace FairPlaySocial.Server.Controllers
             entity.VisitorApplicationUserId = myApplicationUserId;
             entity = await this.profileVisitorService.CreateProfileVisitorAsync(entity, cancellationToken);
             var result = this.mapper.Map<ProfileVisitor, ProfileVisitorModel>(entity);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the logged in user visitors information
+        /// </summary>
+        /// <param name="pageRequestModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public async Task<PagedItems<ProfileVisitorModel>> GetMyProfileVisitorsAsync(
+            [FromQuery] PageRequestModel pageRequestModel,
+            CancellationToken cancellationToken)
+        {
+            var myApplicationUserId = this.currentUserProvider.GetApplicationUserId();
+            var query = this.profileVisitorService
+                .GetAllProfileVisitor(trackEntities: false, cancellationToken: cancellationToken)
+                .Include(p => p.VisitorApplicationUser)
+                .ThenInclude(p=>p.UserProfile)
+                .Where(p => p.VisitedApplicationUserId == myApplicationUserId);
+            PagedItems<ProfileVisitorModel> result = new()
+            {
+                PageSize = Constants.Pagination.DefaultPageSize,
+                PageNumber = pageRequestModel.PageNumber,
+                TotalItems = await query.CountAsync(cancellationToken)
+            };
+            result.TotalPages = (int)Math.Ceiling((double)result.TotalItems / Constants.Pagination.DefaultPageSize);
+            result.Items = await query.OrderByDescending(p => p.RowCreationDateTime)
+                .Skip((pageRequestModel.PageNumber!.Value - 1) * Constants.Pagination.DefaultPageSize)
+                .Take(Constants.Pagination.DefaultPageSize)
+                .Select(p => this.mapper.Map<ProfileVisitor, ProfileVisitorModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
     }

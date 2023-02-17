@@ -13,5 +13,7 @@ namespace FairPlaySocial.Models.ProfileVisitor
         public long VisitedApplicationUserId { get; set; }
 
         public DateTimeOffset RowCreationDateTime { get; set; }
+        public string? VisitorFullName { get; set; }
+        public string? VisitorBio { get; set; }
     }
 }
