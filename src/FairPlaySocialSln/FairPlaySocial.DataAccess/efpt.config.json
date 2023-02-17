@@ -99,6 +99,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ProfileVisitor]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Resource]",
          "ObjectType": 0
       },

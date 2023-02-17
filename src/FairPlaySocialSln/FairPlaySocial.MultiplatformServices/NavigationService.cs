@@ -124,5 +124,10 @@ namespace FairPlaySocial.MultiplatformServices
         {
             this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.UserMessages}", false);
         }
+
+        public void NavigateToMyProfileVisitors()
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.UserRolePagesRoutes.MyProfileVisitors}", false);
+        }
     }
 }

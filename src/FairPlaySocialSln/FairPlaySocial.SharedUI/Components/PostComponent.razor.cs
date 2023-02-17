@@ -40,6 +40,8 @@ namespace FairPlaySocial.SharedUI.Components
         private IToastService? ToastService { get; set; }
         [Inject]
         private INavigationService? NavigationService { get; set; }
+        [Inject]
+        private ProfileVisitorClientService? ProfileVisitorClientService { get; set; }
         private bool IsBusy { get; set; }
         private bool ShowPostAuthorModal { get; set; }
         private ApplicationUserFollowStatusModel? MySelectedAuthorFollowStatus { get; set; }
@@ -68,6 +70,11 @@ namespace FairPlaySocial.SharedUI.Components
                     .GetPublicUserProfileByApplicationUserIdAsync(
                         this.PostModel!.OwnerApplicationUserId!.Value,
                         CancellationToken.None);
+                await this.ProfileVisitorClientService!.CreateMyVisitingAsync(
+                    new Models.ProfileVisitor.CreateMyProfileVisitorModel()
+                    {
+                        VisitedApplicationUserId = this.PostModel.OwnerApplicationUserId.Value
+                    }, CancellationToken.None);
             }
             catch (Exception ex)
             {

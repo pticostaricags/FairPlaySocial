@@ -102,6 +102,7 @@ namespace FairPlaySocial.Common.Global
                 public const string SearchPosts = $"/User/Search/{nameof(SearchPosts)}";
                 public const string SearchGroups = $"/User/Search/{nameof(SearchGroups)}]";
                 public const string UserMessages = $"/User/UserMessages{nameof(UserMessages)}";
+                public const string MyProfileVisitors = $"/User/ProfileVisitors/MyProfileVisitors";
             }
 
             public static class PublicPagesRoutes

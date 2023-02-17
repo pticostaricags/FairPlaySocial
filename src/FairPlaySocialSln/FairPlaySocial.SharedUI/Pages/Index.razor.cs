@@ -56,8 +56,32 @@ namespace FairPlaySocial.SharedUI.Pages
                         {
                             if (state.User.IsInRole(Constants.Roles.Admin))
                             {
-                                this.MainMenuItems = new MenuGrid.MenuGridItem[]
-                                {
+                                AddAdminRoleMenuItems();
+                            }
+                            else if (state.User.IsInRole(Constants.Roles.User))
+                            {
+                                AddUserRoleMenuItems();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await ToastService!.ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+                    this.AppCenterService?.LogException(ex);
+                }
+                finally
+                {
+                    IsLoading = false;
+                    StateHasChanged();
+                }
+            }
+        }
+
+        private void AddAdminRoleMenuItems()
+        {
+            this.MainMenuItems = new MenuGrid.MenuGridItem[]
+            {
                                 new MenuGrid.MenuGridItem()
                                 {
                                     CssClass="bi bi-people-fill",
@@ -66,12 +90,13 @@ namespace FairPlaySocial.SharedUI.Pages
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![UserListTextKey]
                                 }
-                                };
-                            }
-                            else if (state.User.IsInRole(Constants.Roles.User))
-                            {
-                                this.MainMenuItems = new MenuGrid.MenuGridItem[]
-                                {
+            };
+        }
+
+        private void AddUserRoleMenuItems()
+        {
+            this.MainMenuItems = new MenuGrid.MenuGridItem[]
+            {
                                 new MenuGrid.MenuGridItem()
                                 {
                                     CssClass="bi bi-gear-fill",
@@ -125,23 +150,17 @@ namespace FairPlaySocial.SharedUI.Pages
                                     .NavigateToUserMessages()),
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![UserMessagesTextKey]
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-eye-fill",
+                                    OnClick= new EventCallback(this, ()=>
+                                    this.NavigationService!
+                                    .NavigateToMyProfileVisitors()),
+                                    ShowTitleBelowIcon=true,
+                                    Title=Localizer![MyProfileVisitorsTextKey]
                                 }
-                                };
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    await ToastService!.ShowErrorMessageAsync(ex.Message, base.CancellationToken);
-                    this.AppCenterService?.LogException(ex);
-                }
-                finally
-                {
-                    IsLoading = false;
-                    StateHasChanged();
-                }
-            }
+            };
         }
 
         #region Resource Keys
@@ -161,6 +180,8 @@ namespace FairPlaySocial.SharedUI.Pages
         public const string CreateMyGroupTextKey = "CreateMyGroupText";
         [ResourceKey(defaultValue: "User Messages")]
         public const string UserMessagesTextKey = "UserMessagesText";
+        [ResourceKey(defaultValue: "My Profile Visitors")]
+        public const string MyProfileVisitorsTextKey = "MyProfileVisitorsText";
         #endregion Resource Keys
     }
 }
