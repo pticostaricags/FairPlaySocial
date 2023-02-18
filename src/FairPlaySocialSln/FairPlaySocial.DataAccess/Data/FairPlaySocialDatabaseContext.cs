@@ -30,6 +30,8 @@ public partial class FairPlaySocialDatabaseContext : DbContext
 
     public virtual DbSet<ErrorLog> ErrorLog { get; set; }
 
+    public virtual DbSet<ExternalReport> ExternalReport { get; set; }
+
     public virtual DbSet<ForbiddenUrl> ForbiddenUrl { get; set; }
 
     public virtual DbSet<Group> Group { get; set; }

@@ -20,5 +20,6 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToGroupFeed(long groupId);
         void NavigateToUserMessages();
         void NavigateToMyProfileVisitors();
+        void NavigateToExternalReportsViewer();
     }
 }
