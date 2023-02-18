@@ -30,6 +30,7 @@ namespace FairPlaySocial.ClientsConfiguration
             services.AddTransient<SearchClientService>();
             services.AddTransient<UserMessageClientService>();
             services.AddTransient<ProfileVisitorClientService>();
+            services.AddTransient<RestrictedExternalReportClientService>();
             #endregion END OF TRANSIENT SERVICES
 
             #region START OF SINGLETON SERVICES

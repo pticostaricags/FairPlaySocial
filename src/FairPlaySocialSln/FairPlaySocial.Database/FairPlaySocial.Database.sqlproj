@@ -91,6 +91,7 @@
     <Build Include="dbo\Tables\PostKeyPhrase.sql" />
     <Build Include="dbo\Tables\UserMessage.sql" />
     <Build Include="dbo\Tables\ProfileVisitor.sql" />
+    <Build Include="dbo\Tables\ExternalReport.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

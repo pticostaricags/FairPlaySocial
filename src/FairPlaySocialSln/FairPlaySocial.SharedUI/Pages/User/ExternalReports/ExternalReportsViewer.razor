@@ -1,0 +1,21 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>ExternalReportsViewer</h3>
+
+@if (this.AllExternalReports != null)
+{
+    <InputSelect class="@ThemeConfiguration.Selects.DefaultCss" @bind-Value="SelectedReportName">
+        <option value="">Select an External Report</option>
+        @foreach (var singleExternalReport in this.AllExternalReports)
+        {
+            <option value="@singleExternalReport.Name">@singleExternalReport.Name</option>
+        }
+    </InputSelect>
+}
+@if (this.SelectedReportName != null)
+{
+    <iframe src="@this.AllExternalReports!.Single(p=>p.Name==this.SelectedReportName).ExternalUrl"
+        frameborder="0" allowFullScreen="true" style="width:100%; height:100%;"></iframe>
+}

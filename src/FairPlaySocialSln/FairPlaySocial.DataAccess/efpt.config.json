@@ -47,6 +47,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ExternalReport]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ForbiddenUrl]",
          "ObjectType": 0
       },
