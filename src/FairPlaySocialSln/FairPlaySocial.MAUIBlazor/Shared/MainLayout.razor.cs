@@ -34,6 +34,57 @@ namespace FairPlaySocial.MAUIBlazor.Shared
                 this.NavigationService!.NavigateHome(forceReload: true);
             }
         }
+
+        private async Task OnEditProfileClickedAsync()
+        {
+            this.AppCenterService?.LogEvent(EventType.Login);
+            AuthenticationResult? authResult = null;
+            IEnumerable<IAccount> accounts = await B2CConstants!.PublicClientApp!.GetAccountsAsync();
+            try
+            {
+                IAccount? currentUserAccount =
+                    MainLayout.GetAccountByPolicy(accounts,
+                    B2CConstants!.PolicyEditProfile!);
+                authResult = await B2CConstants.PublicClientApp
+                    .AcquireTokenSilent(B2CConstants.ApiScopesArray, currentUserAccount)
+                    .ExecuteAsync();
+                CompleteAuthentication(authResult);
+            }
+            catch (MsalUiRequiredException)
+            {
+                try
+                {
+                    var currentCultureInfo = this.CultureSelectionService!
+                        .GetCurrentCulture();
+                    authResult = await B2CConstants.PublicClientApp
+                        .AcquireTokenInteractive(B2CConstants.ApiScopesArray)
+#if ANDROID
+                        .WithParentActivityOrWindow(Platform.CurrentActivity)
+#endif
+                        .WithAccount(
+                        MainLayout.GetAccountByPolicy(accounts,
+                        B2CConstants!.PolicyEditProfile!))
+                        .WithExtraQueryParameters($"ui_locales={currentCultureInfo.Name}")
+                        .WithPrompt(Prompt.NoPrompt)
+                        //Check https://github.com/Azure-Samples/active-directory-b2c-xamarin-native/blob/main/UserDetailsClient/UserDetailsClient.Core/Features/LogOn/B2CAuthenticationService.cs
+                        .WithAuthority(B2CConstants.AuthorityEditProfile)
+                        .ExecuteAsync();
+                    //CompleteAuthentication(authResult);
+                }
+                catch (Exception ex)
+                {
+                    this.AppCenterService?.LogException(ex);
+                    await this.ToastService!.ShowErrorMessageAsync(ex.Message,
+                        CancellationToken.None);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.AppCenterService?.LogException(ex);
+                string message = $"Users:{string.Join(",", accounts.Select(u => u.Username))}{Environment.NewLine}Error Acquiring Token:{Environment.NewLine}{ex}";
+                await this.ToastService!.ShowErrorMessageAsync(message, CancellationToken.None);
+            }
+        }
         private async Task OnLoginClickedAsync()
         {
             this.AppCenterService?.LogEvent(EventType.Login);
