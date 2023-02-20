@@ -21,6 +21,7 @@
                         <FairPlaySocial.SharedUI.Components.UserMessage></FairPlaySocial.SharedUI.Components.UserMessage>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLogoutClickedAsync())">Log Out</button>
                         <p>@UserState.UserContext.FullName</p>
+                        <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => EditProfile())">Edit Profile</button>
                     </Authorized>
                     <NotAuthorized>
                         <button class="@ThemeConfiguration.Buttons.PrimaryButtonCss" @onclick="@( () => OnLoginClicked())">Log In</button>

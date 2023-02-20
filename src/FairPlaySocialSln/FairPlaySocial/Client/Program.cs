@@ -61,6 +61,9 @@ builder.Services.AddTransient<ICultureSelectionService, BlazorCultureSelectionSe
 builder.Services.AddTransient<IAnalyticsService, BlazorAnalyticsService>();
 builder.Services.AddMultiPlatformServices();
 
+AppSettings appSettings = builder.Configuration.Get<AppSettings>()!;
+builder.Services.AddSingleton(appSettings);
+
 builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUserAccount>(options =>
 {
     builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);

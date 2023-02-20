@@ -1,3 +1,4 @@
+using FairPlaySocial.ClientsConfiguration;
 using FairPlaySocial.ClientServices;
 using FairPlaySocial.Common;
 using FairPlaySocial.Common.Extensions;
@@ -5,6 +6,7 @@ using FairPlaySocial.Common.Interfaces.Services;
 using FairPlaySocial.Models.VisitorTracking;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System.Globalization;
 using System.Text.Json;
@@ -26,6 +28,8 @@ namespace FairPlaySocial.Client.Shared
         private VisitorTrackingClientService? VisitorTrackingClientService { get; set; }
         [Inject]
         private IToastService? ToastService { get; set; }
+        [Inject]
+        public AppSettings? AppSettings { get; set; }
         private bool ShowCultureSelector { get; set; }
         private readonly CancellationTokenSource CancellationTokenSource = new();
         private System.Timers.Timer? VisitsTimer { get; set; }
@@ -136,6 +140,26 @@ namespace FairPlaySocial.Client.Shared
         private void HideCultureSelector()
         {
             this.ShowCultureSelector = false;
+        }
+
+        private void EditProfile()
+        {
+            string auth = AppSettings!.AzureAdB2C!.Authority!.Substring(0, 
+                AppSettings.AzureAdB2C.Authority.LastIndexOf("/"));
+            string redirectUrlBase = this.NavigationManager!.BaseUri.TrimEnd('/');
+            string encodedRedirectUrl = 
+                System.Web.HttpUtility.UrlEncode($"{redirectUrlBase}/authentication/" +
+                $"{AppSettings.AzureAdB2C.ProfileEditCallbackUrl}");
+            string profileEditPolicy = AppSettings!.AzureAdB2C!.ProfileEditPolicyId!;
+            this.NavigationManager!.NavigateTo($"{auth}/oauth2/v2.0/authorize?" +
+                $"client_id={AppSettings.AzureAdB2C.ClientId}" +
+                $"&redirect_uri={encodedRedirectUrl}" +
+                "&response_mode=query" +
+                "&response_type=id_token" +
+                "&scope=openid" +
+                $"&nonce={Guid.NewGuid()}" +
+                "&state=12345" +
+                $"&p={profileEditPolicy}");
         }
     }
 }

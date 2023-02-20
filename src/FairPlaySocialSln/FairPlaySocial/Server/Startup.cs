@@ -106,6 +106,8 @@ namespace FairPlaySocial.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            AppSettings appSettings = Configuration.Get<AppSettings>()!;
+            services.AddSingleton(appSettings);
             services.TryAddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddBlazoredToast();
             services.AddTransient<IToastService, ToastService>();
