@@ -348,7 +348,7 @@ namespace FairPlaySocial.Server
                     services.AddTransient<TranslationService>();
                     services.AddSingleton(azureTranslatorConfiguration);
                     services.AddTransient<AzureTranslatorService>();
-                    //services.AddHostedService<BackgroundTranslationService>();
+                    services.AddHostedService<BackgroundTranslationService>();
                 }
 
                 services.ConfigureAzureTextAnalyticsService(this.Configuration);

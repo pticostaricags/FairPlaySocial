@@ -89,6 +89,14 @@ namespace FairPlaySocial.SharedUI.Pages
                                     .NavigateToUserListForAdmin()),
                                     ShowTitleBelowIcon=true,
                                     Title=Localizer![UserListTextKey]
+                                },
+                                new MenuGrid.MenuGridItem()
+                                {
+                                    CssClass="bi bi-translate",
+                                    OnClick= new EventCallback(this, ()=>this.NavigationService!
+                                    .NavigateToSupportedCultures()),
+                                    ShowTitleBelowIcon=true,
+                                    Title=Localizer![SupportedCulturesTextKey]
                                 }
             };
         }
@@ -193,6 +201,8 @@ namespace FairPlaySocial.SharedUI.Pages
         public const string MyProfileVisitorsTextKey = "MyProfileVisitorsText";
         [ResourceKey(defaultValue: "Exteral Reports")]
         public const string ExternalReportsTextKey = "ExternalReportsText";
+        [ResourceKey(defaultValue: "Supported Cultures")]
+        public const string SupportedCulturesTextKey = "SupportedCulturesText";
         #endregion Resource Keys
     }
 }
