@@ -15,5 +15,6 @@ namespace FairPlaySocial.Models.Culture
         [Required]
         [StringLength(50)]
         public string? Name { get; set; }
+        public string? DisplayName { get; set; }
     }
 }

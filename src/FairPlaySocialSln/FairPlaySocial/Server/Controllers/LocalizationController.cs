@@ -2,8 +2,8 @@
 using FairPlaySocial.Common.Global;
 using FairPlaySocial.DataAccess.Data;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.Localization;
-using Microsoft.AspNetCore.Http;
+using FairPlaySocial.Models.Culture;
+using FairPlaySocial.Models.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
