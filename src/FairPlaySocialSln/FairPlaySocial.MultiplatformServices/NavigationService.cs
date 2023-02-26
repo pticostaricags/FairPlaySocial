@@ -139,5 +139,10 @@ namespace FairPlaySocial.MultiplatformServices
         {
             this.NavigateTo($"{Constants.MauiBlazorAppPages.AdminRolePagesRoutes.SupportedCultures}", false);
         }
+
+        public void NavigateToResourceKeysAdmin()
+        {
+            this.NavigateTo($"{Constants.MauiBlazorAppPages.AdminRolePagesRoutes.ResourceKeysAdmin}", false);
+        }
     }
 }

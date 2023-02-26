@@ -1,0 +1,20 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>ResourceKeysAdmin</h3>
+@if (this.SupportedCultures != null)
+{
+    <div class="mb-3">
+        <AudibleLabel ItemText="Select a Culture:" MakeTextBold="true"></AudibleLabel>
+        <InputSelect class="@ThemeConfiguration.Selects.DefaultCss"
+                 Value="@this.SelectedCulture"
+                 ValueExpression="@( () => this.SelectedCulture)"
+                 ValueChanged="@( async (string? selectedCulture) => await OnSelectedCultureChangeAsync(selectedCulture))">
+            @foreach (var singleSupportedCultre in this.SupportedCultures)
+            {
+                <option value="@singleSupportedCultre.Name">@singleSupportedCultre.Name</option>
+            }
+        </InputSelect>
+    </div>
+}
