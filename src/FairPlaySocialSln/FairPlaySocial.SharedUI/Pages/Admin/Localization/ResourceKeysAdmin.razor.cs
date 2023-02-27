@@ -55,5 +55,25 @@ namespace FairPlaySocial.SharedUI.Pages.Admin.Localization
                     .GetResourcesByCultureNameAsync(this.SelectedCulture!, base.CancellationToken);
             }
         }
+
+        private async Task OnUpdateResourceRecordAsync(ResourceModel? resourceModel)
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.ResourceClientService!
+                    .UpdateResourceAsync(model: resourceModel, cancellationToken: base.CancellationToken);
+            }
+            catch (Exception ex)
+            {
+                await this.ToastService!
+                    .ShowErrorMessageAsync(ex.Message, base.CancellationToken);
+            }
+            finally
+            {
+                this.IsBusy = false;
+                StateHasChanged();
+            }
+        }
     }
 }

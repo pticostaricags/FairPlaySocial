@@ -26,7 +26,7 @@
                 <AudibleLabel ItemText="@singleResourceModel.Type"></AudibleLabel>
                 <AudibleLabel ItemText="@singleResourceModel.Key"></AudibleLabel>
                 <input class="@ThemeConfiguration.GenericControls.DefaultCss" type="text" @bind="@singleResourceModel.Value" />
-                <button class="btn btn-primary">Save Record</button>
+                <button class="btn btn-primary" @onclick="@(async () => await OnUpdateResourceRecordAsync(singleResourceModel))">Save Record</button>
             </div>
         }
     }

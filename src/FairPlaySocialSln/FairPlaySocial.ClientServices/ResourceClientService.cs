@@ -23,5 +23,15 @@ namespace FairPlaySocial.ClientServices
             var result = await response.Content.ReadFromJsonAsync<ResourceModel[]>();
             return result;
         }
+
+        public async Task<ResourceModel?> UpdateResourceAsync(ResourceModel? model, CancellationToken cancellationToken)
+        {
+            var requestUrl = $"api/Resource/UpdateResource";
+            var authorizedHttpClient = this._httpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PutAsJsonAsync(requestUrl, value: model, cancellationToken: cancellationToken);
+            await response.CustomEnsureSuccessStatusCodeAsync();
+            var result = await response.Content.ReadFromJsonAsync<ResourceModel>(cancellationToken: cancellationToken);
+            return result;
+        }
     }
 }
