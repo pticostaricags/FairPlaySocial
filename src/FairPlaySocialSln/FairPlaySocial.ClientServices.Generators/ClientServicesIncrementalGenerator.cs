@@ -11,25 +11,33 @@ namespace FairPlaySocial.ClientServices.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
+            try
+            {
 #if DEBUG
-            //System.Diagnostics.Debugger.Launch();
+                //System.Diagnostics.Debugger.Launch();
 #endif
-            // Do a simple filter for enums
-            IncrementalValuesProvider<ClassDeclarationSyntax> classDeclarations =
-                context.SyntaxProvider
-                .CreateSyntaxProvider(
-                    predicate: static (s, _) => IsSyntaxTargetForGeneration(s), // select enums with attributes
-                    transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx)) // sect the enum with the [EnumExtensions] attribute
-                .Where(static m => m is not null)!; // filter out attributed enums that we don't care about
+                // Do a simple filter for enums
+                IncrementalValuesProvider<ClassDeclarationSyntax> classDeclarations =
+                    context.SyntaxProvider
+                    .CreateSyntaxProvider(
+                        predicate: static (s, _) => IsSyntaxTargetForGeneration(s), // select enums with attributes
+                        transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx)) // sect the enum with the [EnumExtensions] attribute
+                    .Where(static m => m is not null)!; // filter out attributed enums that we don't care about
 
-            // Combine the selected interfaces with the `Compilation`
-            IncrementalValueProvider<(Compilation, ImmutableArray<ClassDeclarationSyntax>)>
-                compilationAndClasses
-                = context.CompilationProvider.Combine(classDeclarations.Collect());
+                // Combine the selected interfaces with the `Compilation`
+                IncrementalValueProvider<(Compilation, ImmutableArray<ClassDeclarationSyntax>)>
+                    compilationAndClasses
+                    = context.CompilationProvider.Combine(classDeclarations.Collect());
 
-            // Generate the source using the compilation and classes
-            context.RegisterSourceOutput(compilationAndClasses,
-                static (spc, source) => Execute(source.Item1, source.Item2, spc));
+                // Generate the source using the compilation and classes
+                context.RegisterSourceOutput(compilationAndClasses,
+                    static (spc, source) => Execute(source.Item1, source.Item2, spc));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                throw;
+            }
         }
 
         private static ClassDeclarationSyntax GetSemanticTargetForGeneration(GeneratorSyntaxContext generatorSyntaxContext)

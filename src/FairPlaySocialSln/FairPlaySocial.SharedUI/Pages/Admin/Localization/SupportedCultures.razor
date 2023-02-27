@@ -1,0 +1,25 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>SupportedCulture</h3>
+
+@if (this.AvailableCultures != null)
+{
+    <div class="mb-3">
+        <AudibleLabel ItemText="Select a culture to enable"></AudibleLabel>
+        <ul class="list-group">
+
+            @foreach (var singleAvailableCulture in this.AvailableCultures)
+            {
+                <li class="list-group-item">
+                    <AudibleButton 
+                        CssClass="btn btn-primary" 
+                        DisplayText="true"
+                           ItemText="@singleAvailableCulture.Name"
+                           OnClick="@(async () => await OnEnableCultureButtonClickAsync(singleAvailableCulture.Name!))"></AudibleButton>
+                </li>
+            }
+        </ul>
+    </div>
+}

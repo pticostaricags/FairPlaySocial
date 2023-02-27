@@ -21,5 +21,7 @@ namespace FairPlaySocial.Common.Interfaces.Services
         void NavigateToUserMessages();
         void NavigateToMyProfileVisitors();
         void NavigateToExternalReportsViewer();
+        void NavigateToSupportedCultures();
+        void NavigateToResourceKeysAdmin();
     }
 }

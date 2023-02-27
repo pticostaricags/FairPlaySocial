@@ -1,0 +1,33 @@
+﻿@inherits CustomBaseComponent
+
+<LoadingIndicator IsLoading="@this.IsBusy"></LoadingIndicator>
+
+<h3>ResourceKeysAdmin</h3>
+@if (this.SupportedCultures != null)
+{
+    <div class="mb-3">
+        <AudibleLabel ItemText="Select a Culture:" MakeTextBold="true"></AudibleLabel>
+        <InputSelect class="@ThemeConfiguration.Selects.DefaultCss"
+                 Value="@this.SelectedCulture"
+                 ValueExpression="@( () => this.SelectedCulture)"
+                 ValueChanged="@( async (string? selectedCulture) => await OnSelectedCultureChangeAsync(selectedCulture))">
+            <option value="">Select a Culture</option>
+            @foreach (var singleSupportedCultre in this.SupportedCultures)
+            {
+                <option value="@singleSupportedCultre.Name">@singleSupportedCultre.Name</option>
+            }
+        </InputSelect>
+    </div>
+    @if (this.SelectedCultureResources != null)
+    {
+        foreach (var singleResourceModel in this.SelectedCultureResources)
+        {
+            <div class="mb-3">
+                <AudibleLabel ItemText="@singleResourceModel.Type"></AudibleLabel>
+                <AudibleLabel ItemText="@singleResourceModel.Key"></AudibleLabel>
+                <input class="@ThemeConfiguration.GenericControls.DefaultCss" type="text" @bind="@singleResourceModel.Value" />
+                <button class="btn btn-primary" @onclick="@(async () => await OnUpdateResourceRecordAsync(singleResourceModel))">Save Record</button>
+            </div>
+        }
+    }
+}

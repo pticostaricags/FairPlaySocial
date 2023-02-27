@@ -87,6 +87,8 @@ namespace FairPlaySocial.Common.Global
             public static class AdminRolePagesRoutes
             {
                 public const string UserList = $"/Admin/{nameof(UserList)}";
+                public const string SupportedCultures = $"/Admin/Localization/{nameof(SupportedCultures)}";
+                public const string ResourceKeysAdmin = $"/Admin/Localization/{nameof(ResourceKeysAdmin)}";
             }
 
             public static class UserRolePagesRoutes
@@ -118,6 +120,8 @@ namespace FairPlaySocial.Common.Global
             public const string ApplicationUser = nameof(ApplicationUser);
             public const string Photo = nameof(Photo);
             public const string UserProfile = nameof(UserProfile);
+            public const string Culture = nameof(Culture);
+            public const string Resource = nameof(Resource);
         }
     }
 }

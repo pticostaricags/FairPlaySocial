@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FairPlaySocial.DataAccess.Models;
-using FairPlaySocial.Models.Localization;
+using FairPlaySocial.Models.Resource;
 
 namespace FairPlaySocial.Server.AutoMapperProfiles
 {
@@ -21,6 +21,8 @@ namespace FairPlaySocial.Server.AutoMapperProfiles
                     dest.CultureName = source.Culture.Name;
                 }
             });
+            this.CreateMap<ResourceModel, Resource>();
+            this.CreateMap<CreateResourceModel, Resource>();
         }
     }
 }

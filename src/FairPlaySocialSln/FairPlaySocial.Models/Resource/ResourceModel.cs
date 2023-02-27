@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FairPlaySocial.Models.Localization
+namespace FairPlaySocial.Models.Resource
 {
-    /// <summary>
-    /// Represents the culture
-    /// </summary>
     public class ResourceModel
     {
-        /// <summary>
-        /// The resource type
-        /// </summary>
+        [Key]
+        [Required]
+        public int? ResourceId { get; set; }
+
+        [Required]
+        [StringLength(1500)]
         public string? Type { get; set; }
-        /// <summary>
-        /// Key
-        /// </summary>
+
         [Required]
         [StringLength(50)]
         public string? Key { get; set; }
-        /// <summary>
-        /// Value
-        /// </summary>
+
         [Required]
+        [Column(TypeName = "text")]
         public string? Value { get; set; }
-        /// <summary>
-        /// Culture Name
-        /// </summary>
         [Required]
-        [StringLength(50)]
+        public int? CultureId { get; set; }
         public string? CultureName { get; set; }
     }
 }

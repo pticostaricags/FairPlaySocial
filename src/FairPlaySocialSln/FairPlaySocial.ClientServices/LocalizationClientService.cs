@@ -1,11 +1,7 @@
-﻿using FairPlaySocial.Models.Localization;
+﻿using FairPlaySocial.Models.Culture;
+using FairPlaySocial.Models.Resource;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using static FairPlaySocial.Common.Global.Constants;
 
 namespace FairPlaySocial.ClientServices

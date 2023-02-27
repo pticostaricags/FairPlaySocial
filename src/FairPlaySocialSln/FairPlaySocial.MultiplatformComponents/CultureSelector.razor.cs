@@ -1,7 +1,7 @@
 ﻿using FairPlaySocial.ClientServices;
 using FairPlaySocial.Common.CustomAttributes.Localization;
 using FairPlaySocial.Common.Interfaces.Services;
-using FairPlaySocial.Models.Localization;
+using FairPlaySocial.Models.Culture;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
